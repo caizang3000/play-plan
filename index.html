@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Plan: Đi Chơi Cầu Giấy</title>
+  <style>
+    :root {
+      --bg: #0f172a; --card: #1e293b; --accent: #38bdf8;
+      --ok: #10b981; --warn: #f59e0b; --danger: #f43f5e;
+      --text: #f8fafc; --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 16px; line-height: 1.5; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; padding: 18px; background: var(--card); border-radius: 16px; border: 1px solid #334155; margin-bottom: 16px; }
+    h1 { font-size: 1.35rem; color: var(--accent); margin-bottom: 4px; }
+    .sub { font-size: 0.85rem; color: var(--muted); }
+
+    /* Live Controls Bar */
+    .control-bar { background: var(--card); padding: 14px; border-radius: 14px; border: 1px solid #334155; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
+    .status-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn { padding: 8px 12px; border-radius: 10px; border: 1px solid #475569; background: #0f172a; color: var(--text); cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: 0.2s; }
+    .btn.active { background: #0284c7; border-color: var(--accent); }
+    .btn-share { background: var(--ok); border-color: #059669; color: #052e16; font-weight: 700; }
+    
+    /* KPIs */
+    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+    .kpi { background: var(--card); padding: 12px; border-radius: 12px; text-align: center; border: 1px solid #334155; }
+    .kpi-val { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
+    .kpi-lbl { font-size: 0.75rem; color: var(--muted); }
+
+    /* Main Grid */
+    .grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card); border-radius: 16px; padding: 16px; border: 1px solid #334155; margin-bottom: 16px; }
+    .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+
+    /* Interactive Steps */
+    .step { background: #0f172a; padding: 12px; border-radius: 12px; border-left: 4px solid var(--accent); margin-bottom: 12px; transition: 0.2s; }
+    .step.done { opacity: 0.6; border-left-color: var(--ok); }
+    .step-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .step-time { font-size: 0.78rem; color: var(--accent); font-weight: 700; }
+    .step-place { font-size: 0.98rem; font-weight: 700; margin-bottom: 4px; }
+    .step-desc { font-size: 0.83rem; color: var(--muted); margin-bottom: 8px; }
+    .step-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .cost-input { background: #1e293b; border: 1px solid #475569; color: #34d399; padding: 4px 8px; border-radius: 6px; width: 110px; font-weight: 700; font-size: 0.85rem; }
+    .chk-label { font-size: 0.8rem; display: flex; align-items: center; gap: 5px; cursor: pointer; color: #cbd5e1; }
+
+    /* Note box */
+    textarea { width: 100%; height: 80px; background: #0f172a; border: 1px solid #475569; color: var(--text); border-radius: 10px; padding: 10px; font-size: 0.85rem; resize: vertical; margin-top: 8px; }
+    .map-box { background: #0b1120; border-radius: 12px; padding: 8px; text-align: center; border: 1px solid #334155; }
+    svg { width: 100%; height: auto; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--ok); color: #052e16; padding: 10px 16px; border-radius: 10px; font-weight: 700; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>⚡ KẾ HOẠCH ĐI CHƠI CẬP NHẬT TRỰC TIẾP</h1>
+    <div class="sub">Xuất phát: <b>27 Ngõ 37 Phố Dịch Vọng</b> • Chạm để tích hoàn thành & sửa chi phí thực tế</div>
+  </header>
+
+  <div class="control-bar">
+    <div class="status-group">
+      <button class="btn active" id="mode-normal" onclick="setSituation('normal')">☀️ Thuận lợi (Chuẩn)</button>
+      <button class="btn" id="mode-rain" onclick="setSituation('rain')">🌧️ Trời mưa / Nắng gắt</button>
+      <button class="btn" id="mode-crowded" onclick="setSituation('crowded')">🔥 Quán đông (Đổi quán)</button>
+    </div>
+    <button class="btn btn-share" onclick="shareState()">🔗 Copy Link Cập Nhật</button>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-val" id="total-cost">541.000đ</div>
+      <div class="kpi-lbl" id="per-person">~270.500đ / người</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="budget-left" style="color:#34d399">+9.000đ</div>
+      <div class="kpi-lbl">So với hạn mức 550k</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val" id="progress-txt">0/4 chặng</div>
+      <div class="kpi-lbl">Tiến độ đi chơi</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <div class="card-title">
+          <span>📍 Lộ trình & Chi tiêu thực tế</span>
+          <span style="font-size:0.75rem; color:var(--muted)">Sửa số tiền để tự tính lại</span>
+        </div>
+        <div id="steps-container"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title">🗺️ Bản đồ lộ trình tương ứng</div>
+        <div class="map-box">
+          <svg viewBox="0 0 380 230">
+            <line x1="0" y1="50" x2="380" y2="50" stroke="#1e293b" stroke-width="7"/>
+            <text x="10" y="42" fill="#64748b" font-size="9">CẦU GIẤY - XUÂN THỦY</text>
+            <line x1="0" y1="190" x2="380" y2="190" stroke="#1e293b" stroke-width="7"/>
+            <text x="10" y="182" fill="#64748b" font-size="9">PHỐ THÀNH THÁI</text>
+            <path id="map-path" d="M 200 115 L 190 145 L 175 190 L 105 50 L 200 115" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="5,4"/>
+            <circle cx="200" cy="115" r="6" fill="#f43f5e"/>
+            <text x="210" y="118" fill="#fff" font-size="10" font-weight="bold">📍 27 Ngõ 37 Dịch Vọng</text>
+            <circle cx="190" cy="145" r="5" fill="#38bdf8"/>
+            <text id="map-t1" x="200" y="148" fill="#bae6fd" font-size="9">1. T-Box / JIDAI</text>
+            <circle id="map-c2" cx="175" cy="190" r="5" fill="#10b981"/>
+            <text id="map-t2" x="115" y="210" fill="#a7f3d0" font-size="9">2. CV Cầu Giấy</text>
+            <circle cx="105" cy="50" r="6" fill="#f59e0b"/>
+            <text id="map-t3" x="35" y="30" fill="#fde68a" font-size="10" font-weight="bold">3 & 4. IPH / Phan Văn Trường</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📝 Ghi chú chung (Cập nhật trực tiếp)</div>
+        <textarea id="shared-note" placeholder="Ví dụ: Gửi xe tầng hầm B1 cột C5, đổi sang uống trà tắc,..." oninput="saveLocal()"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast">✅ Đã copy link cập nhật! Gửi ngay cho bạn đồng hành.</div>
+
+<script>
+const scenarios = {
+  normal: [
+    { time: "13h30 – 16h30", place: "🎬 T-Box Café Dịch Vọng", desc: "Đi bộ 50m từ 27 Ngõ 37 Dịch Vọng. Xem phim phòng lạnh riêng tư tránh nắng.", defaultCost: 140000 },
+    { time: "16h30 – 18h00", place: "🌿 Công viên Cầu Giấy (Phố Thành Thái)", desc: "Chạy xe 400m. Dạo hồ, chụp ảnh đồi cỏ đón gió chiều.", defaultCost: 15000 },
+    { time: "18h00 – 20h15", place: "🍲 Buffet Dookki (Tầng 3 IPH Xuân Thủy)", desc: "Ăn lẩu Tokbokki, gà rán, chả cá & nước ngọt miễn phí thả ga.", defaultCost: 306000 },
+    { time: "20h15 – 22h30", place: "🎮 Timezone IPH & Chợ đêm Nhà Xanh", desc: "Chơi game xu, đi bộ dạo chợ đêm và uống trà chanh trước khi về.", defaultCost: 80000 }
+  ],
+  rain: [
+    { time: "13h30 – 16h30", place: "🎬 T-Box Café Dịch Vọng", desc: "Đi bộ 50m ngay trong ngõ, không lo ướt mưa hay nắng gắt.", defaultCost: 140000 },
+    { time: "16h30 – 18h00", place: "🕹️ Khu Game Timezone & Sảnh IPH (Trong nhà)", desc: "Bỏ qua công viên ngoài trời. Chạy thẳng vào hầm IPH gửi xe, chơi game xu và dạo TTTM có mái che.", defaultCost: 60000 },
+    { time: "18h00 – 20h15", place: "🍲 Buffet Dookki (Tầng 3 IPH Xuân Thủy)", desc: "Ở ngay cùng tầng 3, ăn lẩu Tokbokki nóng hổi không cần ra ngoài đường.", defaultCost: 306000 },
+    { time: "20h15 – 22h30", place: "☕ Cafe sảnh tầng 1 IPH / Lân La Coffee", desc: "Ngồi cafe có mái che ấm cúng trò chuyện chờ tạnh mưa rồi về.", defaultCost: 75000 }
+  ],
+  crowded: [
+    { time: "13h30 – 16h30", place: "☕ JIDAI Cerenote Coffee (Đầu ngõ 165 Cầu Giấy)", desc: "Phương án thay thế khi T-Box hết phòng. Quán rộng, tối giản, mở xuyên đêm.", defaultCost: 95000 },
+    { time: "16h30 – 18h00", place: "🌿 Công viên Cầu Giấy (Phố Thành Thái)", desc: "Dạo bộ quanh hồ hóng gió chiều mát mẻ.", defaultCost: 15000 },
+    { time: "18h00 – 20h15", place: "🥩 Buffet Nướng Chảo Gang (Phan Văn Trường)", desc: "Đổi ngay sang nướng bơ chảo gang sát cạnh IPH nếu Dookki phải xếp hàng chờ bàn.", defaultCost: 320000 },
+    { time: "20h15 – 22h30", place: "🍋 Chợ đêm Nhà Xanh & Trà chanh vỉa hè", desc: "Đi bộ ngay tại phố Phan Văn Trường dạo chợ đêm và uống trà tắc.", defaultCost: 45000 }
+  ]
+};
+
+let state = { mode: 'normal', costs: [140000, 15000, 306000, 80000], done: [false, false, false, false], note: '' };
+
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('m')) state.mode = params.get('m');
+  if (params.has('c')) state.costs = params.get('c').split(',').map(Number);
+  if (params.has('d')) state.done = params.get('d').split(',').map(x => x === '1');
+  if (params.has('n')) state.note = decodeURIComponent(params.get('n'));
+  document.getElementById('shared-note').value = state.note;
+  render();
+}
+
+function setSituation(mode) {
+  state.mode = mode;
+  state.costs = scenarios[mode].map(s => s.defaultCost);
+  render();
+}
+
+function render() {
+  ['normal', 'rain', 'crowded'].forEach(m => {
+    document.getElementById('mode-' + m).classList.toggle('active', state.mode === m);
+  });
+
+  // Update Map
+  const path = document.getElementById('map-path');
+  const c2 = document.getElementById('map-c2');
+  const t2 = document.getElementById('map-t2');
+  if (state.mode === 'rain') {
+    path.setAttribute('d', 'M 200 115 L 190 145 L 105 50 L 200 115');
+    c2.setAttribute('opacity', '0.2');
+    t2.textContent = '(Bỏ qua CV do mưa)';
+  } else {
+    path.setAttribute('d', 'M 200 115 L 190 145 L 175 190 L 105 50 L 200 115');
+    c2.setAttribute('opacity', '1');
+    t2.textContent = '2. CV Cầu Giấy';
+  }
+
+  const list = scenarios[state.mode];
+  const container = document.getElementById('steps-container');
+  container.innerHTML = list.map((s, i) => `
+    <div class="step ${state.done[i] ? 'done' : ''}">
+      <div class="step-top">
+        <span class="step-time">${s.time}</span>
+        <label class="chk-label">
+          <input type="checkbox" ${state.done[i] ? 'checked' : ''} onchange="toggleDone(${i}, this.checked)"> Đã xong
+        </label>
+      </div>
+      <div class="step-place">${s.place}</div>
+      <div class="step-desc">${s.desc}</div>
+      <div class="step-inputs">
+        <span style="font-size:0.8rem; color:#94a3b8">Thực chi (VNĐ):</span>
+        <input type="number" class="cost-input" step="5000" value="${state.costs[i]}" oninput="updateCost(${i}, this.value)">
+      </div>
+    </div>
+  `).join('');
+
+  updateKPIs();
+}
+
+function toggleDone(i, val) { state.done[i] = val; render(); }
+function updateCost(i, val) { state.costs[i] = Number(val) || 0; updateKPIs(); }
+function saveLocal() { state.note = document.getElementById('shared-note').value; }
+
+function updateKPIs() {
+  const total = state.costs.reduce((a, b) => a + b, 0);
+  const diff = 550000 - total;
+  const doneCount = state.done.filter(Boolean).length;
+  document.getElementById('total-cost').textContent = total.toLocaleString('vi-VN') + 'đ';
+  document.getElementById('per-person').textContent = '~' + Math.round(total / 2).toLocaleString('vi-VN') + 'đ / người';
+  const leftEl = document.getElementById('budget-left');
+  leftEl.textContent = (diff >= 0 ? 'Dư ' : 'Lố ') + Math.abs(diff).toLocaleString('vi-VN') + 'đ';
+  leftEl.style.color = diff >= 0 ? '#34d399' : '#f43f5e';
+  document.getElementById('progress-txt').textContent = `${doneCount}/4 chặng`;
+}
+
+function shareState() {
+  state.note = document.getElementById('shared-note').value;
+  const params = new URLSearchParams();
+  params.set('m', state.mode);
+  params.set('c', state.costs.join(','));
+  params.set('d', state.done.map(x => x ? '1' : '0').join(','));
+  if (state.note) params.set('n', encodeURIComponent(state.note));
+  const newUrl = window.location.origin + window.location.pathname + '?' + params.toString();
+  window.history.replaceState({}, '', newUrl);
+  navigator.clipboard.writeText(newUrl);
+  const t = document.getElementById('toast');
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+
+loadFromURL();
+</script>
+</body>
+</html>
