@@ -2,244 +2,540 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Plan: Đi Chơi Cầu Giấy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DateOS • Cầu Giấy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f172a; --card: #1e293b; --accent: #38bdf8;
-      --ok: #10b981; --warn: #f59e0b; --danger: #f43f5e;
-      --text: #f8fafc; --muted: #94a3b8;
+      --bg: #090d16;
+      --glass: rgba(30, 41, 59, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --accent: #38bdf8;
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 16px; line-height: 1.5; }
-    .container { max-width: 900px; margin: 0 auto; }
-    header { text-align: center; padding: 18px; background: var(--card); border-radius: 16px; border: 1px solid #334155; margin-bottom: 16px; }
-    h1 { font-size: 1.35rem; color: var(--accent); margin-bottom: 4px; }
-    .sub { font-size: 0.85rem; color: var(--muted); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body {
+      background: var(--bg);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.18) 0px, transparent 50%),
+        radial-gradient(at 100% 20%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(244, 63, 94, 0.1) 0px, transparent 50%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px 14px 90px;
+    }
+    .app { max-width: 960px; margin: 0 auto; }
 
-    /* Live Controls Bar */
-    .control-bar { background: var(--card); padding: 14px; border-radius: 14px; border: 1px solid #334155; margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
-    .status-group { display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn { padding: 8px 12px; border-radius: 10px; border: 1px solid #475569; background: #0f172a; color: var(--text); cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: 0.2s; }
-    .btn.active { background: #0284c7; border-color: var(--accent); }
-    .btn-share { background: var(--ok); border-color: #059669; color: #052e16; font-weight: 700; }
+    /* Top Live Status Banner */
+    .live-banner {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+      background: linear-gradient(90deg, rgba(99,102,241,0.2), rgba(56,189,248,0.15));
+      border: 1px solid rgba(99,102,241,0.35);
+      padding: 12px 18px; border-radius: 18px; margin-bottom: 16px;
+      backdrop-filter: blur(12px);
+    }
+    .live-left { display: flex; align-items: center; gap: 10px; }
+    .dot-live { width: 10px; height: 10px; background: var(--emerald); border-radius: 50%; box-shadow: 0 0 12px var(--emerald); animation: blink 1.5s infinite; }
+    @keyframes blink { 50% { opacity: 0.3; transform: scale(0.85); } }
+    .clock-txt { font-weight: 800; font-size: 0.95rem; color: var(--accent); letter-spacing: 0.5px; }
+    .now-status { font-size: 0.85rem; color: #e2e8f0; }
+
+    /* Header & Mode Switcher */
+    .hero {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 24px; padding: 20px; margin-bottom: 18px;
+      backdrop-filter: blur(16px);
+    }
+    .hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .brand { font-size: 1.4rem; font-weight: 800; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .sub-brand { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
     
-    /* KPIs */
-    .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-    .kpi { background: var(--card); padding: 12px; border-radius: 12px; text-align: center; border: 1px solid #334155; }
-    .kpi-val { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
-    .kpi-lbl { font-size: 0.75rem; color: var(--muted); }
+    .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: rgba(15,23,42,0.7); padding: 6px; border-radius: 16px; border: 1px solid var(--glass-border); }
+    .mode-btn {
+      padding: 10px 8px; border-radius: 12px; border: none; background: transparent;
+      color: var(--muted); font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: 0.25s;
+    }
+    .mode-btn.active { background: linear-gradient(135deg, var(--primary), #3b82f6); color: #fff; box-shadow: 0 4px 15px rgba(99,102,241,0.35); }
+
+    /* Bento KPIs */
+    .bento-kpi { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+    @media (max-width: 640px) { .bento-kpi { grid-template-columns: 1fr 1fr; } .bento-kpi > div:first-child { grid-column: span 2; } }
+    .kpi-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      padding: 16px; border-radius: 20px; backdrop-filter: blur(16px);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .kpi-lbl { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+    .kpi-val { font-size: 1.45rem; font-weight: 800; margin: 6px 0 2px; }
+    .kpi-sub { font-size: 0.78rem; color: var(--muted); }
+    .progress-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 99px; overflow: hidden; margin-top: 8px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--emerald), var(--accent)); width: 0%; transition: 0.4s; }
 
     /* Main Grid */
-    .grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 16px; }
-    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-    .card { background: var(--card); border-radius: 16px; padding: 16px; border: 1px solid #334155; margin-bottom: 16px; }
-    .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+    .main-grid { display: grid; grid-template-columns: 1.25fr 0.85fr; gap: 18px; }
+    @media (max-width: 820px) { .main-grid { grid-template-columns: 1fr; } }
 
-    /* Interactive Steps */
-    .step { background: #0f172a; padding: 12px; border-radius: 12px; border-left: 4px solid var(--accent); margin-bottom: 12px; transition: 0.2s; }
-    .step.done { opacity: 0.6; border-left-color: var(--ok); }
-    .step-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-    .step-time { font-size: 0.78rem; color: var(--accent); font-weight: 700; }
-    .step-place { font-size: 0.98rem; font-weight: 700; margin-bottom: 4px; }
-    .step-desc { font-size: 0.83rem; color: var(--muted); margin-bottom: 8px; }
-    .step-inputs { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .cost-input { background: #1e293b; border: 1px solid #475569; color: #34d399; padding: 4px 8px; border-radius: 6px; width: 110px; font-weight: 700; font-size: 0.85rem; }
-    .chk-label { font-size: 0.8rem; display: flex; align-items: center; gap: 5px; cursor: pointer; color: #cbd5e1; }
+    .section-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 24px; padding: 18px; margin-bottom: 18px; backdrop-filter: blur(16px);
+    }
+    .sec-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; color: #e2e8f0; }
 
-    /* Note box */
-    textarea { width: 100%; height: 80px; background: #0f172a; border: 1px solid #475569; color: var(--text); border-radius: 10px; padding: 10px; font-size: 0.85rem; resize: vertical; margin-top: 8px; }
-    .map-box { background: #0b1120; border-radius: 12px; padding: 8px; text-align: center; border: 1px solid #334155; }
-    svg { width: 100%; height: auto; }
-    .toast { position: fixed; bottom: 20px; right: 20px; background: var(--ok); color: #052e16; padding: 10px 16px; border-radius: 10px; font-weight: 700; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+    /* Step Cards */
+    .step-card {
+      background: rgba(15, 23, 42, 0.65); border: 1px solid var(--glass-border);
+      border-radius: 18px; padding: 14px; margin-bottom: 12px; transition: 0.25s; position: relative; overflow: hidden;
+    }
+    .step-card.active-now { border-color: var(--accent); box-shadow: 0 0 20px rgba(56, 189, 248, 0.15); }
+    .step-card.done { opacity: 0.55; border-color: rgba(16,185,129,0.4); }
+    .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .badge-time { font-size: 0.75rem; font-weight: 700; color: var(--accent); background: rgba(56,189,248,0.12); padding: 4px 10px; border-radius: 99px; }
+    .step-title { font-size: 1.02rem; font-weight: 800; margin-bottom: 4px; }
+    .step-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.45; margin-bottom: 12px; }
+    
+    .step-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .input-group { display: flex; align-items: center; gap: 6px; }
+    .money-input {
+      background: rgba(30,41,59,0.9); border: 1px solid rgba(255,255,255,0.15);
+      color: var(--emerald); font-weight: 800; font-size: 0.85rem; padding: 6px 10px; border-radius: 10px; width: 105px;
+    }
+    .payer-select {
+      background: rgba(30,41,59,0.9); border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text); font-size: 0.78rem; font-weight: 600; padding: 6px 8px; border-radius: 10px;
+    }
+    .map-link {
+      text-decoration: none; font-size: 0.76rem; font-weight: 700; color: #fff;
+      background: rgba(255,255,255,0.08); padding: 6px 11px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s;
+    }
+    .map-link:hover { background: var(--primary); }
+
+    /* Custom Checkbox */
+    .done-btn {
+      border: 1px solid rgba(255,255,255,0.15); background: transparent; color: var(--muted);
+      padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+    }
+    .done-btn.checked { background: var(--emerald); color: #052e16; border-color: var(--emerald); }
+
+    /* Extra Expense Row */
+    .extra-row { display: flex; gap: 8px; margin-top: 10px; }
+    .extra-input { flex: 1; background: rgba(15,23,42,0.8); border: 1px solid var(--glass-border); color: #fff; padding: 8px 12px; border-radius: 12px; font-size: 0.82rem; }
+    .btn-small { background: var(--primary); color: #fff; border: none; padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+
+    /* Unique Feature 1: Split Bill Widget */
+    .split-box { background: rgba(15,23,42,0.6); border-radius: 16px; padding: 14px; border: 1px solid var(--glass-border); }
+    .split-names { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .name-inp { background: rgba(30,41,59,0.8); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; text-align: center; }
+    .settlement { font-size: 0.85rem; color: #fde68a; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3); padding: 10px 12px; border-radius: 12px; font-weight: 600; text-align: center; }
+
+    /* Unique Feature 2: Gacha Wheel */
+    .gacha-box { text-align: center; background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(244,63,94,0.15)); border: 1px solid rgba(244,63,94,0.3); border-radius: 18px; padding: 16px; }
+    .gacha-res { font-size: 1.05rem; font-weight: 800; color: #fff; min-height: 28px; margin: 10px 0; }
+    .gacha-tags { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+    .g-tag { font-size: 0.72rem; padding: 4px 9px; border-radius: 99px; background: rgba(255,255,255,0.08); color: var(--muted); cursor: pointer; border: 1px solid transparent; }
+    .g-tag.active { border-color: var(--accent); color: #fff; background: rgba(56,189,248,0.15); }
+
+    /* Unique Feature 3: Parking & Quick Note */
+    .park-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .park-inp { background: rgba(15,23,42,0.8); border: 1px solid var(--glass-border); color: var(--accent); padding: 8px 12px; border-radius: 12px; font-size: 0.82rem; font-weight: 700; }
+    textarea { width: 100%; height: 68px; background: rgba(15,23,42,0.8); border: 1px solid var(--glass-border); color: #fff; border-radius: 12px; padding: 10px; font-size: 0.82rem; resize: none; }
+
+    /* Bottom Floating Dock */
+    .floating-dock {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 99px;
+      display: flex; gap: 10px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 99;
+    }
+    .dock-btn {
+      border: none; padding: 10px 18px; border-radius: 99px; font-weight: 800; font-size: 0.82rem;
+      cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s;
+    }
+    .dock-share { background: linear-gradient(135deg, var(--emerald), #059669); color: #052e16; }
+    .dock-reset { background: rgba(255,255,255,0.08); color: var(--text); }
+
+    .toast {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      background: var(--emerald); color: #052e16; padding: 10px 20px; border-radius: 99px;
+      font-weight: 800; font-size: 0.85rem; display: none; z-index: 100; box-shadow: 0 8px 25px rgba(16,185,129,0.4);
+    }
   </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <h1>⚡ KẾ HOẠCH ĐI CHƠI CẬP NHẬT TRỰC TIẾP</h1>
-    <div class="sub">Xuất phát: <b>27 Ngõ 37 Phố Dịch Vọng</b> • Chạm để tích hoàn thành & sửa chi phí thực tế</div>
-  </header>
+<div class="toast" id="toast">🔗 Đã sao chép Link đồng bộ! Dán gửi qua Zalo/Mess ngay.</div>
 
-  <div class="control-bar">
-    <div class="status-group">
-      <button class="btn active" id="mode-normal" onclick="setSituation('normal')">☀️ Thuận lợi (Chuẩn)</button>
-      <button class="btn" id="mode-rain" onclick="setSituation('rain')">🌧️ Trời mưa / Nắng gắt</button>
-      <button class="btn" id="mode-crowded" onclick="setSituation('crowded')">🔥 Quán đông (Đổi quán)</button>
+<div class="app">
+  <!-- 1. Radar Thời Gian Thực -->
+  <div class="live-banner">
+    <div class="live-left">
+      <div class="dot-live"></div>
+      <span class="clock-txt" id="live-clock">13:30</span>
+      <span class="now-status" id="live-status">Đang kiểm tra lịch trình...</span>
     </div>
-    <button class="btn btn-share" onclick="shareState()">🔗 Copy Link Cập Nhật</button>
+    <span style="font-size:0.75rem; color:var(--muted)">📍 Tâm điểm: 27 Ngõ 37 Phố Dịch Vọng</span>
   </div>
 
-  <div class="kpi-grid">
-    <div class="kpi">
-      <div class="kpi-val" id="total-cost">541.000đ</div>
-      <div class="kpi-lbl" id="per-person">~270.500đ / người</div>
+  <!-- 2. Header & Chuyển kịch bản thông minh -->
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="brand">✨ DateOS • Hành Trình Cầu Giấy</div>
+        <div class="sub-brand">Lộ trình khép kín 2,4km • Tự động tính tiền & định vị Maps</div>
+      </div>
     </div>
-    <div class="kpi">
-      <div class="kpi-val" id="budget-left" style="color:#34d399">+9.000đ</div>
-      <div class="kpi-lbl">So với hạn mức 550k</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-val" id="progress-txt">0/4 chặng</div>
-      <div class="kpi-lbl">Tiến độ đi chơi</div>
+    <div class="modes">
+      <button class="mode-btn active" id="m-normal" onclick="switchMode('normal')">☀️ Chuẩn Tối Ưu</button>
+      <button class="mode-btn" id="m-rain" onclick="switchMode('rain')">🌧️ Mưa / Nắng Gắt</button>
+      <button class="mode-btn" id="m-crowded" onclick="switchMode('crowded')">🔥 Đổi Quán Đỡ Đông</button>
     </div>
   </div>
 
-  <div class="grid">
+  <!-- 3. Bento KPIs -->
+  <div class="bento-kpi">
+    <div class="kpi-card">
+      <div class="kpi-lbl">💰 Ngân sách thực chi / Hạn mức 550k</div>
+      <div style="display:flex; justify-content:space-between; align-items:baseline;">
+        <div class="kpi-val" id="ui-total">541.000đ</div>
+        <div class="kpi-sub" id="ui-diff" style="font-weight:700; color:var(--emerald)">Dư 9.000đ</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="budget-bar"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-lbl">👥 Trung bình / Người</div>
+      <div class="kpi-val" id="ui-per" style="color:var(--accent)">270.500đ</div>
+      <div class="kpi-sub">Trọn gói 9 tiếng</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-lbl">🚀 Tiến độ hành trình</div>
+      <div class="kpi-val" id="ui-prog">0 / 4</div>
+      <div class="kpi-sub" id="ui-dist">Quãng đường: 2,4 km</div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <!-- Cột Trái: Timeline tương tác & Mở Google Maps -->
     <div>
-      <div class="card">
-        <div class="card-title">
-          <span>📍 Lộ trình & Chi tiêu thực tế</span>
-          <span style="font-size:0.75rem; color:var(--muted)">Sửa số tiền để tự tính lại</span>
+      <div class="section-card">
+        <div class="sec-title">
+          <span>🗺️ Lộ trình & Chi tiêu từng chặng</span>
+          <span style="font-size:0.74rem; color:var(--muted)">Chạm để sửa giá & chọn người trả</span>
         </div>
-        <div id="steps-container"></div>
+        <div id="timeline-list"></div>
+
+        <!-- Thêm chi phí phát sinh -->
+        <div style="margin-top:14px; padding-top:12px; border-top:1px dashed rgba(255,255,255,0.1);">
+          <div style="font-size:0.78rem; font-weight:700; color:var(--muted); margin-bottom:6px;">➕ Phát sinh ngoài dự kiến (Mua nước, kẹo, gửi xe phụ...)</div>
+          <div class="extra-row">
+            <input type="text" id="ext-name" class="extra-input" placeholder="Tên khoản chi (VD: Kem ốc quế)" oninput="syncInput()">
+            <input type="number" id="ext-cost" class="money-input" step="5000" value="0" oninput="syncInput()">
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- Cột Phải: Công cụ độc đáo -->
     <div>
-      <div class="card">
-        <div class="card-title">🗺️ Bản đồ lộ trình tương ứng</div>
-        <div class="map-box">
-          <svg viewBox="0 0 380 230">
-            <line x1="0" y1="50" x2="380" y2="50" stroke="#1e293b" stroke-width="7"/>
-            <text x="10" y="42" fill="#64748b" font-size="9">CẦU GIẤY - XUÂN THỦY</text>
-            <line x1="0" y1="190" x2="380" y2="190" stroke="#1e293b" stroke-width="7"/>
-            <text x="10" y="182" fill="#64748b" font-size="9">PHỐ THÀNH THÁI</text>
-            <path id="map-path" d="M 200 115 L 190 145 L 175 190 L 105 50 L 200 115" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="5,4"/>
-            <circle cx="200" cy="115" r="6" fill="#f43f5e"/>
-            <text x="210" y="118" fill="#fff" font-size="10" font-weight="bold">📍 27 Ngõ 37 Dịch Vọng</text>
-            <circle cx="190" cy="145" r="5" fill="#38bdf8"/>
-            <text id="map-t1" x="200" y="148" fill="#bae6fd" font-size="9">1. T-Box / JIDAI</text>
-            <circle id="map-c2" cx="175" cy="190" r="5" fill="#10b981"/>
-            <text id="map-t2" x="115" y="210" fill="#a7f3d0" font-size="9">2. CV Cầu Giấy</text>
-            <circle cx="105" cy="50" r="6" fill="#f59e0b"/>
-            <text id="map-t3" x="35" y="30" fill="#fde68a" font-size="10" font-weight="bold">3 & 4. IPH / Phan Văn Trường</text>
-          </svg>
+      <!-- 4. Chia tiền thông minh -->
+      <div class="section-card">
+        <div class="sec-title">
+          <span>⚖️ Quyết toán & Chia tiền tự động</span>
+          <span style="font-size:0.72rem; color:var(--accent)">50 / 50</span>
+        </div>
+        <div class="split-box">
+          <div class="split-names">
+            <input type="text" id="nameA" class="name-inp" value="Bạn A" oninput="syncInput()">
+            <input type="text" id="nameB" class="name-inp" value="Bạn B" oninput="syncInput()">
+          </div>
+          <div class="settlement" id="split-result">
+            Đang chọn "Quỹ chung" cho tất cả các chặng.
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-title">📝 Ghi chú chung (Cập nhật trực tiếp)</div>
-        <textarea id="shared-note" placeholder="Ví dụ: Gửi xe tầng hầm B1 cột C5, đổi sang uống trà tắc,..." oninput="saveLocal()"></textarea>
+      <!-- 5. Vòng quay Gacha quyết định nhanh -->
+      <div class="section-card">
+        <div class="sec-title">
+          <span>🎰 Vòng quay "Chốt Đơn" (Khỏi nghĩ nhiều)</span>
+        </div>
+        <div class="gacha-box">
+          <div class="gacha-tags">
+            <span class="g-tag active" id="gt-food" onclick="setGachaCat('food')">🍲 Tối ăn gì?</span>
+            <span class="g-tag" id="gt-drink" onclick="setGachaCat('drink')">🧋 Uống gì?</span>
+            <span class="g-tag" id="gt-fun" onclick="setGachaCat('fun')">🎮 Chơi gì thêm?</span>
+          </div>
+          <div class="gacha-res" id="gacha-output">Bấm quay để vũ trụ chọn giúp!</div>
+          <button class="btn-small" onclick="spinGacha()" style="width:100%; padding:10px; font-size:0.85rem;">🎲 Quay Chốt Ngay</button>
+        </div>
+      </div>
+
+      <!-- 6. Thẻ nhớ đỗ xe & Ghi chú -->
+      <div class="section-card">
+        <div class="sec-title">
+          <span>🅿️ Thẻ nhớ vị trí đỗ xe & Ghi chú nhanh</span>
+        </div>
+        <div class="park-grid">
+          <input type="text" id="park-loc" class="park-inp" placeholder="📍 Tầng hầm / Khu đỗ xe..." oninput="syncInput()">
+          <input type="text" id="park-col" class="park-inp" placeholder="🔢 Cột số / Vé xe..." oninput="syncInput()">
+        </div>
+        <textarea id="shared-note" placeholder="Ghi chú chung: Mã giảm giá, phòng chiếu số mấy, đồ cần mang theo..." oninput="syncInput()"></textarea>
       </div>
     </div>
   </div>
 </div>
-<div class="toast" id="toast">✅ Đã copy link cập nhật! Gửi ngay cho bạn đồng hành.</div>
+
+<!-- Thanh công cụ nổi dưới đáy màn hình -->
+<div class="floating-dock">
+  <button class="dock-btn dock-share" onclick="copyLiveLink()">🔗 Copy Link Đồng Bộ</button>
+  <button class="dock-btn dock-reset" onclick="resetPlan()">🔄 Đặt lại</button>
+</div>
 
 <script>
-const scenarios = {
+const DB = {
   normal: [
-    { time: "13h30 – 16h30", place: "🎬 T-Box Café Dịch Vọng", desc: "Đi bộ 50m từ 27 Ngõ 37 Dịch Vọng. Xem phim phòng lạnh riêng tư tránh nắng.", defaultCost: 140000 },
-    { time: "16h30 – 18h00", place: "🌿 Công viên Cầu Giấy (Phố Thành Thái)", desc: "Chạy xe 400m. Dạo hồ, chụp ảnh đồi cỏ đón gió chiều.", defaultCost: 15000 },
-    { time: "18h00 – 20h15", place: "🍲 Buffet Dookki (Tầng 3 IPH Xuân Thủy)", desc: "Ăn lẩu Tokbokki, gà rán, chả cá & nước ngọt miễn phí thả ga.", defaultCost: 306000 },
-    { time: "20h15 – 22h30", place: "🎮 Timezone IPH & Chợ đêm Nhà Xanh", desc: "Chơi game xu, đi bộ dạo chợ đêm và uống trà chanh trước khi về.", defaultCost: 80000 }
+    { start: 13.5, end: 16.5, time: "13h30 – 16h30", place: "🎬 T-Box Café Dịch Vọng", desc: "Đi bộ 50m từ 27 Ngõ 37 Phố Dịch Vọng. Phòng phim sofa điều hòa riêng tư.", cost: 140000, map: "T-Box Cafe Ngõ 37 Dịch Vọng Cầu Giấy" },
+    { start: 16.5, end: 18.0, time: "16h30 – 18h00", place: "🌿 Công viên Cầu Giấy (Thành Thái)", desc: "Chạy xe 400m qua phố Thành Thái. Dạo hồ, chụp ảnh đồi cỏ đón gió chiều.", cost: 15000, map: "Công viên Cầu Giấy Phố Thành Thái" },
+    { start: 18.0, end: 20.25, time: "18h00 – 20h15", place: "🍲 Buffet Dookki (Tầng 3 IPH)", desc: "Lẩu Tokbokki, gà rán Hàn Quốc, chả cá xiên & nước ngọt miễn phí không giới hạn.", cost: 306000, map: "Dookki Indochina Plaza 241 Xuân Thủy" },
+    { start: 20.25, end: 22.5, time: "20h15 – 22h30", place: "🎮 Timezone & Chợ đêm Nhà Xanh", desc: "Chơi game xu tầng 3, đi bộ dạo chợ đêm Nhà Xanh & uống trà chanh trước khi về.", cost: 80000, map: "Chợ Nhà Xanh Phan Văn Trường Cầu Giấy" }
   ],
   rain: [
-    { time: "13h30 – 16h30", place: "🎬 T-Box Café Dịch Vọng", desc: "Đi bộ 50m ngay trong ngõ, không lo ướt mưa hay nắng gắt.", defaultCost: 140000 },
-    { time: "16h30 – 18h00", place: "🕹️ Khu Game Timezone & Sảnh IPH (Trong nhà)", desc: "Bỏ qua công viên ngoài trời. Chạy thẳng vào hầm IPH gửi xe, chơi game xu và dạo TTTM có mái che.", defaultCost: 60000 },
-    { time: "18h00 – 20h15", place: "🍲 Buffet Dookki (Tầng 3 IPH Xuân Thủy)", desc: "Ở ngay cùng tầng 3, ăn lẩu Tokbokki nóng hổi không cần ra ngoài đường.", defaultCost: 306000 },
-    { time: "20h15 – 22h30", place: "☕ Cafe sảnh tầng 1 IPH / Lân La Coffee", desc: "Ngồi cafe có mái che ấm cúng trò chuyện chờ tạnh mưa rồi về.", defaultCost: 75000 }
+    { start: 13.5, end: 16.5, time: "13h30 – 16h30", place: "🎬 T-Box Café Dịch Vọng", desc: "Cách 27 Ngõ 37 Dịch Vọng đúng 50m, nằm trong nhà kín đáo bất chấp mưa nắng.", cost: 140000, map: "T-Box Cafe Ngõ 37 Dịch Vọng Cầu Giấy" },
+    { start: 16.5, end: 18.0, time: "16h30 – 18h00", place: "🕹️ Khu Game Timezone IPH (Trong nhà)", desc: "Bỏ qua công viên ngoài trời. Vào thẳng hầm IPH gửi xe, chơi đua xe, gắp thú máy lạnh.", cost: 60000, map: "Timezone Indochina Plaza 241 Xuân Thủy" },
+    { start: 18.0, end: 20.25, time: "18h00 – 20h15", place: "🍲 Buffet Dookki (Cùng tầng 3 IPH)", desc: "Ăn lẩu Tokbokki nóng hổi ngay cùng tầng, không phải bước chân ra ngoài đường.", cost: 306000, map: "Dookki Indochina Plaza 241 Xuân Thủy" },
+    { start: 20.25, end: 22.5, time: "20h15 – 22h30", place: "☕ Cafe Sảnh IPH / Lân La Coffee", desc: "Ngồi thưởng trà ấm cúng có mái che chờ tạnh mưa rồi chạy thẳng về Dịch Vọng.", cost: 75000, map: "Indochina Plaza 241 Xuân Thủy" }
   ],
   crowded: [
-    { time: "13h30 – 16h30", place: "☕ JIDAI Cerenote Coffee (Đầu ngõ 165 Cầu Giấy)", desc: "Phương án thay thế khi T-Box hết phòng. Quán rộng, tối giản, mở xuyên đêm.", defaultCost: 95000 },
-    { time: "16h30 – 18h00", place: "🌿 Công viên Cầu Giấy (Phố Thành Thái)", desc: "Dạo bộ quanh hồ hóng gió chiều mát mẻ.", defaultCost: 15000 },
-    { time: "18h00 – 20h15", place: "🥩 Buffet Nướng Chảo Gang (Phan Văn Trường)", desc: "Đổi ngay sang nướng bơ chảo gang sát cạnh IPH nếu Dookki phải xếp hàng chờ bàn.", defaultCost: 320000 },
-    { time: "20h15 – 22h30", place: "🍋 Chợ đêm Nhà Xanh & Trà chanh vỉa hè", desc: "Đi bộ ngay tại phố Phan Văn Trường dạo chợ đêm và uống trà tắc.", defaultCost: 45000 }
+    { start: 13.5, end: 16.5, time: "13h30 – 16h30", place: "☕ JIDAI Cerenote Coffee", desc: "Phương án dự phòng sát Phố Dịch Vọng nếu T-Box kín phòng. Không gian rộng, ăn ảnh.", cost: 95000, map: "JIDAI Cerenote Coffee Ngõ 165 Cầu Giấy" },
+    { start: 16.5, end: 18.0, time: "16h30 – 18h00", place: "🌿 Công viên Cầu Giấy (Thành Thái)", desc: "Dạo bộ quanh hồ hóng gió chiều mát mẻ.", cost: 15000, map: "Công viên Cầu Giấy Phố Thành Thái" },
+    { start: 18.0, end: 20.25, time: "18h00 – 20h15", place: "🥩 Buffet Nướng Chảo Gang", desc: "Rẽ ngay sang Phan Văn Trường ăn ba chỉ bò, nầm nướng nếu Dookki xếp hàng lâu.", cost: 320000, map: "Phố Phan Văn Trường Cầu Giấy" },
+    { start: 20.25, end: 22.5, time: "20h15 – 22h30", place: "🍋 Chợ đêm Nhà Xanh & Trà tắc", desc: "Đi bộ ngay tại chỗ dạo chợ sinh viên và ngồi trà chanh vỉa hè.", cost: 45000, map: "Chợ Nhà Xanh Phan Văn Trường" }
   ]
 };
 
-let state = { mode: 'normal', costs: [140000, 15000, 306000, 80000], done: [false, false, false, false], note: '' };
+const GACHA = {
+  food: ["🍲 Buffet Lẩu Tokbokki Dookki", "🥩 Buffet Nướng Chảo Gang Phan Văn Trường", "🥘 Buffet Lẩu Bò (Lẩu Wang / Lẩu Phan)", "🍕 Cơm trộn / Gà sốt phô mai Hàn Quốc"],
+  drink: ["🍋 Trà chanh giã tay + Hướng dương", "🧋 Trà Ô long sữa Phê La", "🥥 Chè dừa dầm chợ Nhà Xanh", "🍵 Trà hoa quả nhiệt đới mát lạnh"],
+  fun: ["📸 Chụp Photobooth lấy liền Hàn Quốc", "🏀 Thi ném bóng rổ tại Timezone", "🎱 Giao lưu 1 cơ Bi-a vui vẻ", "🧸 Thử vận may gắp thú bông 5 xu"]
+};
 
-function loadFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  if (params.has('m')) state.mode = params.get('m');
-  if (params.has('c')) state.costs = params.get('c').split(',').map(Number);
-  if (params.has('d')) state.done = params.get('d').split(',').map(x => x === '1');
-  if (params.has('n')) state.note = decodeURIComponent(params.get('n'));
-  document.getElementById('shared-note').value = state.note;
+let state = {
+  m: 'normal',
+  c: [140000, 15000, 306000, 80000],
+  d: [0, 0, 0, 0],
+  p: ['S', 'S', 'S', 'S'], // S: Chung, A: Bạn A, B: Bạn B
+  na: 'Bạn A',
+  nb: 'Bạn B',
+  en: '',
+  ec: 0,
+  pl: '',
+  pc: '',
+  nt: ''
+};
+let gachaCat = 'food';
+
+function init() {
+  const q = new URLSearchParams(window.location.search);
+  if (q.has('m')) state.m = q.get('m');
+  if (q.has('c')) state.c = q.get('c').split(',').map(Number);
+  if (q.has('d')) state.d = q.get('d').split(',').map(Number);
+  if (q.has('p')) state.p = q.get('p').split(',');
+  if (q.has('na')) state.na = q.get('na');
+  if (q.has('nb')) state.nb = q.get('nb');
+  if (q.has('en')) state.en = q.get('en');
+  if (q.has('ec')) state.ec = Number(q.get('ec')) || 0;
+  if (q.has('pl')) state.pl = q.get('pl');
+  if (q.has('pc')) state.pc = q.get('pc');
+  if (q.has('nt')) state.nt = q.get('nt');
+
+  document.getElementById('nameA').value = state.na;
+  document.getElementById('nameB').value = state.nb;
+  document.getElementById('ext-name').value = state.en;
+  document.getElementById('ext-cost').value = state.ec;
+  document.getElementById('park-loc').value = state.pl;
+  document.getElementById('park-col').value = state.pc;
+  document.getElementById('shared-note').value = state.nt;
+
+  updateLiveClock();
+  setInterval(updateLiveClock, 30000);
   render();
 }
 
-function setSituation(mode) {
-  state.mode = mode;
-  state.costs = scenarios[mode].map(s => s.defaultCost);
+function updateLiveClock() {
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  const dec = now.getHours() + now.getMinutes() / 60;
+  document.getElementById('live-clock').textContent = `${hh}:${mm}`;
+
+  const steps = DB[state.m];
+  let statusTxt = "Sẵn sàng xuất phát từ 27 Ngõ 37 Dịch Vọng!";
+  if (dec >= 13.5 && dec < 22.5) {
+    const activeIdx = steps.findIndex(s => dec >= s.start && dec < s.end);
+    if (activeIdx !== -1) statusTxt = `Đang trong khung giờ Chặng ${activeIdx + 1}: ${steps[activeIdx].place}`;
+  } else if (dec >= 22.5) {
+    statusTxt = "🌙 Đã khuya – Hoàn tất hành trình về lại Dịch Vọng!";
+  }
+  document.getElementById('live-status').textContent = statusTxt;
+}
+
+function switchMode(mode) {
+  state.m = mode;
+  state.c = DB[mode].map(s => s.cost);
   render();
 }
 
 function render() {
-  ['normal', 'rain', 'crowded'].forEach(m => {
-    document.getElementById('mode-' + m).classList.toggle('active', state.mode === m);
+  ['normal', 'rain', 'crowded'].forEach(k => {
+    document.getElementById('m-' + k).classList.toggle('active', state.m === k);
   });
 
-  // Update Map
-  const path = document.getElementById('map-path');
-  const c2 = document.getElementById('map-c2');
-  const t2 = document.getElementById('map-t2');
-  if (state.mode === 'rain') {
-    path.setAttribute('d', 'M 200 115 L 190 145 L 105 50 L 200 115');
-    c2.setAttribute('opacity', '0.2');
-    t2.textContent = '(Bỏ qua CV do mưa)';
+  const nowDec = new Date().getHours() + new Date().getMinutes() / 60;
+  const list = DB[state.m];
+  const container = document.getElementById('timeline-list');
+
+  container.innerHTML = list.map((s, i) => {
+    const isNow = nowDec >= s.start && nowDec < s.end;
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.map)}`;
+    return `
+      <div class="step-card ${state.d[i] ? 'done' : ''} ${isNow ? 'active-now' : ''}">
+        <div class="step-header">
+          <span class="badge-time">${s.time} ${isNow ? '• ĐANG DIỄN RA' : ''}</span>
+          <button class="done-btn ${state.d[i] ? 'checked' : ''}" onclick="toggleStep(${i})">
+            ${state.d[i] ? '✓ Đã xong' : 'Đánh dấu xong'}
+          </button>
+        </div>
+        <div class="step-title">${s.place}</div>
+        <div class="step-desc">${s.desc}</div>
+        <div class="step-actions">
+          <div class="input-group">
+            <input type="number" class="money-input" step="5000" value="${state.c[i]}" oninput="changeCost(${i}, this.value)">
+            <select class="payer-select" onchange="changePayer(${i}, this.value)">
+              <option value="S" ${state.p[i] === 'S' ? 'selected' : ''}>🤝 Quỹ chung</option>
+              <option value="A" ${state.p[i] === 'A' ? 'selected' : ''}>💳 ${state.na} trả</option>
+              <option value="B" ${state.p[i] === 'B' ? 'selected' : ''}>💳 ${state.nb} trả</option>
+            </select>
+          </div>
+          <a href="${mapUrl}" target="_blank" class="map-link">📍 Chỉ đường Maps</a>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  calcTotals();
+}
+
+function toggleStep(i) { state.d[i] = state.d[i] ? 0 : 1; render(); }
+function changeCost(i, val) { state.c[i] = Number(val) || 0; calcTotals(); }
+function changePayer(i, val) { state.p[i] = val; calcTotals(); }
+
+function syncInput() {
+  state.na = document.getElementById('nameA').value || 'Bạn A';
+  state.nb = document.getElementById('nameB').value || 'Bạn B';
+  state.en = document.getElementById('ext-name').value;
+  state.ec = Number(document.getElementById('ext-cost').value) || 0;
+  state.pl = document.getElementById('park-loc').value;
+  state.pc = document.getElementById('park-col').value;
+  state.nt = document.getElementById('shared-note').value;
+  calcTotals();
+}
+
+function calcTotals() {
+  const stepSum = state.c.reduce((a, b) => a + b, 0);
+  const total = stepSum + state.ec;
+  const budget = 550000;
+  const diff = budget - total;
+
+  document.getElementById('ui-total').textContent = total.toLocaleString('vi-VN') + 'đ';
+  document.getElementById('ui-per').textContent = Math.round(total / 2).toLocaleString('vi-VN') + 'đ';
+  
+  const diffEl = document.getElementById('ui-diff');
+  diffEl.textContent = (diff >= 0 ? 'Dư ' : 'Vượt ') + Math.abs(diff).toLocaleString('vi-VN') + 'đ';
+  diffEl.style.color = diff >= 0 ? 'var(--emerald)' : 'var(--rose)';
+
+  const pct = Math.min(100, Math.round((total / budget) * 100));
+  const bar = document.getElementById('budget-bar');
+  bar.style.width = pct + '%';
+  bar.style.background = total > budget ? 'var(--rose)' : 'linear-gradient(90deg, var(--emerald), var(--accent))';
+
+  const doneCount = state.d.filter(Boolean).length;
+  document.getElementById('ui-prog').textContent = `${doneCount} / 4 chặng`;
+
+  // Split Bill Logic
+  let paidA = 0, paidB = 0;
+  state.c.forEach((cost, idx) => {
+    if (state.p[idx] === 'A') paidA += cost;
+    if (state.p[idx] === 'B') paidB += cost;
+  });
+  const splitEl = document.getElementById('split-result');
+  if (paidA === 0 && paidB === 0) {
+    splitEl.textContent = `Mỗi người góp ${Math.round(total / 2).toLocaleString('vi-VN')}đ vào quỹ chung.`;
   } else {
-    path.setAttribute('d', 'M 200 115 L 190 145 L 175 190 L 105 50 L 200 115');
-    c2.setAttribute('opacity', '1');
-    t2.textContent = '2. CV Cầu Giấy';
+    const net = (paidA - paidB) / 2;
+    if (net > 0) {
+      splitEl.innerHTML = `💸 <b>${state.nb}</b> chuyển trả <b>${state.na}</b>: <b>${Math.round(net).toLocaleString('vi-VN')}đ</b>`;
+    } else if (net < 0) {
+      splitEl.innerHTML = `💸 <b>${state.na}</b> chuyển trả <b>${state.nb}</b>: <b>${Math.round(Math.abs(net)).toLocaleString('vi-VN')}đ</b>`;
+    } else {
+      splitEl.textContent = `🎉 Hai bạn đã chi trả cân bằng nhau!`;
+    }
   }
-
-  const list = scenarios[state.mode];
-  const container = document.getElementById('steps-container');
-  container.innerHTML = list.map((s, i) => `
-    <div class="step ${state.done[i] ? 'done' : ''}">
-      <div class="step-top">
-        <span class="step-time">${s.time}</span>
-        <label class="chk-label">
-          <input type="checkbox" ${state.done[i] ? 'checked' : ''} onchange="toggleDone(${i}, this.checked)"> Đã xong
-        </label>
-      </div>
-      <div class="step-place">${s.place}</div>
-      <div class="step-desc">${s.desc}</div>
-      <div class="step-inputs">
-        <span style="font-size:0.8rem; color:#94a3b8">Thực chi (VNĐ):</span>
-        <input type="number" class="cost-input" step="5000" value="${state.costs[i]}" oninput="updateCost(${i}, this.value)">
-      </div>
-    </div>
-  `).join('');
-
-  updateKPIs();
 }
 
-function toggleDone(i, val) { state.done[i] = val; render(); }
-function updateCost(i, val) { state.costs[i] = Number(val) || 0; updateKPIs(); }
-function saveLocal() { state.note = document.getElementById('shared-note').value; }
-
-function updateKPIs() {
-  const total = state.costs.reduce((a, b) => a + b, 0);
-  const diff = 550000 - total;
-  const doneCount = state.done.filter(Boolean).length;
-  document.getElementById('total-cost').textContent = total.toLocaleString('vi-VN') + 'đ';
-  document.getElementById('per-person').textContent = '~' + Math.round(total / 2).toLocaleString('vi-VN') + 'đ / người';
-  const leftEl = document.getElementById('budget-left');
-  leftEl.textContent = (diff >= 0 ? 'Dư ' : 'Lố ') + Math.abs(diff).toLocaleString('vi-VN') + 'đ';
-  leftEl.style.color = diff >= 0 ? '#34d399' : '#f43f5e';
-  document.getElementById('progress-txt').textContent = `${doneCount}/4 chặng`;
+function setGachaCat(cat) {
+  gachaCat = cat;
+  ['food', 'drink', 'fun'].forEach(c => {
+    document.getElementById('gt-' + c).classList.toggle('active', c === cat);
+  });
+  document.getElementById('gacha-output').textContent = "Bấm quay để vũ trụ chọn giúp!";
 }
 
-function shareState() {
-  state.note = document.getElementById('shared-note').value;
-  const params = new URLSearchParams();
-  params.set('m', state.mode);
-  params.set('c', state.costs.join(','));
-  params.set('d', state.done.map(x => x ? '1' : '0').join(','));
-  if (state.note) params.set('n', encodeURIComponent(state.note));
-  const newUrl = window.location.origin + window.location.pathname + '?' + params.toString();
-  window.history.replaceState({}, '', newUrl);
-  navigator.clipboard.writeText(newUrl);
+function spinGacha() {
+  const items = GACHA[gachaCat];
+  const out = document.getElementById('gacha-output');
+  let count = 0;
+  const timer = setInterval(() => {
+    out.textContent = items[count % items.length];
+    count++;
+    if (count > 10) {
+      clearInterval(timer);
+      const pick = items[Math.floor(Math.random() * items.length)];
+      out.innerHTML = `🎯 Chốt: <span style="color:var(--accent)">${pick}</span>`;
+    }
+  }, 70);
+}
+
+function copyLiveLink() {
+  syncInput();
+  const q = new URLSearchParams();
+  q.set('m', state.m);
+  q.set('c', state.c.join(','));
+  q.set('d', state.d.join(','));
+  q.set('p', state.p.join(','));
+  q.set('na', state.na);
+  q.set('nb', state.nb);
+  if (state.en) q.set('en', state.en);
+  if (state.ec) q.set('ec', state.ec);
+  if (state.pl) q.set('pl', state.pl);
+  if (state.pc) q.set('pc', state.pc);
+  if (state.nt) q.set('nt', state.nt);
+
+  const url = window.location.origin + window.location.pathname + '?' + q.toString();
+  window.history.replaceState({}, '', url);
+  navigator.clipboard.writeText(url);
+
   const t = document.getElementById('toast');
   t.style.display = 'block';
   setTimeout(() => t.style.display = 'none', 3000);
 }
 
-loadFromURL();
+function resetPlan() {
+  window.location.href = window.location.pathname;
+}
+
+init();
 </script>
 </body>
 </html>
