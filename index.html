@@ -3,32 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>DateOS • Lịch Trình Đi Chơi Cầu Giấy</title>
+  <title>BroOS v4.0 • Kèo 3 Tăng Cầu Giấy</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fffaf5;
-      --card: rgba(255, 255, 255, 0.92);
-      --border: rgba(226, 232, 240, 0.9);
+      --bg: #f4f7fb;
+      --card: rgba(255, 255, 255, 0.96);
+      --border: #e2e8f0;
       --text: #0f172a;
       --muted: #64748b;
-      --coral: #ff5a5f;
-      --orange: #ff8a00;
-      --sky: #0ea5e9;
-      --indigo: #6366f1;
+      --blue: #0284c7;
+      --indigo: #4f46e5;
       --emerald: #10b981;
-      --violet: #8b5cf6;
-      --rose: #f43f5e;
-      --shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.07);
+      --amber: #f59e0b;
+      --orange: #ea580c;
+      --red: #ef4444;
+      --shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.07);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
     body {
       background-color: var(--bg);
       background-image: 
-        radial-gradient(at 0% 0%, rgba(255, 138, 0, 0.14) 0px, transparent 50%),
-        radial-gradient(at 100% 10%, rgba(14, 165, 233, 0.14) 0px, transparent 50%),
-        radial-gradient(at 100% 90%, rgba(244, 63, 94, 0.12) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.14) 0px, transparent 50%),
+        radial-gradient(at 100% 10%, rgba(16, 185, 129, 0.14) 0px, transparent 50%),
+        radial-gradient(at 100% 90%, rgba(234, 88, 12, 0.12) 0px, transparent 50%);
       background-attachment: fixed;
       color: var(--text);
       min-height: 100vh;
@@ -36,65 +34,63 @@
     }
     .app { max-width: 980px; margin: 0 auto; }
 
-    /* Top Live Pill Banner */
+    /* Top Live Banner */
     .live-banner {
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
-      background: linear-gradient(90deg, #ffffff, #f0f9ff);
-      border: 1px solid #bae6fd;
+      background: #ffffff; border: 1.5px solid #bae6fd;
       padding: 10px 16px; border-radius: 99px; margin-bottom: 16px;
-      box-shadow: 0 4px 15px rgba(14, 165, 233, 0.08);
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.08);
     }
     .live-left { display: flex; align-items: center; gap: 8px; }
     .dot-live { width: 10px; height: 10px; background: var(--emerald); border-radius: 50%; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2); animation: pulse 1.8s infinite; }
     @keyframes pulse { 50% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.1); } }
-    .clock-txt { font-weight: 800; font-size: 0.9rem; color: var(--sky); background: #e0f2fe; padding: 3px 10px; border-radius: 99px; }
-    .now-status { font-size: 0.82rem; font-weight: 600; color: #334155; }
-    .loc-pill { font-size: 0.75rem; font-weight: 700; color: var(--coral); background: #fff1f2; padding: 4px 10px; border-radius: 99px; border: 1px solid #ffe4e6; }
+    .clock-txt { font-weight: 800; font-size: 0.9rem; color: var(--blue); background: #e0f2fe; padding: 3px 10px; border-radius: 99px; }
+    .now-status { font-size: 0.82rem; font-weight: 700; color: #1e293b; }
+    .loc-pill { font-size: 0.75rem; font-weight: 800; color: var(--indigo); background: #eef2ff; padding: 4px 12px; border-radius: 99px; border: 1px solid #c7d2fe; }
 
     /* Hero Card */
     .hero {
-      background: var(--card); border: 1px solid #fff;
-      border-radius: 26px; padding: 20px; margin-bottom: 16px;
-      box-shadow: var(--shadow); backdrop-filter: blur(16px);
+      background: var(--card); border: 1px solid #ffffff;
+      border-radius: 24px; padding: 20px; margin-bottom: 16px;
+      box-shadow: var(--shadow);
     }
     .hero-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
     .brand {
       font-size: 1.45rem; font-weight: 800;
-      background: linear-gradient(135deg, #ff5a5f, #ff8a00, #6366f1);
+      background: linear-gradient(135deg, #0284c7, #4f46e5, #ea580c);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .sub-brand { font-size: 0.82rem; color: var(--muted); font-weight: 500; margin-top: 2px; }
+    .sub-brand { font-size: 0.82rem; color: var(--muted); font-weight: 600; margin-top: 2px; }
     .db-badge {
       font-size: 0.75rem; font-weight: 800; color: #047857;
-      background: #d1fae5; border: 1px solid #a7f3d0; padding: 6px 12px; border-radius: 99px;
+      background: #d1fae5; border: 1px solid #6ee7b7; padding: 6px 12px; border-radius: 99px;
     }
 
-    /* Visual Stepper */
+    /* 3-Stage Route Stepper */
     .route-stepper {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-      background: #f8fafc; padding: 10px; border-radius: 18px; border: 1px solid #e2e8f0; margin-bottom: 14px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+      background: #f8fafc; padding: 10px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 14px;
     }
     .r-node {
-      display: flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 12px;
-      background: #fff; border: 1px solid #e2e8f0; font-size: 0.74rem; font-weight: 700; color: var(--muted); transition: 0.25s;
+      display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 10px; border-radius: 12px;
+      background: #fff; border: 1px solid #e2e8f0; font-size: 0.78rem; font-weight: 800; color: var(--muted); transition: 0.25s;
     }
-    .r-node.done { background: #ecfdf5; border-color: #6ee7b7; color: #047857; }
-    .r-num { width: 20px; height: 20px; border-radius: 50%; background: #f1f5f9; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; }
+    .r-node.done { background: #ecfdf5; border-color: #34d399; color: #047857; }
+    .r-num { width: 22px; height: 22px; border-radius: 50%; background: #e2e8f0; display: inline-flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 800; color: #334155; }
     .r-node.done .r-num { background: var(--emerald); color: #fff; }
-    @media (max-width: 600px) { .r-label { display: none; } .route-stepper { text-align: center; } .r-node { justify-content: center; } }
+    @media (max-width: 560px) { .r-label { font-size: 0.7rem; } }
 
     /* Presets */
     .preset-bar { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
     .preset-bar::-webkit-scrollbar { display: none; }
     .preset-chip {
-      white-space: nowrap; padding: 9px 14px; border-radius: 14px; border: 1px solid #e2e8f0;
-      background: #ffffff; color: #334155; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: 0.2s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      white-space: nowrap; padding: 9px 14px; border-radius: 12px; border: 1.5px solid #e2e8f0;
+      background: #ffffff; color: #1e293b; font-size: 0.78rem; font-weight: 800; cursor: pointer; transition: 0.2s;
     }
-    .preset-chip:hover { transform: translateY(-1px); border-color: #cbd5e1; }
+    .preset-chip:hover { border-color: var(--blue); }
     .preset-chip.active {
-      background: linear-gradient(135deg, #ff5a5f, #ff8a00); color: #fff; border-color: transparent;
-      box-shadow: 0 6px 16px rgba(255, 90, 95, 0.3);
+      background: linear-gradient(135deg, #0284c7, #4f46e5); color: #fff; border-color: transparent;
+      box-shadow: 0 6px 15px rgba(2, 132, 199, 0.28);
     }
 
     /* Bento KPIs */
@@ -102,13 +98,13 @@
     @media (max-width: 640px) { .bento-kpi { grid-template-columns: 1fr 1fr; } .bento-kpi > div:first-child { grid-column: span 2; } }
     .kpi-card {
       background: var(--card); border: 1px solid #fff;
-      padding: 16px 18px; border-radius: 22px; box-shadow: var(--shadow);
+      padding: 16px 18px; border-radius: 20px; box-shadow: var(--shadow);
     }
     .kpi-lbl { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 800; }
     .kpi-val { font-size: 1.5rem; font-weight: 800; margin: 4px 0 2px; color: var(--text); }
     .kpi-sub { font-size: 0.76rem; color: var(--muted); font-weight: 600; }
-    .progress-bar { height: 8px; background: #f1f5f9; border-radius: 99px; overflow: hidden; margin-top: 8px; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #0ea5e9); width: 0%; transition: 0.4s; border-radius: 99px; }
+    .progress-bar { height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin-top: 8px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #10b981, #0284c7); width: 0%; transition: 0.4s; border-radius: 99px; }
 
     /* Main Grid */
     .main-grid { display: grid; grid-template-columns: 1.3fr 0.85fr; gap: 16px; }
@@ -116,124 +112,121 @@
 
     .section-card {
       background: var(--card); border: 1px solid #fff;
-      border-radius: 24px; padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow);
+      border-radius: 22px; padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow);
     }
     .sec-title { font-size: 0.95rem; font-weight: 800; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; color: #0f172a; }
 
-    /* Color-coded Step Cards */
+    /* Step Cards */
     .step-card {
       background: #ffffff; border: 2px solid #f1f5f9;
-      border-radius: 20px; padding: 15px; margin-bottom: 14px; transition: 0.25s;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.03);
+      border-radius: 18px; padding: 16px; margin-bottom: 14px; transition: 0.25s;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
     }
-    .step-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06); }
-    .step-0 { border-left: 6px solid var(--sky); }
+    .step-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06); }
+    .step-0 { border-left: 6px solid var(--blue); }
     .step-1 { border-left: 6px solid var(--emerald); }
-    .step-2 { border-left: 6px solid var(--coral); }
-    .step-3 { border-left: 6px solid var(--violet); }
+    .step-2 { border-left: 6px solid var(--orange); background: linear-gradient(to bottom right, #ffffff, #fff7ed); }
     
-    .step-card.done { opacity: 0.65; background: #f8fafc; border-color: #cbd5e1; }
+    .step-card.done { opacity: 0.6; background: #f8fafc; border-color: #cbd5e1; }
     .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
     
     .badge-time { font-size: 0.74rem; font-weight: 800; padding: 5px 11px; border-radius: 99px; }
     .step-0 .badge-time { background: #e0f2fe; color: #0369a1; }
     .step-1 .badge-time { background: #d1fae5; color: #047857; }
-    .step-2 .badge-time { background: #ffe4e6; color: #be123c; }
-    .step-3 .badge-time { background: #ede9fe; color: #6d28d9; }
+    .step-2 .badge-time { background: #ffedd5; color: #c2410c; }
 
     .step-btns { display: flex; gap: 6px; }
     .mini-btn {
-      border: 1px solid #e2e8f0; background: #f8fafc; color: #475569;
-      padding: 5px 10px; border-radius: 99px; font-size: 0.72rem; font-weight: 700; cursor: pointer; transition: 0.2s;
+      border: 1px solid #cbd5e1; background: #f8fafc; color: #334155;
+      padding: 5px 10px; border-radius: 99px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: 0.2s;
     }
-    .mini-btn:hover { background: #f1f5f9; }
     .mini-btn.checked { background: var(--emerald); color: #ffffff; border-color: var(--emerald); }
-    .mini-btn.custom-active { background: var(--orange); color: #ffffff; border-color: var(--orange); }
+    .mini-btn.custom-active { background: var(--amber); color: #0f172a; border-color: var(--amber); }
 
     /* Dropdown & Custom Box */
     .venue-select {
       width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1;
-      color: #0f172a; font-size: 0.9rem; font-weight: 700; padding: 10px 12px; border-radius: 14px; margin-bottom: 8px; cursor: pointer; transition: 0.2s;
+      color: #0f172a; font-size: 0.9rem; font-weight: 800; padding: 10px 12px; border-radius: 12px; margin-bottom: 8px; cursor: pointer;
     }
-    .venue-select:focus { outline: none; border-color: var(--indigo); background: #fff; }
-    .venue-select optgroup { background: #f1f5f9; color: var(--indigo); font-weight: 800; }
+    .venue-select:focus { outline: none; border-color: var(--blue); background: #fff; }
+    .venue-select optgroup { background: #e2e8f0; color: #0f172a; font-weight: 800; }
     .venue-select option { background: #ffffff; color: #0f172a; font-weight: 600; }
 
     .custom-venue-box { display: none; gap: 6px; margin-bottom: 8px; }
     .custom-venue-box.show { display: flex; }
-    .custom-inp { flex: 1; background: #fffbeb; border: 1.5px solid var(--orange); color: #0f172a; padding: 9px 12px; border-radius: 12px; font-size: 0.82rem; font-weight: 700; }
+    .custom-inp { flex: 1; background: #fffbeb; border: 1.5px solid var(--amber); color: #0f172a; padding: 9px 12px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; }
 
     .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
-    .v-tag { font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 8px; background: #f1f5f9; color: #475569; }
-    .step-desc { font-size: 0.82rem; color: #475569; line-height: 1.5; margin-bottom: 12px; }
+    .v-tag { font-size: 0.7rem; font-weight: 800; padding: 3px 9px; border-radius: 6px; background: #f1f5f9; color: #334155; }
+    .step-2 .v-tag:first-child { background: #ffedd5; color: #9a3412; }
+    .step-desc { font-size: 0.82rem; color: #475569; line-height: 1.5; margin-bottom: 12px; font-weight: 500; }
     
-    .step-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px dashed #e2e8f0; }
+    .step-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px dashed #cbd5e1; }
     .input-group { display: flex; align-items: center; gap: 6px; }
     .money-input {
-      background: #ecfdf5; border: 1.5px solid #a7f3d0;
+      background: #ecfdf5; border: 1.5px solid #6ee7b7;
       color: #047857; font-weight: 800; font-size: 0.85rem; padding: 6px 10px; border-radius: 10px; width: 110px;
     }
     .payer-select {
-      background: #f8fafc; border: 1.5px solid #e2e8f0;
-      color: #334155; font-size: 0.76rem; font-weight: 700; padding: 6px 8px; border-radius: 10px; cursor: pointer;
+      background: #f8fafc; border: 1.5px solid #cbd5e1;
+      color: #1e293b; font-size: 0.76rem; font-weight: 700; padding: 6px 8px; border-radius: 10px; cursor: pointer;
     }
     .map-link {
-      text-decoration: none; font-size: 0.76rem; font-weight: 800; color: var(--indigo);
-      background: #eef2ff; border: 1px solid #c7d2fe; padding: 6px 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s;
+      text-decoration: none; font-size: 0.76rem; font-weight: 800; color: #fff;
+      background: var(--blue); padding: 6px 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s;
     }
-    .map-link:hover { background: var(--indigo); color: #fff; }
+    .map-link:hover { background: var(--indigo); }
 
     /* Extra Row */
     .extra-row { display: flex; gap: 8px; margin-top: 8px; }
-    .extra-input { flex: 1; background: #f8fafc; border: 1.5px solid #e2e8f0; color: #0f172a; padding: 8px 12px; border-radius: 12px; font-size: 0.82rem; font-weight: 600; }
+    .extra-input { flex: 1; background: #f8fafc; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 8px 12px; border-radius: 10px; font-size: 0.82rem; font-weight: 600; }
 
     /* Right Widgets */
-    .split-box { background: #fffbeb; border-radius: 18px; padding: 14px; border: 1px solid #fde68a; }
+    .split-box { background: #f0fdf4; border-radius: 16px; padding: 14px; border: 1.5px solid #bbf7d0; }
     .split-names { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-    .name-inp { background: #ffffff; border: 1.5px solid #fcd34d; color: #0f172a; padding: 7px 10px; border-radius: 10px; font-size: 0.82rem; font-weight: 800; text-align: center; }
-    .settlement { font-size: 0.84rem; color: #92400e; background: #fef3c7; padding: 10px; border-radius: 12px; font-weight: 700; text-align: center; }
+    .name-inp { background: #ffffff; border: 1.5px solid #86efac; color: #0f172a; padding: 7px 10px; border-radius: 10px; font-size: 0.82rem; font-weight: 800; text-align: center; }
+    .settlement { font-size: 0.84rem; color: #065f46; background: #dcfce7; padding: 10px; border-radius: 10px; font-weight: 800; text-align: center; }
 
     .gacha-box {
       text-align: center;
-      background: linear-gradient(135deg, #fff1f2, #eef2ff);
-      border: 1.5px solid #fecdd3; border-radius: 20px; padding: 16px;
+      background: linear-gradient(135deg, #f0f9ff, #eef2ff);
+      border: 1.5px solid #bae6fd; border-radius: 18px; padding: 16px;
     }
-    .gacha-res { font-size: 0.95rem; font-weight: 800; color: var(--coral); min-height: 32px; margin: 10px 0; display: flex; align-items: center; justify-content: center; }
+    .gacha-res { font-size: 0.95rem; font-weight: 800; color: var(--indigo); min-height: 32px; margin: 10px 0; display: flex; align-items: center; justify-content: center; }
     .gacha-tags { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
-    .g-tag { font-size: 0.72rem; padding: 5px 10px; border-radius: 99px; background: #ffffff; color: #64748b; cursor: pointer; font-weight: 700; border: 1px solid #e2e8f0; }
-    .g-tag.active { color: #fff; background: var(--coral); border-color: var(--coral); }
+    .g-tag { font-size: 0.72rem; padding: 5px 10px; border-radius: 99px; background: #ffffff; color: #475569; cursor: pointer; font-weight: 800; border: 1px solid #cbd5e1; }
+    .g-tag.active { color: #fff; background: var(--blue); border-color: var(--blue); }
     .btn-gacha {
-      background: linear-gradient(135deg, #ff5a5f, #ff8a00); color: #fff; border: none;
-      padding: 10px 14px; border-radius: 14px; font-weight: 800; font-size: 0.82rem; cursor: pointer; width: 100%;
-      box-shadow: 0 6px 15px rgba(255, 90, 95, 0.25); transition: 0.2s;
+      background: linear-gradient(135deg, #0284c7, #4f46e5); color: #fff; border: none;
+      padding: 10px 14px; border-radius: 12px; font-weight: 800; font-size: 0.82rem; cursor: pointer; width: 100%;
+      box-shadow: 0 6px 15px rgba(2, 132, 199, 0.25);
     }
-    .btn-gacha:hover { transform: translateY(-1px); }
 
     .park-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-    .park-inp { background: #f0f9ff; border: 1.5px solid #bae6fd; color: #0369a1; padding: 9px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; }
-    textarea { width: 100%; height: 70px; background: #f8fafc; border: 1.5px solid #e2e8f0; color: #0f172a; border-radius: 12px; padding: 10px; font-size: 0.82rem; font-weight: 500; resize: none; }
+    .park-inp { background: #fffbeb; border: 1.5px solid #fde68a; color: #b45309; padding: 9px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: 800; }
+    textarea { width: 100%; height: 70px; background: #f8fafc; border: 1.5px solid #cbd5e1; color: #0f172a; border-radius: 10px; padding: 10px; font-size: 0.82rem; font-weight: 600; resize: none; }
 
     /* Floating Dock */
     .floating-dock {
       position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
-      border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 99px;
-      display: flex; gap: 8px; align-items: center; box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14); z-index: 99;
+      background: rgba(15, 23, 42, 0.94); backdrop-filter: blur(16px);
+      border: 1px solid #334155; padding: 8px 12px; border-radius: 99px;
+      display: flex; gap: 8px; align-items: center; box-shadow: 0 12px 32px rgba(15, 23, 42, 0.25); z-index: 99;
     }
-    .dock-btn { border: none; padding: 10px 16px; border-radius: 99px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
-    .dock-share { background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
-    .dock-random { background: #eef2ff; color: var(--indigo); border: 1px solid #c7d2fe; }
-    .dock-reset { background: #f1f5f9; color: #475569; }
+    .dock-btn { border: none; padding: 10px 16px; border-radius: 99px; font-weight: 800; font-size: 0.8rem; cursor: pointer; white-space: nowrap; }
+    .dock-share { background: var(--emerald); color: #052e16; }
+    .dock-random { background: #1e293b; color: #38bdf8; border: 1px solid #0284c7; }
+    .dock-reset { background: #334155; color: #f8fafc; }
 
     .toast {
       position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
       background: #0f172a; color: #ffffff; padding: 11px 20px; border-radius: 99px;
-      font-weight: 800; font-size: 0.82rem; display: none; z-index: 100; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+      font-weight: 800; font-size: 0.82rem; display: none; z-index: 100; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
     }
   </style>
 </head>
 <body>
-<div class="toast" id="toast">🎉 Đã sao chép Link đồng bộ! Dán gửi qua Zalo/Mess ngay.</div>
+<div class="toast" id="toast">✅ Đã copy Link! Gửi ngay qua Zalo/Mess cho thằng bạn.</div>
 
 <div class="app">
   <!-- Live Banner -->
@@ -241,75 +234,73 @@
     <div class="live-left">
       <div class="dot-live"></div>
       <span class="clock-txt" id="live-clock">13:30</span>
-      <span class="now-status" id="live-status">Sẵn sàng khám phá 48 điểm hẹn Cầu Giấy!</span>
+      <span class="now-status" id="live-status">Lộ trình 3 Tăng gọn nhẹ – Ăn tối kết hợp ngồi tâm sự!</span>
     </div>
-    <span class="loc-pill">📍 Xuất phát: 27 Ngõ 37 Phố Dịch Vọng</span>
+    <span class="loc-pill">📍 Tập kết: 27 Ngõ 37 Phố Dịch Vọng</span>
   </div>
 
-  <!-- Hero & Visual Stepper -->
+  <!-- Hero & 3-Stage Stepper -->
   <div class="hero">
     <div class="hero-top">
       <div>
-        <div class="brand">☀️ DateOS • Hành Trình Cầu Giấy</div>
-        <div class="sub-brand">48 quán chọn lọc theo từng khung giờ • Tự động chia tiền & mở Maps</div>
+        <div class="brand">⚡ BroOS v4.0 • Kèo 3 Tăng Cầu Giấy</div>
+        <div class="sub-brand">Chiều chơi game/bi-a ➔ Chiều muộn dạo mát ➔ Tối vừa ăn vừa đàm đạo tới khuya</div>
       </div>
-      <span class="db-badge">✨ 48 Quán + Tự Nhập</span>
+      <span class="db-badge">🔥 36 Quán Chọn Lọc</span>
     </div>
 
-    <!-- Thanh trạng thái 4 chặng trực quan -->
-    <div class="route-stepper" id="stepper-bar">
-      <div class="r-node" id="st-0"><span class="r-num">1</span><span class="r-label">Đầu chiều</span></div>
-      <div class="r-node" id="st-1"><span class="r-num">2</span><span class="r-label">Hoàng hôn</span></div>
-      <div class="r-node" id="st-2"><span class="r-num">3</span><span class="r-label">Bữa tối</span></div>
-      <div class="r-node" id="st-3"><span class="r-num">4</span><span class="r-label">Đêm chill</span></div>
+    <div class="route-stepper">
+      <div class="r-node" id="st-0"><span class="r-num">1</span><span class="r-label">13h30: Cày Game / Bi-a</span></div>
+      <div class="r-node" id="st-1"><span class="r-num">2</span><span class="r-label">16h30: Giải ngố chiều</span></div>
+      <div class="r-node" id="st-2"><span class="r-num">3</span><span class="r-label">18h00 – 22h30: Ăn & Chém gió</span></div>
     </div>
 
     <div class="preset-bar">
-      <button class="preset-chip active" onclick="applyPreset([0,0,0,0], this)">🏆 Vòng Cung Chuẩn (Ít đi lại)</button>
-      <button class="preset-chip" onclick="applyPreset([2,1,4,4], this)">🥩 Team Mê Thịt Nướng</button>
-      <button class="preset-chip" onclick="applyPreset([8,0,2,7], this)">🎮 Cày Game PS5 & Lẩu Bò</button>
-      <button class="preset-chip" onclick="applyPreset([0,8,0,0], this)">🌧️ 100% Trong Nhà (Tránh nắng/mưa)</button>
-      <button class="preset-chip" onclick="applyPreset([3,5,11,4], this)">💸 Siêu Tiết Kiệm (~250k/2 người)</button>
+      <button class="preset-chip active" onclick="applyPreset([0,0,0], this)">🎱 Kèo Chuẩn: Bi-a + Hóng Gió + Nướng Chảo Gang</button>
+      <button class="preset-chip" onclick="applyPreset([1,3,4], this)">🎮 Kèo Game: PS5/PES + Timezone + Buffet Lẩu Bò</button>
+      <button class="preset-chip" onclick="applyPreset([5,0,7], this)">🍲 Kèo Lai Rai: Cafe Game + Công Viên + Lẩu Bò Tự Do</button>
+      <button class="preset-chip" onclick="applyPreset([3,4,1], this)">🔥 Kèo Xôm: Cyber Net + Bowling + Nhất Nướng Than Hoa</button>
+      <button class="preset-chip" onclick="applyPreset([6,2,9], this)">💸 Kèo Tiết Kiệm: Cộng Cafe + Ga Chùa Hà + Lẩu Ếch (~350k)</button>
     </div>
   </div>
 
   <!-- Bento KPIs -->
   <div class="bento-kpi">
     <div class="kpi-card">
-      <div class="kpi-lbl">💰 Tổng chi tiêu / Ngân sách 550k</div>
+      <div class="kpi-lbl">💰 Tổng thiệt hại / Hạn mức 500k</div>
       <div style="display:flex; justify-content:space-between; align-items:baseline;">
-        <div class="kpi-val" id="ui-total">541.000đ</div>
-        <div class="kpi-sub" id="ui-diff" style="font-weight:800; color:var(--emerald)">Dư 9.000đ</div>
+        <div class="kpi-val" id="ui-total">465.000đ</div>
+        <div class="kpi-sub" id="ui-diff" style="font-weight:800; color:var(--emerald)">Dư 35.000đ</div>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="budget-bar"></div></div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-lbl">👥 Chia đôi / Mỗi người</div>
-      <div class="kpi-val" id="ui-per" style="color:var(--coral)">270.500đ</div>
-      <div class="kpi-sub">Trọn gói từ 13h30 – 22h30</div>
+      <div class="kpi-lbl">🤝 Campuchia / Mỗi ông</div>
+      <div class="kpi-val" id="ui-per" style="color:var(--blue)">232.500đ</div>
+      <div class="kpi-sub">Đã gộp ăn tối & nước ngồi khuya</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-lbl">🎯 Tiến độ trải nghiệm</div>
-      <div class="kpi-val" id="ui-prog" style="color:var(--indigo)">0 / 4</div>
-      <div class="kpi-sub">Chạm nút "Xong" ở mỗi chặng</div>
+      <div class="kpi-lbl">✅ Tiến độ kèo</div>
+      <div class="kpi-val" id="ui-prog" style="color:var(--indigo)">0 / 3 tăng</div>
+      <div class="kpi-sub">Chỉ gửi xe tối đa 2 lần</div>
     </div>
   </div>
 
   <div class="main-grid">
-    <!-- Cột Trái: 4 Chặng -->
+    <!-- Cột Trái: 3 Tăng -->
     <div>
       <div class="section-card">
         <div class="sec-title">
-          <span>🗺️ Lịch trình & Kho 48 quán Cầu Giấy</span>
-          <span style="font-size:0.74rem; color:var(--coral); font-weight:700;">Bấm vào tên quán để đổi</span>
+          <span>🗺️ Lịch trình 3 Tăng (Tăng 3 ngồi dài tới 22h30)</span>
+          <span style="font-size:0.74rem; color:var(--blue); font-weight:800;">Bấm vào khung để đổi quán</span>
         </div>
         <div id="timeline-list"></div>
 
         <!-- Chi phí phát sinh -->
-        <div style="margin-top:14px; padding-top:14px; border-top:1.5px dashed #e2e8f0;">
-          <div style="font-size:0.78rem; font-weight:800; color:var(--muted); margin-bottom:6px;">➕ Khoản chi phụ phát sinh (Kem, nước suối, gửi xe lẻ...)</div>
+        <div style="margin-top:14px; padding-top:14px; border-top:1.5px dashed #cbd5e1;">
+          <div style="font-size:0.78rem; font-weight:800; color:var(--muted); margin-bottom:6px;">➕ Phát sinh thêm (Gọi thêm bia/nước ngọt tại bàn ăn, gửi xe...)</div>
           <div class="extra-row">
-            <input type="text" id="ext-name" class="extra-input" placeholder="Tên khoản chi (VD: 2 cây kem ốc quế)" oninput="syncInput()">
+            <input type="text" id="ext-name" class="extra-input" placeholder="Khoản chi phụ (VD: Thêm 2 chai bia / nước ngọt)" oninput="syncInput()">
             <input type="number" id="ext-cost" class="money-input" step="5000" value="0" oninput="syncInput()">
           </div>
         </div>
@@ -321,13 +312,13 @@
       <!-- Chia tiền -->
       <div class="section-card">
         <div class="sec-title">
-          <span>⚖️ Quyết toán & Chia tiền tự động</span>
-          <span style="font-size:0.72rem; color:var(--orange); font-weight:800;">50 / 50</span>
+          <span>⚖️ Máy tính Campuchia (50/50)</span>
+          <span style="font-size:0.72rem; color:var(--emerald); font-weight:800;">Tự động trừ nợ</span>
         </div>
         <div class="split-box">
           <div class="split-names">
-            <input type="text" id="nameA" class="name-inp" value="Bạn A" oninput="syncInput()">
-            <input type="text" id="nameB" class="name-inp" value="Bạn B" oninput="syncInput()">
+            <input type="text" id="nameA" class="name-inp" value="Ông A" oninput="syncInput()">
+            <input type="text" id="nameB" class="name-inp" value="Ông B" oninput="syncInput()">
           </div>
           <div class="settlement" id="split-result">Đang tính toán...</div>
         </div>
@@ -335,124 +326,114 @@
 
       <!-- Vòng quay Gacha -->
       <div class="section-card">
-        <div class="sec-title"><span>🎰 Vòng quay "Chốt Đơn" ngẫu nhiên</span></div>
+        <div class="sec-title"><span>🎰 Vòng quay "Chốt Kèo" (Khỏi nghĩ nhiều)</span></div>
         <div class="gacha-box">
           <div class="gacha-tags">
-            <span class="g-tag active" id="gt-0" onclick="setGachaStep(0)">Chặng 1 (Chiều)</span>
-            <span class="g-tag" id="gt-1" onclick="setGachaStep(1)">Chặng 2 (Dạo)</span>
-            <span class="g-tag" id="gt-2" onclick="setGachaStep(2)">Chặng 3 (Ăn tối)</span>
-            <span class="g-tag" id="gt-3" onclick="setGachaStep(3)">Chặng 4 (Đêm)</span>
+            <span class="g-tag active" id="gt-0" onclick="setGachaStep(0)">Tăng 1 (Đầu chiều)</span>
+            <span class="g-tag" id="gt-1" onclick="setGachaStep(1)">Tăng 2 (Chiều muộn)</span>
+            <span class="g-tag" id="gt-2" onclick="setGachaStep(2)">Tăng 3 (Ăn & Ngồi lâu)</span>
           </div>
-          <div class="gacha-res" id="gacha-output">Phân vân quá thì để vũ trụ chọn giúp!</div>
-          <button class="btn-gacha" onclick="spinGacha()">🎲 Quay & Áp Dụng Luôn Vào Chặng</button>
+          <div class="gacha-res" id="gacha-output">Chưa biết đi đâu thì bấm quay chốt luôn!</div>
+          <button class="btn-gacha" onclick="spinGacha()">🎲 Quay & Áp Dụng Luôn Vào Lịch Trình</button>
         </div>
       </div>
 
       <!-- Thẻ nhớ đỗ xe -->
       <div class="section-card">
-        <div class="sec-title"><span>🅿️ Thẻ nhớ vị trí đỗ xe & Ghi chú</span></div>
+        <div class="sec-title"><span>🅿️ Nhớ chỗ để xe & Ghi chú nhanh</span></div>
         <div class="park-grid">
-          <input type="text" id="park-loc" class="park-inp" placeholder="📍 Hầm / Bãi đỗ xe..." oninput="syncInput()">
+          <input type="text" id="park-loc" class="park-inp" placeholder="📍 Hầm / Bãi xe nào..." oninput="syncInput()">
           <input type="text" id="park-col" class="park-inp" placeholder="🔢 Cột số / Vé xe..." oninput="syncInput()">
         </div>
-        <textarea id="shared-note" placeholder="Ghi chú chung: Mã giảm giá, phòng chiếu số mấy, đồ mang theo..." oninput="syncInput()"></textarea>
+        <textarea id="shared-note" placeholder="Ghi chú: Số bàn đặt trước, pass wifi, kèo độ bi-a ai thua trả tiền nước..." oninput="syncInput()"></textarea>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Thanh Dock nổi dưới đáy -->
+<!-- Thanh Dock dưới đáy -->
 <div class="floating-dock">
-  <button class="dock-btn dock-share" onclick="copyLiveLink()">🔗 Copy Link Đồng Bộ</button>
-  <button class="dock-btn dock-random" onclick="randomizeAll()">🎲 Phối Ngẫu Nhiên</button>
+  <button class="dock-btn dock-share" onclick="copyLiveLink()">🔗 Copy Link Gửi Bạn</button>
+  <button class="dock-btn dock-random" onclick="randomizeAll()">🎲 Random 3 Tăng</button>
   <button class="dock-btn dock-reset" onclick="resetPlan()">🔄 Reset</button>
 </div>
 
 <script>
+// KHO DỮ LIỆU 36 ĐỊA ĐIỂM CHO 3 TĂNG (TĂNG 3 TỐI ƯU CHO VIỆC NGỒI LÂU TRÒ CHUYỆN)
 const MEGA_DB = [
-  // CHẶNG 1: ĐẦU CHIỀU (13h30 - 16h30)
+  // ================= TĂNG 1: ĐẦU CHIỀU TRÁNH NẮNG (13h30 - 16h30) =================
   [
-    { group: "🎬 Cafe Phim & Phòng Riêng Tư", name: "T-Box Café Dịch Vọng (Ngõ 37)", desc: "Đi bộ 50m từ 27 Ngõ 37 Dịch Vọng. Phòng chiếu riêng có sofa, điều hòa mát lạnh tránh nắng.", cost: 140000, tag: "📍 Cách 50m • ❄️ Phòng riêng", map: "T-Box Cafe Ngõ 37 Dịch Vọng Cầu Giấy" },
-    { group: "🎬 Cafe Phim & Phòng Riêng Tư", name: "Cafe Phim 3D Box (Trần Quốc Hoàn)", desc: "Phòng xem phim mini ấm cúng cho 2 người, tự chọn phim bom tấn hoặc lãng mạn.", cost: 130000, tag: "📍 Cách 1,2km • ❄️ Trong nhà", map: "Cafe Phim Trần Quốc Hoàn Cầu Giấy" },
-    { group: "☕ Cafe Đẹp, Yên Tĩnh & Trò Chuyện", name: "JIDAI by Cerenote Coffee (Ngõ 165 Cầu Giấy)", desc: "Không gian rộng, thiết kế tối giản kiểu Nhật rất ăn ảnh, đi bộ vài phút từ Dịch Vọng.", cost: 95000, tag: "📍 Cách 300m • 📸 Ăn ảnh", map: "JIDAI Cerenote Coffee Ngõ 165 Cầu Giấy" },
-    { group: "☕ Cafe Đẹp, Yên Tĩnh & Trò Chuyện", name: "Tiny Post Cafe (Số 8 Ngõ 165 Cầu Giấy)", desc: "Quán xinh xắn có góc viết bưu thiếp, yên tĩnh, đồ uống vừa túi tiền sinh viên.", cost: 80000, tag: "📍 Cách 300m • ❄️ Trong nhà", map: "Tiny Post Cafe Ngõ 165 Cầu Giấy" },
-    { group: "☕ Cafe Đẹp, Yên Tĩnh & Trò Chuyện", name: "Tâm Hoa Trà Quán (Ngách 37/2 Dịch Vọng)", desc: "Nằm ngay sát điểm xuất phát. Không gian trà đạo tĩnh lặng, tách biệt tiếng ồn.", cost: 90000, tag: "📍 Cách 80m • 🍵 Tĩnh lặng", map: "Ngách 37/2 Dịch Vọng Cầu Giấy" },
-    { group: "☕ Cafe Đẹp, Yên Tĩnh & Trò Chuyện", name: "Valhalla Coffee (40 Khúc Thừa Dụ)", desc: "Không gian thoáng, ghế ngồi êm, rất hợp ngồi nghỉ ngơi tán gẫu suốt buổi chiều.", cost: 90000, tag: "📍 Cách 500m • ❄️ Trong nhà", map: "40 Khúc Thừa Dụ Cầu Giấy" },
-    { group: "☕ Cafe Đẹp, Yên Tĩnh & Trò Chuyện", name: "Timeline Coffee (Ngõ 79 Cầu Giấy)", desc: "Quán nhiều tầng với nhiều góc decor chụp ảnh đẹp, đồ uống đa dạng.", cost: 95000, tag: "📍 Cách 700m • 📸 Nhiều góc chụp", map: "Timeline Coffee Ngõ 79 Cầu Giấy" },
-    { group: "☕ Cafe Đẹp, Yên Tĩnh & Trò Chuyện", name: "Lân La Coffee (Ngõ 181 Xuân Thủy)", desc: "Quán cafe nấp trong ngõ yên bình, nhạc nhẹ nhàng và trà trái cây mát lạnh.", cost: 85000, tag: "📍 Cách 1km • 🌿 Yên tĩnh", map: "Lân La Coffee Ngõ 181 Xuân Thủy" },
-    { group: "🎮 Game, Bi-a, Rạp Phim & Tương Tác", name: "Nox Joy Station - PS5 & Switch (Nguyễn Khang)", desc: "Chơi game đôi It Takes Two, Overcooked, Mario Kart trên màn hình lớn cực vui.", cost: 120000, tag: "📍 Cách 1,2km • 🎮 Tương tác cao", map: "Ngõ 251 Nguyễn Khang Cầu Giấy" },
-    { group: "🎮 Game, Bi-a, Rạp Phim & Tương Tác", name: "Fun Board Game & Drink (Nguyễn Văn Huyên)", desc: "Hàng trăm bộ boardgame cho 2 người vừa uống nước vừa đấu trí cười thả ga.", cost: 100000, tag: "📍 Cách 900m • 🎲 Đấu trí", map: "Ngõ 158 Nguyễn Văn Huyên Cầu Giấy" },
-    { group: "🎮 Game, Bi-a, Rạp Phim & Tương Tác", name: "CLB Bi-a KF Pool / Bida Dịch Vọng", desc: "Giao lưu vài ván bi-a trong phòng điều hòa mát rượi ngay gần ngõ 37.", cost: 110000, tag: "📍 Cách 250m • 🎱 Năng động", map: "Ngõ 165 Cầu Giấy" },
-    { group: "🎮 Game, Bi-a, Rạp Phim & Tương Tác", name: "CGV Indochina Plaza Xuân Thủy (Vé U22)", desc: "Xem phim rạp màn ảnh rộng với giá vé ưu đãi học sinh/sinh viên U22.", cost: 140000, tag: "📍 Cách 1km • 🍿 Rạp lớn", map: "CGV Indochina Plaza 241 Xuân Thủy" }
+    { group: "🎱 Bi-a, PS5 / PES & Cyber Game Máy Lạnh", name: "CLB Bi-a KF Pool / Bida Phố Dịch Vọng", desc: "Ngay gần 27 Ngõ 37 Dịch Vọng. Làm vài cơ bi-a lỗ trong phòng điều hòa mát rượi tránh nắng.", cost: 110000, tag: "📍 Cách 250m • 🎱 Bi-a máy lạnh", map: "KF Pool Arena Ngõ 165 Cầu Giấy" },
+    { group: "🎱 Bi-a, PS5 / PES & Cyber Game Máy Lạnh", name: "Đá PES / FC Online / PS5 (Dịch Vọng / Nguyễn Khang)", desc: "Thuê máy PS5 màn hình lớn đá vài trận PES hoặc chơi Black Myth: Wukong, It Takes Two.", cost: 100000, tag: "📍 Cách 400m • 🎮 Đá PES / PS5", map: "PS5 Dịch Vọng Cầu Giấy" },
+    { group: "🎱 Bi-a, PS5 / PES & Cyber Game Máy Lạnh", name: "Peri Pool Arena / CLB Bida Trần Quốc Hoàn", desc: "Sàn bi-a tiêu chuẩn thi đấu, bàn phẳng đẹp, điều hòa sâu cho anh em so cơ.", cost: 130000, tag: "📍 Cách 1,1km • 🎱 Bàn chuẩn", map: "Bida Trần Quốc Hoàn Cầu Giấy" },
+    { group: "🎱 Bi-a, PS5 / PES & Cyber Game Máy Lạnh", name: "Cyber Game Spartacus / Vikings (Khu Cầu Giấy)", desc: "Ngồi phòng VIP màn hình 240Hz cày vài trận LOL, Valorant, CS2 cùng nhau + gọi nước tại máy.", cost: 100000, tag: "📍 Cách 600m • 💻 PC cấu hình cao", map: "Spartacus Gaming Cầu Giấy" },
+    { group: "🎱 Bi-a, PS5 / PES & Cyber Game Máy Lạnh", name: "Fun Boardgame & Đấu Trí (Nguyễn Văn Huyên)", desc: "Ngồi phòng lạnh uống trà tắc và đấu các bộ game chiến thuật gay cấn.", cost: 90000, tag: "📍 Cách 900m • 🎲 Chiến thuật", map: "Ngõ 158 Nguyễn Văn Huyên Cầu Giấy" },
+
+    { group: "☕ Cafe Rộng Ngồi Chơi Game Mobile / Chém Gió", name: "JIDAI Cerenote Coffee (Đầu Ngõ 165 Cầu Giấy)", desc: "Đi bộ vài phút từ Ngõ 37 Dịch Vọng. Quán rộng, bàn thoải mái, wifi khỏe để ngồi bắn PUBG / Liên Quân.", cost: 90000, tag: "📍 Cách 300m • 📶 Wifi khỏe", map: "JIDAI Cerenote Coffee Ngõ 165 Cầu Giấy" },
+    { group: "☕ Cafe Rộng Ngồi Chơi Game Mobile / Chém Gió", name: "Cộng Cà Phê (Cầu Giấy / Xuân Thủy)", desc: "Gọi 2 cốc cốt dừa đậu xanh ngồi điều hòa mát rượi, không gian bụi bặm thoải mái nói chuyện.", cost: 100000, tag: "📍 Cách 700m • ☕ Bụi bặm", map: "Cộng Cà Phê Cầu Giấy" },
+    { group: "☕ Cafe Rộng Ngồi Chơi Game Mobile / Chém Gió", name: "Valhalla Coffee (40 Khúc Thừa Dụ)", desc: "Quán rộng rãi ngay gần Dịch Vọng, ghế ngồi êm, ổ cắm đầy đủ để hai anh em cày game điện thoại.", cost: 85000, tag: "📍 Cách 500m • 🔌 Nhiều ổ cắm", map: "40 Khúc Thừa Dụ Cầu Giấy" },
+    { group: "☕ Cafe Rộng Ngồi Chơi Game Mobile / Chém Gió", name: "Highlands Coffee / The Coffee House (Thành Thái)", desc: "Ngay trục phố Thành Thái, không gian thoáng đãng, máy lạnh mát sâu đầu giờ chiều.", cost: 95000, tag: "📍 Cách 400m • ❄️ Mát lạnh", map: "Highlands Coffee Thành Thái Cầu Giấy" },
+
+    { group: "🍿 Xem Phim Bom Tấn Hành Động", name: "CGV Indochina Plaza Xuân Thủy (Vé U22)", desc: "Cày một bộ phim hành động / siêu anh hùng màn ảnh rộng với giá vé U22 sinh viên.", cost: 140000, tag: "📍 Cách 1km • 🍿 Bom tấn", map: "CGV Indochina Plaza 241 Xuân Thủy" },
+    { group: "🍿 Xem Phim Bom Tấn Hành Động", name: "Lotte Cinema / BHD Star Discovery (302 Cầu Giấy)", desc: "Đi bộ hoặc chạy xe 2 phút từ Dịch Vọng ra thẳng 302 Cầu Giấy xem phim cực tiện.", cost: 130000, tag: "📍 Cách 450m • 🎬 Rất gần", map: "302 Cầu Giấy" },
+    { group: "🍿 Xem Phim Bom Tấn Hành Động", name: "T-Box Café Dịch Vọng (Xem bóng đá / Netflix)", desc: "Bao phòng riêng nằm xem lại trận cầu đinh hoặc phim hành động Netflix ngay đầu ngõ 37.", cost: 140000, tag: "📍 Cách 50m • 📺 Màn chiếu lớn", map: "T-Box Cafe Ngõ 37 Dịch Vọng Cầu Giấy" }
   ],
 
-  // CHẶNG 2: CHIỀU MUỘN (16h30 - 18h00)
+  // ================= TĂNG 2: CHIỀU MUỘN GIẢI NGỐ & VẬN ĐỘNG (16h30 - 18h00) =================
   [
-    { group: "🌿 Công Viên & Hồ Đón Gió Hoàng Hôn", name: "Công viên Cầu Giấy (Phố Thành Thái)", desc: "Cách Dịch Vọng 400m. Đi bộ quanh hồ, chụp ảnh đồi cỏ nhân tạo hoàn toàn miễn phí.", cost: 15000, tag: "📍 Cách 400m • 🌤️ Ngoài trời", map: "Công viên Cầu Giấy Phố Thành Thái" },
-    { group: "🌿 Công Viên & Hồ Đón Gió Hoàng Hôn", name: "Công viên Hồ điều hòa Mai Dịch", desc: "Mặt hồ cực rộng và lộng gió, ngắm mặt trời lặn đẹp nhất nhì khu vực Cầu Giấy.", cost: 15000, tag: "📍 Cách 2km • 🌅 Hoàng hôn đẹp", map: "Công viên Hồ điều hòa Mai Dịch" },
-    { group: "🌿 Công Viên & Hồ Đón Gió Hoàng Hôn", name: "Công viên Nghĩa Đô (Nguyễn Văn Huyên)", desc: "Nhiều cây cổ thụ xanh mát, đường dạo bộ quanh hồ yên bình, cổ kính.", cost: 15000, tag: "📍 Cách 800m • 🌳 Xanh mát", map: "Công viên Nghĩa Đô Cầu Giấy" },
-    { group: "🌿 Công Viên & Hồ Đón Gió Hoàng Hôn", name: "Dạo phố cây xanh Vũ Phạm Hàm – Trung Hòa", desc: "Tản bộ dưới hàng cây rợp bóng và ghé mua bánh ngọt / kem mát lạnh.", cost: 30000, tag: "📍 Cách 1,2km • 🚶 Dạo phố", map: "Phố Vũ Phạm Hàm Cầu Giấy" },
-    { group: "🏮 Văn Hóa, Bảo Tàng & Tàu Điện Trên Cao", name: "Bảo tàng Dân tộc học Việt Nam (Nguyễn Văn Huyên)", desc: "Chụp ảnh tại khu vườn nhà Rông, nhà Dài rợp bóng cây (Có giảm giá thẻ sinh viên).", cost: 40000, tag: "📍 Cách 900m • 📸 Cực ăn ảnh", map: "Bảo tàng Dân tộc học Việt Nam" },
-    { group: "🏮 Văn Hóa, Bảo Tàng & Tàu Điện Trên Cao", name: "Vãn cảnh Chùa Hà & Cầu đi bộ Ga Chùa Hà", desc: "Dạo khuôn viên thanh tịnh rồi lên cầu đi bộ ngắm dòng xe lúc phố lên đèn.", cost: 10000, tag: "📍 Cách 350m • 🏮 Thanh tịnh", map: "Chùa Hà Cầu Giấy" },
-    { group: "🏮 Văn Hóa, Bảo Tàng & Tàu Điện Trên Cao", name: "Trải nghiệm Tàu điện trên cao (Ga Chùa Hà)", desc: "Mua vé tàu điện đi thử 1-2 ga ngắm toàn cảnh hoàng hôn thành phố từ trên cao.", cost: 30000, tag: "📍 Cách 350m • 🚆 Trải nghiệm mới", map: "Ga Chùa Hà Cầu Giấy" },
-    { group: "📸 Chụp Photobooth & Dạo TTTM Máy Lạnh", name: "WOW Photo Booth (Tòa N04-B2 Thành Thái)", desc: "Thử phụ kiện bờm tóc, kính mắt vui nhộn và chụp ảnh lấy liền lưu giữ kỷ niệm.", cost: 80000, tag: "📍 Cách 450m • 📸 Chụp ảnh đôi", map: "Tòa N04-B2 Thành Thái Cầu Giấy" },
-    { group: "📸 Chụp Photobooth & Dạo TTTM Máy Lạnh", name: "Dạo sảnh The Loop IPH (241 Xuân Thủy)", desc: "Tận hưởng điều hòa mát rượi, ngắm các gian hàng phụ kiện và chụp ảnh sảnh giếng trời.", cost: 15000, tag: "📍 Cách 1km • ❄️ Trong nhà", map: "Indochina Plaza 241 Xuân Thủy" },
-    { group: "📸 Chụp Photobooth & Dạo TTTM Máy Lạnh", name: "Haru Film / Photo Time (Khu Xuân Thủy)", desc: "Studio chụp ảnh Hàn Quốc lấy ngay với nhiều phông nền màu pastel trẻ trung.", cost: 80000, tag: "📍 Cách 1,1km • 📸 Hàn Quốc", map: "241 Xuân Thủy Cầu Giấy" },
-    { group: "📸 Chụp Photobooth & Dạo TTTM Máy Lạnh", name: "Nhà sách Tiến Thọ (Xuân Thủy)", desc: "Dạo khu sách khổng lồ, văn phòng phẩm dễ thương và khu trò chơi trong nhà.", cost: 30000, tag: "📍 Cách 900m • 📚 Đa năng", map: "Nhà sách Tiến Thọ Xuân Thủy" },
-    { group: "📸 Chụp Photobooth & Dạo TTTM Máy Lạnh", name: "Tổ hợp Discovery Complex (302 Cầu Giấy)", desc: "Đi bộ ngay gần Dịch Vọng, dạo siêu thị và trung tâm thương mại có mái che.", cost: 15000, tag: "📍 Cách 450m • ❄️ Trong nhà", map: "302 Cầu Giấy" }
+    { group: "🌬️ Hóng Gió, Trà Đá Vỉa Hè & Dạo Bộ", name: "Công viên Cầu Giấy & Trà Đá Phố Thành Thái", desc: "Ra công viên đi bộ giãn gân cốt sau Tăng 1 rồi làm 2 cốc trà đá vỉa hè ngắm phố chiều.", cost: 15000, tag: "📍 Cách 400m • 🌬️ Thoáng mát", map: "Công viên Cầu Giấy Phố Thành Thái" },
+    { group: "🌬️ Hóng Gió, Trà Đá Vỉa Hè & Dạo Bộ", name: "Hóng gió Công viên Hồ điều hòa Mai Dịch", desc: "Chạy xe ra mặt hồ rộng mênh mông hóng gió chiều cực mát trước khi đi ăn.", cost: 15000, tag: "📍 Cách 2km • 🌊 Hồ rộng", map: "Công viên Hồ điều hòa Mai Dịch" },
+    { group: "🌬️ Hóng Gió, Trà Đá Vỉa Hè & Dạo Bộ", name: "Ngắm phố từ Cầu đi bộ & Ga Tàu Điện Chùa Hà", desc: "Đi bộ lên nhà ga trên cao ngắm toàn cảnh trục đường Cầu Giấy giờ tan tầm.", cost: 15000, tag: "📍 Cách 350m • 🚆 Góc nhìn đẹp", map: "Ga Chùa Hà Cầu Giấy" },
+    { group: "🌬️ Hóng Gió, Trà Đá Vỉa Hè & Dạo Bộ", name: "Công viên Nghĩa Đô (Nguyễn Văn Huyên)", desc: "Đi bộ một vòng quanh hồ dưới tán cây cổ thụ cho tiêu hao năng lượng để tối ăn cho khỏe.", cost: 15000, tag: "📍 Cách 800m • 🌳 Rợp bóng cây", map: "Công viên Nghĩa Đô Cầu Giấy" },
+
+    { group: "🕹️ Khu Game Arcade, Bowling & Thể Thao", name: "Đua Xe, Bắn Súng & Bóng Rổ tại Timezone IPH", desc: "Mua thẻ xu vào so tài ném bóng rổ, đua xe mô phỏng, đập búa và bắn súng cực cuốn.", cost: 70000, tag: "📍 Cách 1km • 🏀 So tài tay đôi", map: "Timezone Indochina Plaza 241 Xuân Thủy" },
+    { group: "🕹️ Khu Game Arcade, Bowling & Thể Thao", name: "Ném Bowling / Khu Game Discovery (302 Cầu Giấy)", desc: "Làm vài đường Bowling hoặc máy chơi game thùng ngay tại 302 Cầu Giấy.", cost: 90000, tag: "📍 Cách 450m • 🎳 Thể thao", map: "302 Cầu Giấy" },
+    { group: "🕹️ Khu Game Arcade, Bowling & Thể Thao", name: "CLB Bắn Cung / Bóng Bàn khu Cầu Giấy", desc: "Trải nghiệm bắn cung thể thao hoặc thuê bàn bóng bàn giao lưu toát mồ hôi trước bữa tối.", cost: 80000, tag: "📍 Cách 1km • 🏹 Vận động", map: "CLB Bắn cung Cầu Giấy" },
+    { group: "🕹️ Khu Game Arcade, Bowling & Thể Thao", name: "Dạo khu Công nghệ / Nhà sách Tiến Thọ (Xuân Thủy)", desc: "Ngắm đồ công nghệ, mô hình Gundam, truyện tranh Manga và khu trò chơi trong nhà.", cost: 20000, tag: "📍 Cách 900m • 🤖 Mô hình / Manga", map: "Nhà sách Tiến Thọ Xuân Thủy" },
+
+    { group: "🍺 Giải Khát Nhẹ Chiều Muộn", name: "Làm 1-2 Cốc Bia Hơi Giải Nhiệt (Phố Thành Thái)", desc: "Ngồi vỉa hè thoáng mát làm đúng 1 cốc bia hơi Hà Nội mát lạnh khai vị trước giờ ăn tối.", cost: 40000, tag: "📍 Cách 400m • 🍺 Giải nhiệt", map: "Phố Thành Thái Cầu Giấy" },
+    { group: "🍺 Giải Khát Nhẹ Chiều Muộn", name: "Dạo sảnh The Loop IPH (241 Xuân Thủy)", desc: "Đi dạo mát trong trung tâm thương mại có điều hòa chờ tới giờ vào quẩy bàn tiệc tối.", cost: 10000, tag: "📍 Cách 1km • ❄️ Điều hòa", map: "Indochina Plaza 241 Xuân Thủy" },
+    { group: "🍺 Giải Khát Nhẹ Chiều Muộn", name: "Trà Tắc / Nước Mía Siêu To cổng CV Nghĩa Đô", desc: "Làm 2 cốc nước mía khổng lồ mát lạnh rồi chạy thẳng tới quán ăn tối.", cost: 25000, tag: "📍 Cách 800m • 🥤 Giải khát", map: "Công viên Nghĩa Đô Cầu Giấy" },
+    { group: "🍺 Giải Khát Nhẹ Chiều Muộn", name: "Dạo Chợ Nhà Xanh sớm (Phan Văn Trường)", desc: "Lượn một vòng phố sinh viên ngắm đồ rồi tạt thẳng vào quán nướng/lẩu ngay cạnh đó.", cost: 15000, tag: "📍 Cách 1km • 🚶 Tiện đường ăn", map: "Chợ Nhà Xanh Phan Văn Trường" }
   ],
 
-  // CHẶNG 3: BỮA TỐI (18h00 - 20h15)
+  // ================= TĂNG 3: ĂN TỐI KÉO DÀI & NGỒI TRÒ CHUYỆN TỚI KHUYA (18h00 - 22h30) =================
   [
-    { group: "🍲 Buffet Lẩu & Tokbokki Sinh Viên", name: "Buffet Dookki (Tầng 3 IPH Xuân Thủy)", desc: "139k+VAT/người. Lẩu Tokbokki, gà rán Hàn Quốc, chả cá, miến trộn & nước ngọt miễn phí.", cost: 306000, tag: "🔥 Quán Hot • 🥤 Đã gồm nước", map: "Dookki Indochina Plaza 241 Xuân Thủy" },
-    { group: "🍲 Buffet Lẩu & Tokbokki Sinh Viên", name: "Buffet Lẩu Phan (Tô Hiệu / Nguyễn Khang)", desc: "Suất 129k-149k/người. Gọi thịt bò Mỹ, ba chỉ heo, nấm và váng đậu nhúng lẩu Thái thả ga.", cost: 310000, tag: "🥩 Bò Mỹ thả ga • ❄️ Máy lạnh", map: "Lẩu Phan Đào Tấn Cầu Giấy" },
-    { group: "🍲 Buffet Lẩu & Tokbokki Sinh Viên", name: "Buffet Lẩu Wang (Tô Hiệu / Nguyễn Khang)", desc: "Không gian trẻ trung, nước lẩu Kim chi / Tứ xuyên đậm đà hợp khẩu vị sinh viên.", cost: 320000, tag: "🥘 Nhiều vị lẩu • ❄️ Máy lạnh", map: "Lẩu Wang Tô Hiệu Cầu Giấy" },
-    { group: "🍲 Buffet Lẩu & Tokbokki Sinh Viên", name: "Lẩu Thái / Lẩu Ếch Tiểu Màn Thầu (Cầu Giấy)", desc: "Set lẩu đầy đặn cho 2 người với nước lẩu chua cay rất bắt vị.", cost: 260000, tag: "🌶️ Chua cay • 💸 Vừa túi tiền", map: "Lẩu ếch Cầu Giấy" },
-    { group: "🥩 Buffet Nướng Chảo Gang & BBQ", name: "Buffet Nướng Chảo Gang (Phan Văn Trường)", desc: "Thiên đường sinh viên: Ba chỉ bò, nầm, lòng nướng bơ xèo xèo kèm bánh mì mật ong.", cost: 300000, tag: "🧈 Nướng bơ • 賑 Nhộn nhịp", map: "Phố Phan Văn Trường Cầu Giấy" },
-    { group: "🥩 Buffet Nướng Chảo Gang & BBQ", name: "Nhất Nướng - Buffet Than Hoa (28 Trần Vỹ)", desc: "Quán rộng thoáng, thịt tẩm ướp đậm đà nướng trên bếp than hoa không khói.", cost: 330000, tag: "🔥 Than hoa • 🥩 Nhiều món", map: "28 Trần Vỹ Cầu Giấy" },
-    { group: "🥩 Buffet Nướng Chảo Gang & BBQ", name: "Buk Buk - Buffet Nướng Hàn Quốc (Cầu Giấy)", desc: "Thịt nướng chuẩn vị đường phố Hàn Quốc trong không gian nhà hàng máy lạnh.", cost: 350000, tag: "🇰🇷 Chuẩn Hàn • ❄️ Máy lạnh", map: "Buk Buk Cầu Giấy" },
-    { group: "🥩 Buffet Nướng Chảo Gang & BBQ", name: "Sườn Mười BBQ (128 Vũ Phạm Hàm)", desc: "Đổi gió sang tảng sườn nướng sốt BBQ mềm rục, mỳ Ý và salad trong không gian hẹn hò.", cost: 380000, tag: "🍖 Hẹn hò lịch sự • ❄️ Máy lạnh", map: "128 Vũ Phạm Hàm Cầu Giấy" },
-    { group: "🍜 Quán Ngon Hợp Ví (Không Buffet)", name: "Lẩu Bò Tự Do (58 Khúc Thừa Dụ)", desc: "Gọi một nồi lẩu bò tươi nhúng rau cải, đậu phụ ngồi lai rai ấm cúng ngay gần Dịch Vọng.", cost: 270000, tag: "📍 Cách 500m • 🍲 Lai rai", map: "58 Khúc Thừa Dụ Cầu Giấy" },
-    { group: "🍜 Quán Ngon Hợp Ví (Không Buffet)", name: "TSF Thai Street Food (Số 6 Khúc Thừa Dụ)", desc: "Pad Thái, cơm rang dứa, gỏi xoài và súp Tomyum chua cay chuẩn vị Thái.", cost: 200000, tag: "📍 Cách 500m • 🇹🇭 Đồ Thái", map: "6 Khúc Thừa Dụ Cầu Giấy" },
-    { group: "🍜 Quán Ngon Hợp Ví (Không Buffet)", name: "Quán Ốc Tuyết & Đồ Ăn Vặt (38 Trần Thái Tông)", desc: "Ốc luộc mắm gừng, cút lộn xào me, nem chua rán và khoai tây lắc.", cost: 170000, tag: "📍 Cách 400m • 🐚 Ăn vặt no bụng", map: "38 Trần Thái Tông Cầu Giấy" },
-    { group: "🍜 Quán Ngon Hợp Ví (Không Buffet)", name: "Nem nướng Nha Trang / Bún Ngan Chùa Hà", desc: "Phương án siêu tiết kiệm mà vẫn ngon miệng, ngay sát Ngõ 37 Dịch Vọng.", cost: 100000, tag: "📍 Cách 300m • 💸 Siêu tiết kiệm", map: "Số 3 Phố Chùa Hà Cầu Giấy" }
-  ],
+    { group: "🥩 Buffet Nướng Ngồi Lâu Thoải Mái (Không Giới Hạn Giờ)", name: "Buffet Nướng Chảo Gang (Phan Văn Trường)", desc: "Ba chỉ bò, nầm, lòng nướng bơ xèo xèo gọi thả ga. Không gian mở thoáng mát, hai anh em vừa nướng lai rai vừa chém gió 3-4 tiếng cực thoải mái (Đã tính cả nước ngọt/trà đá).", cost: 340000, tag: "⏳ Ngồi lâu thoải mái • 🥩 Gọi thả ga", map: "Phố Phan Văn Trường Cầu Giấy" },
+    { group: "🥩 Buffet Nướng Ngồi Lâu Thoải Mái (Không Giới Hạn Giờ)", name: "Nhất Nướng - Buffet Than Hoa (28 Trần Vỹ)", desc: "Quán rất rộng, bàn ghế thoáng, nướng than hoa không khói. Cực hợp vừa nướng thịt vừa nhâm nhi vài chai bia/nước ngọt tâm sự tới 22h30.", cost: 360000, tag: "⏳ Không giục giờ • 🔥 Than hoa", map: "28 Trần Vỹ Cầu Giấy" },
+    { group: "🥩 Buffet Nướng Ngồi Lâu Thoải Mái (Không Giới Hạn Giờ)", name: "Buffet Nướng Бо / Nướng Lụi (Trần Quốc Hoàn)", desc: "Thiên đường nướng sinh viên giá mềm, nhân viên thoải mái, ngồi lai rai cả tối không lo phát sinh.", cost: 320000, tag: "⏳ Ngồi tới khuya • 💸 Giá sinh viên", map: "Phố Trần Quốc Hoàn Cầu Giấy" },
+    { group: "🥩 Buffet Nướng Ngồi Lâu Thoải Mái (Không Giới Hạn Giờ)", name: "Buk Buk - Buffet Nướng & Nhậu Hàn Quốc", desc: "Phong cách quán nhậu nướng Hàn Quốc có máy lạnh, thiết kế riêng cho các hội bạn ngồi ăn uống và nói chuyện lâu.", cost: 380000, tag: "⏳ Chuyên ngồi lai rai • ❄️ Máy lạnh", map: "Buk Buk Cầu Giấy" },
 
-  // CHẶNG 4: ĐÊM (20h15 - 22h30)
-  [
-    { group: "🎮 Game Xu & Chợ Đêm Sôi Động", name: "Timezone IPH & Dạo Chợ đêm Nhà Xanh", desc: "Chơi đua xe, bắn súng, gắp thú tại tầng 3 IPH rồi đi bộ sang chợ đêm ngắm đồ.", cost: 80000, tag: "🎮 Vui nhộn • 🚶 Đi bộ tiêu cơm", map: "Chợ Nhà Xanh Phan Văn Trường" },
-    { group: "🎮 Game Xu & Chợ Đêm Sôi Động", name: "Chè Dừa Dầm / Sữa Chua Mít (Chợ Nhà Xanh)", desc: "Dạo chợ sinh viên sầm uất và thưởng thức 2 cốc chè mát lạnh ngọt ngào.", cost: 50000, tag: "🍧 Ngọt ngào • 💸 Rẻ", map: "Phố Phan Văn Trường Cầu Giấy" },
-    { group: "🎮 Game Xu & Chợ Đêm Sôi Động", name: "Khu Game / Bowling Discovery (302 Cầu Giấy)", desc: "Vui chơi trong tổ hợp trung tâm thương mại ngay gần điểm về Dịch Vọng.", cost: 100000, tag: "📍 Cách 450m • 🎳 Hiện đại", map: "302 Cầu Giấy" },
-    { group: "🎮 Game Xu & Chợ Đêm Sôi Động", name: "Xiên Bẩn & Trà Tắc cổng ĐH Sư Phạm / Báo Chí", desc: "Trải nghiệm không khí ăn đêm tấp nập đặc trưng của sinh viên khu Xuân Thủy.", cost: 60000, tag: "🍢 Đậm chất SV • 🌙 Sôi động", map: "136 Xuân Thủy Cầu Giấy" },
-    { group: "🍋 Trà Chanh Vỉa Hè Lộng Gió", name: "Trà chanh vỉa hè Phố Thành Thái (Cạnh CV Cầu Giấy)", desc: "Vỉa hè cực rộng và thoáng gió, gọi 2 cốc trà tắc + đĩa hướng dương tâm sự tới khuya.", cost: 45000, tag: "📍 Cách 400m • 🌬️ Gió mát", map: "Công viên Cầu Giấy Phố Thành Thái" },
-    { group: "🍋 Trà Chanh Vỉa Hè Lộng Gió", name: "Trà chanh đại lộ Dương Đình Nghệ", desc: "Ngồi ngắm trục đường lớn thoáng đãng về đêm, cách Dịch Vọng chỉ vài phút.", cost: 45000, tag: "📍 Cách 600m • 🛣️ Đại lộ rộng", map: "Phố Dương Đình Nghệ Cầu Giấy" },
-    { group: "🍋 Trà Chanh Vỉa Hè Lộng Gió", name: "Trà chanh Ngõ 165 Cầu Giấy / Phố Dịch Vọng", desc: "Ngồi ngay gần điểm xuất phát để lúc về chỉ việc đi bộ vài bước chân.", cost: 40000, tag: "📍 Cách 150m • 🏠 Tiện đường về", map: "Ngõ 165 Cầu Giấy" },
-    { group: "🎸 Cafe Đêm, Trà Ô Long & Nhạc Sống Acoustic", name: "Phê La Thành Thái (Mở tới ~23h00)", desc: "Thưởng thức trà Ô long đặc sản thơm đậm trên ghế dù phong cách cắm trại.", cost: 110000, tag: "📍 Cách 400m • 🏕️ Chill", map: "Phê La Thành Thái Cầu Giấy" },
-    { group: "🎸 Cafe Đêm, Trà Ô Long & Nhạc Sống Acoustic", name: "Cafe Ca Nhạc G4U (29 Nguyễn Khang - Acoustic)", desc: "Lắng nghe đêm nhạc sống Acoustic hát live mộc mạc từ 20h30 hàng tối.", cost: 160000, tag: "🎸 Nhạc sống Live • 🕯️ Lãng mạn", map: "29 Nguyễn Khang Cầu Giấy" },
-    { group: "🎸 Cafe Đêm, Trà Ô Long & Nhạc Sống Acoustic", name: "JIDAI Cerenote Coffee (Mở xuyên đêm 24/7)", desc: "Không lo quán đóng cửa sớm, ngồi phòng lạnh nghe nhạc tâm sự thoải mái tới đêm muộn.", cost: 90000, tag: "📍 Cách 300m • 🌙 Mở 24/24", map: "JIDAI Cerenote Coffee Ngõ 165 Cầu Giấy" },
-    { group: "🎸 Cafe Đêm, Trà Ô Long & Nhạc Sống Acoustic", name: "Valhalla Coffee (40 Khúc Thừa Dụ - Mở tới 23h30)", desc: "Không gian ấm cúng về đêm, rất gần Ngõ 37 Dịch Vọng.", cost: 85000, tag: "📍 Cách 500m • ☕ Mở muộn", map: "40 Khúc Thừa Dụ Cầu Giấy" },
-    { group: "🎸 Cafe Đêm, Trà Ô Long & Nhạc Sống Acoustic", name: "Laika Cafe / Tiệm Trà Tháng Tư (Khu Cầu Giấy)", desc: "Không gian ban công thoáng đãng, đèn vàng lung linh ngắm phố đêm.", cost: 95000, tag: "✨ Đèn lung linh • 📸 Đẹp", map: "Laika Cafe Cầu Giấy" }
+    { group: "🍲 Buffet Lẩu Bò Mỹ & Tokbokki (Phòng Lạnh)", name: "Buffet Lẩu Phan (Đào Tấn / Nguyễn Khang)", desc: "Bò Mỹ, ba chỉ heo nhúng lẩu Thái/Mala không giới hạn. Bàn rộng, đi tầm 18h-18h30 ngồi ăn và trò chuyện thoải mái (Đã gồm buffet nước).", cost: 340000, tag: "⏳ Ngồi 2.5 - 3 tiếng • 🥩 Bò Mỹ", map: "Lẩu Phan Nguyễn Khang Cầu Giấy" },
+    { group: "🍲 Buffet Lẩu Bò Mỹ & Tokbokki (Phòng Lạnh)", name: "Buffet Lẩu Wang (Tô Hiệu / Nguyễn Khang)", desc: "Không gian trẻ trung, lịch sự, điều hòa mát, vừa nhúng lẩu vừa ngồi tổng kết chuyện học hành, công việc.", cost: 350000, tag: "⏳ Ngồi êm ấm • ❄️ Máy lạnh", map: "Lẩu Wang Tô Hiệu Cầu Giấy" },
+    { group: "🍲 Buffet Lẩu Bò Mỹ & Tokbokki (Phòng Lạnh)", name: "Buffet Dookki (Tầng 3 IPH Xuân Thủy)", desc: "153k/ông đã gồm nước ngọt miễn phí. Lưu ý: Chỉ nên chọn nếu đi ngày thường vắng khách vì cuối tuần quán hay giới hạn 90 phút.", cost: 306000, tag: "⚠️ Giới hạn 90p nếu đông • 🍗 Gà + Lẩu", map: "Dookki Indochina Plaza 241 Xuân Thủy" },
+
+    { group: "🍻 Lẩu Bò, Lẩu Ếch & Quán Lai Rai (Vua Ngồi Lâu)", name: "Lẩu Bò Tự Do (58 Khúc Thừa Dụ - Sát Dịch Vọng)", desc: "Đỉnh cao ngồi lâu cho 2 anh em! Gọi nồi lẩu bò tươi + đĩa ngô chiên + vài cốc bia/nước ngọt, ngồi từ 18h tới 23h đêm không ai giục.", cost: 320000, tag: "🏆 Vua ngồi lâu • 📍 Cách 500m", map: "58 Khúc Thừa Dụ Cầu Giấy" },
+    { group: "🍻 Lẩu Bò, Lẩu Ếch & Quán Lai Rai (Vua Ngồi Lâu)", name: "Sườn Mười BBQ (128 Vũ Phạm Hàm)", desc: "Không gian lịch sự, nhạc nhẹ dễ nói chuyện sâu. Gọi set sườn nướng tảng BBQ lớn + khoai tây + đồ uống ngồi nhâm nhi.", cost: 390000, tag: "⏳ Yên tĩnh dễ tâm sự • 🍖 Sườn BBQ", map: "128 Vũ Phạm Hàm Cầu Giấy" },
+    { group: "🍻 Lẩu Bò, Lẩu Ếch & Quán Lai Rai (Vua Ngồi Lâu)", name: "Lẩu Ếch Măng Cay / Bò Nhúng Dấm (Khu Cầu Giấy)", desc: "Nồi lẩu ếch đun liu riu suốt buổi tối, vừa ăn vừa nói chuyện cực kỳ ấm cúng và hợp túi tiền sinh viên.", cost: 280000, tag: "⏳ Ngồi tới 23h • 🐸 Mồi bén", map: "Lẩu ếch Cầu Giấy" },
+    { group: "🍻 Lẩu Bò, Lẩu Ếch & Quán Lai Rai (Vua Ngồi Lâu)", name: "Lòng Rán & Lẩu Cháo Lòng (Đường Nguyễn Khang)", desc: "Làm mẹt lòng rán giòn + nồi lẩu cháo nhỏ ngồi lai rai tâm sự chuyện đời cực hợp gu anh em.", cost: 250000, tag: "⏳ Ngồi thoải mái • 🔥 Ngon bổ rẻ", map: "Lòng rán Nguyễn Khang Cầu Giấy" },
+    { group: "🍻 Lẩu Bò, Lẩu Ếch & Quán Lai Rai (Vua Ngồi Lâu)", name: "Vịt Nướng Cháy Tỏi & Lẩu Vịt (Trần Quốc Hoàn)", desc: "Quán bình dân rộng rãi, gọi nửa con vịt cháy tỏi + nồi lẩu măng ngồi nhâm nhi cả buổi tối.", cost: 240000, tag: "⏳ Thoải mái giờ giấc • 💸 Siêu kinh tế", map: "Vịt nướng Trần Quốc Hoàn Cầu Giấy" }
   ]
 ];
 
 let state = {
-  sv: [0, 0, 0, 0],
-  customNames: ["", "", "", ""],
-  c: [140000, 15000, 306000, 80000],
-  d: [0, 0, 0, 0],
-  p: ['S', 'S', 'S', 'S'],
-  na: 'Bạn A', nb: 'Bạn B',
+  sv: [0, 0, 0],
+  customNames: ["", "", ""],
+  c: [110000, 15000, 340000],
+  d: [0, 0, 0],
+  p: ['S', 'S', 'S'],
+  na: 'Ông A', nb: 'Ông B',
   en: '', ec: 0, pl: '', pc: '', nt: ''
 };
-let gachaStep = 0;
+let gachaStep = 2; // Mặc định trỏ vào Tăng 3 (Ăn tối)
 
 function init() {
   const q = new URLSearchParams(window.location.search);
-  if (q.has('sv')) state.sv = q.get('sv').split(',').map(Number);
-  if (q.has('cn')) state.customNames = q.get('cn').split('|');
-  if (q.has('c')) state.c = q.get('c').split(',').map(Number);
-  if (q.has('d')) state.d = q.get('d').split(',').map(Number);
-  if (q.has('p')) state.p = q.get('p').split(',');
+  if (q.has('sv')) state.sv = q.get('sv').split(',').map(Number).slice(0, 3);
+  if (q.has('cn')) state.customNames = q.get('cn').split('|').slice(0, 3);
+  if (q.has('c')) state.c = q.get('c').split(',').map(Number).slice(0, 3);
+  if (q.has('d')) state.d = q.get('d').split(',').map(Number).slice(0, 3);
+  if (q.has('p')) state.p = q.get('p').split(',').slice(0, 3);
   if (q.has('na')) state.na = q.get('na');
   if (q.has('nb')) state.nb = q.get('nb');
   if (q.has('en')) state.en = q.get('en');
@@ -469,6 +450,7 @@ function init() {
   document.getElementById('park-col').value = state.pc;
   document.getElementById('shared-note').value = state.nt;
 
+  setGachaStep(2);
   updateClock();
   setInterval(updateClock, 30000);
   render();
@@ -485,7 +467,7 @@ function applyPreset(indices, btnEl) {
   document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
   if (btnEl) btnEl.classList.add('active');
   state.sv = [...indices];
-  state.customNames = ["", "", "", ""];
+  state.customNames = ["", "", ""];
   state.c = indices.map((vIdx, stepIdx) => MEGA_DB[stepIdx][vIdx].cost);
   render();
 }
@@ -497,10 +479,9 @@ function randomizeAll() {
 
 function render() {
   const times = [
-    "Chặng 1 • 13h30 – 16h30 (Đầu chiều)",
-    "Chặng 2 • 16h30 – 18h00 (Hoàng hôn)",
-    "Chặng 3 • 18h00 – 20h15 (Bữa tối)",
-    "Chặng 4 • 20h15 – 22h30 (Đêm chill)"
+    "Tăng 1 • 13h30 – 16h30 (Tránh nắng / Cày Game)",
+    "Tăng 2 • 16h30 – 18h00 (Giải ngố chiều muộn)",
+    "Tăng 3 • 18h00 – 22h30 (Ăn tối kéo dài & Ngồi tâm sự tại quán)"
   ];
   const container = document.getElementById('timeline-list');
 
@@ -511,7 +492,6 @@ function render() {
     const displayMapQuery = isCustom ? state.customNames[i] + " Cầu Giấy" : venue.map;
     const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(displayMapQuery)}`;
 
-    // Cập nhật thanh tiến trình trên cùng
     const stNode = document.getElementById('st-' + i);
     if (stNode) stNode.classList.toggle('done', Boolean(state.d[i]));
 
@@ -540,7 +520,7 @@ function render() {
               ✍️ Tự nhập quán
             </button>
             <button class="mini-btn ${state.d[i] ? 'checked' : ''}" onclick="toggleStep(${i})">
-              ${state.d[i] ? '✓ Đã xong' : 'Đánh dấu xong'}
+              ${state.d[i] ? '✓ Đã xong' : 'Xong tăng này'}
             </button>
           </div>
         </div>
@@ -550,26 +530,26 @@ function render() {
         </select>
 
         <div class="custom-venue-box ${isCustom ? 'show' : ''}" id="custom-box-${i}">
-          <input type="text" class="custom-inp" placeholder="Gõ tên quán tự chọn của hai bạn tại đây..." value="${state.customNames[i]}" oninput="updateCustomName(${i}, this.value)">
+          <input type="text" class="custom-inp" placeholder="Gõ tên quán tự chọn của 2 anh em vào đây..." value="${state.customNames[i]}" oninput="updateCustomName(${i}, this.value)">
         </div>
 
         <div class="tags-row">
-          <span class="v-tag">${isCustom ? '✨ Địa điểm tự chọn' : venue.tag}</span>
+          <span class="v-tag">${isCustom ? '⚡ Quán tự chọn' : venue.tag}</span>
           <span class="v-tag">📂 ${venue.group.replace(/^[^\s]+\s/, '')}</span>
         </div>
 
-        <div class="step-desc">${isCustom ? 'Đang dùng địa điểm tự nhập. Bấm nút Chỉ đường Maps bên dưới để mở định vị.' : venue.desc}</div>
+        <div class="step-desc">${isCustom ? 'Đang dùng quán tự nhập. Bấm nút Mở Google Maps bên dưới để tìm đường.' : venue.desc}</div>
 
         <div class="step-actions">
           <div class="input-group">
             <input type="number" class="money-input" step="5000" value="${state.c[i]}" oninput="changeCost(${i}, this.value)">
             <select class="payer-select" onchange="changePayer(${i}, this.value)">
-              <option value="S" ${state.p[i] === 'S' ? 'selected' : ''}>🤝 Quỹ chung</option>
-              <option value="A" ${state.p[i] === 'A' ? 'selected' : ''}>💳 ${state.na}</option>
-              <option value="B" ${state.p[i] === 'B' ? 'selected' : ''}>💳 ${state.nb}</option>
+              <option value="S" ${state.p[i] === 'S' ? 'selected' : ''}>🤝 Chia đôi luôn</option>
+              <option value="A" ${state.p[i] === 'A' ? 'selected' : ''}>💳 ${state.na} ứng</option>
+              <option value="B" ${state.p[i] === 'B' ? 'selected' : ''}>💳 ${state.nb} ứng</option>
             </select>
           </div>
-          <a href="${mapUrl}" target="_blank" class="map-link" id="map-link-${i}">📍 Chỉ đường Maps</a>
+          <a href="${mapUrl}" target="_blank" class="map-link" id="map-link-${i}">📍 Mở Google Maps</a>
         </div>
       </div>
     `;
@@ -608,8 +588,8 @@ function changeCost(i, val) { state.c[i] = Number(val) || 0; calcTotals(); }
 function changePayer(i, val) { state.p[i] = val; calcTotals(); }
 
 function syncInput() {
-  state.na = document.getElementById('nameA').value || 'Bạn A';
-  state.nb = document.getElementById('nameB').value || 'Bạn B';
+  state.na = document.getElementById('nameA').value || 'Ông A';
+  state.nb = document.getElementById('nameB').value || 'Ông B';
   state.en = document.getElementById('ext-name').value;
   state.ec = Number(document.getElementById('ext-cost').value) || 0;
   state.pl = document.getElementById('park-loc').value;
@@ -621,7 +601,7 @@ function syncInput() {
 function calcTotals() {
   const stepSum = state.c.reduce((a, b) => a + b, 0);
   const total = stepSum + state.ec;
-  const budget = 550000;
+  const budget = 500000;
   const diff = budget - total;
 
   document.getElementById('ui-total').textContent = total.toLocaleString('vi-VN') + 'đ';
@@ -629,15 +609,15 @@ function calcTotals() {
   
   const diffEl = document.getElementById('ui-diff');
   diffEl.textContent = (diff >= 0 ? 'Dư ' : 'Vượt ') + Math.abs(diff).toLocaleString('vi-VN') + 'đ';
-  diffEl.style.color = diff >= 0 ? 'var(--emerald)' : 'var(--rose)';
+  diffEl.style.color = diff >= 0 ? 'var(--emerald)' : 'var(--red)';
 
   const pct = Math.min(100, Math.round((total / budget) * 100));
   const bar = document.getElementById('budget-bar');
   bar.style.width = pct + '%';
-  bar.style.background = total > budget ? 'var(--rose)' : 'linear-gradient(90deg, #10b981, #0ea5e9)';
+  bar.style.background = total > budget ? 'var(--red)' : 'linear-gradient(90deg, #10b981, #0284c7)';
 
   const doneCount = state.d.filter(Boolean).length;
-  document.getElementById('ui-prog').textContent = `${doneCount} / 4 chặng`;
+  document.getElementById('ui-prog').textContent = `${doneCount} / 3 tăng`;
 
   let paidA = 0, paidB = 0;
   state.c.forEach((cost, idx) => {
@@ -646,25 +626,25 @@ function calcTotals() {
   });
   const splitEl = document.getElementById('split-result');
   if (paidA === 0 && paidB === 0) {
-    splitEl.textContent = `Mỗi người góp ${Math.round(total / 2).toLocaleString('vi-VN')}đ vào quỹ chung.`;
+    splitEl.textContent = `Mỗi anh em chuẩn bị ${Math.round(total / 2).toLocaleString('vi-VN')}đ.`;
   } else {
     const net = (paidA - paidB) / 2;
     if (net > 0) {
-      splitEl.innerHTML = `💸 <b>${state.nb}</b> chuyển trả <b>${state.na}</b>: <b>${Math.round(net).toLocaleString('vi-VN')}đ</b>`;
+      splitEl.innerHTML = `💸 <b>${state.nb}</b> bắn trả <b>${state.na}</b>: <b>${Math.round(net).toLocaleString('vi-VN')}đ</b>`;
     } else if (net < 0) {
-      splitEl.innerHTML = `💸 <b>${state.na}</b> chuyển trả <b>${state.nb}</b>: <b>${Math.round(Math.abs(net)).toLocaleString('vi-VN')}đ</b>`;
+      splitEl.innerHTML = `💸 <b>${state.na}</b> bắn trả <b>${state.nb}</b>: <b>${Math.round(Math.abs(net)).toLocaleString('vi-VN')}đ</b>`;
     } else {
-      splitEl.textContent = `🎉 Hai bạn đã chi trả cân bằng nhau!`;
+      splitEl.textContent = `🤝 Hai anh em đã chi cân bằng nhau!`;
     }
   }
 }
 
 function setGachaStep(sIdx) {
   gachaStep = sIdx;
-  [0, 1, 2, 3].forEach(i => {
+  [0, 1, 2].forEach(i => {
     document.getElementById('gt-' + i).classList.toggle('active', i === sIdx);
   });
-  document.getElementById('gacha-output').textContent = `Quay chọn ngẫu nhiên 1 trong 12 quán Chặng ${sIdx + 1}!`;
+  document.getElementById('gacha-output').textContent = `Quay chọn 1 trong 12 quán cho Tăng ${sIdx + 1}!`;
 }
 
 function spinGacha() {
@@ -678,7 +658,7 @@ function spinGacha() {
       clearInterval(timer);
       const pickIdx = Math.floor(Math.random() * list.length);
       const pick = list[pickIdx];
-      out.innerHTML = `🎯 Chốt: <span style="color:var(--indigo)">${pick.name}</span>`;
+      out.innerHTML = `🎯 Chốt luôn: <span style="color:var(--blue)">${pick.name}</span>`;
       changeVenue(gachaStep, pickIdx);
     }
   }, 65);
