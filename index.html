@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>BroOS v4.5 • Lịch Trình Thư Giãn & Giá Thực Tế</title>
+  <title>BroOS v6.0 • Chuẩn Đơn Giá × 2 Người</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -56,15 +56,19 @@
     }
     .hero-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
     .brand {
-      font-size: 1.42rem; font-weight: 800;
-      background: linear-gradient(135deg, #0284c7, #4f46e5, #059669);
+      font-size: 1.4rem; font-weight: 800;
+      background: linear-gradient(135deg, #0284c7, #4f46e5, #ea580c);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .sub-brand { font-size: 0.82rem; color: var(--muted); font-weight: 600; margin-top: 2px; }
-    .db-badge {
-      font-size: 0.75rem; font-weight: 800; color: #047857;
-      background: #d1fae5; border: 1px solid #6ee7b7; padding: 6px 12px; border-radius: 99px;
+
+    /* Budget Cap Selector */
+    .cap-switch { display: flex; gap: 6px; background: #f1f5f9; padding: 5px; border-radius: 14px; border: 1px solid #cbd5e1; }
+    .cap-btn {
+      border: none; background: transparent; padding: 7px 12px; border-radius: 10px;
+      font-size: 0.76rem; font-weight: 800; color: #475569; cursor: pointer; transition: 0.2s;
     }
+    .cap-btn.active { background: #0f172a; color: #fff; }
 
     /* 3-Stage Route Stepper */
     .route-stepper {
@@ -91,6 +95,18 @@
     .preset-chip.active {
       background: linear-gradient(135deg, #0284c7, #4f46e5); color: #fff; border-color: transparent;
       box-shadow: 0 6px 15px rgba(2, 132, 199, 0.28);
+    }
+
+    /* Alert Banner */
+    .over-alert {
+      display: none; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+      background: #fff7ed; border: 1.5px solid #fdba74; color: #9a3412;
+      padding: 12px 16px; border-radius: 16px; margin-bottom: 16px; font-size: 0.82rem; font-weight: 700;
+    }
+    .over-alert.show { display: flex; }
+    .fix-btn {
+      background: var(--orange); color: #fff; border: none; padding: 7px 14px; border-radius: 10px;
+      font-weight: 800; font-size: 0.76rem; cursor: pointer; white-space: nowrap;
     }
 
     /* Bento KPIs */
@@ -122,7 +138,6 @@
       border-radius: 18px; padding: 16px; margin-bottom: 14px; transition: 0.25s;
       box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
     }
-    .step-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06); }
     .step-0 { border-left: 6px solid var(--blue); }
     .step-1 { border-left: 6px solid var(--emerald); }
     .step-2 { border-left: 6px solid var(--orange); background: linear-gradient(to bottom right, #ffffff, #fff7ed); }
@@ -138,7 +153,7 @@
     .step-btns { display: flex; gap: 6px; }
     .mini-btn {
       border: 1px solid #cbd5e1; background: #f8fafc; color: #334155;
-      padding: 5px 10px; border-radius: 99px; font-size: 0.72rem; font-weight: 800; cursor: pointer; transition: 0.2s;
+      padding: 5px 10px; border-radius: 99px; font-size: 0.72rem; font-weight: 800; cursor: pointer;
     }
     .mini-btn.checked { background: var(--emerald); color: #ffffff; border-color: var(--emerald); }
     .mini-btn.custom-active { background: var(--amber); color: #0f172a; border-color: var(--amber); }
@@ -146,9 +161,8 @@
     /* Dropdown & Custom Box */
     .venue-select {
       width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1;
-      color: #0f172a; font-size: 0.9rem; font-weight: 800; padding: 10px 12px; border-radius: 12px; margin-bottom: 8px; cursor: pointer;
+      color: #0f172a; font-size: 0.86rem; font-weight: 800; padding: 10px 12px; border-radius: 12px; margin-bottom: 8px; cursor: pointer;
     }
-    .venue-select:focus { outline: none; border-color: var(--blue); background: #fff; }
     .venue-select optgroup { background: #e2e8f0; color: #0f172a; font-weight: 800; }
     .venue-select option { background: #ffffff; color: #0f172a; font-weight: 600; }
 
@@ -156,16 +170,21 @@
     .custom-venue-box.show { display: flex; }
     .custom-inp { flex: 1; background: #fffbeb; border: 1.5px solid var(--amber); color: #0f172a; padding: 9px 12px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; }
 
+    /* Price Math Breakdown Pill */
+    .math-pill {
+      display: inline-block; background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46;
+      font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; margin-bottom: 8px;
+    }
+
     .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
     .v-tag { font-size: 0.7rem; font-weight: 800; padding: 3px 9px; border-radius: 6px; background: #f1f5f9; color: #334155; }
-    .step-2 .v-tag:first-child { background: #ffedd5; color: #9a3412; }
     .step-desc { font-size: 0.82rem; color: #475569; line-height: 1.5; margin-bottom: 12px; font-weight: 500; }
     
     .step-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding-top: 10px; border-top: 1px dashed #cbd5e1; }
     .input-group { display: flex; align-items: center; gap: 6px; }
     .money-input {
       background: #ecfdf5; border: 1.5px solid #6ee7b7;
-      color: #047857; font-weight: 800; font-size: 0.85rem; padding: 6px 10px; border-radius: 10px; width: 110px;
+      color: #047857; font-weight: 800; font-size: 0.85rem; padding: 6px 10px; border-radius: 10px; width: 115px;
     }
     .payer-select {
       background: #f8fafc; border: 1.5px solid #cbd5e1;
@@ -173,9 +192,8 @@
     }
     .map-link {
       text-decoration: none; font-size: 0.76rem; font-weight: 800; color: #fff;
-      background: var(--blue); padding: 6px 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s;
+      background: var(--blue); padding: 6px 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px;
     }
-    .map-link:hover { background: var(--indigo); }
 
     /* Extra Row */
     .extra-row { display: flex; gap: 8px; margin-top: 8px; }
@@ -188,18 +206,16 @@
     .settlement { font-size: 0.84rem; color: #065f46; background: #dcfce7; padding: 10px; border-radius: 10px; font-weight: 800; text-align: center; }
 
     .gacha-box {
-      text-align: center;
-      background: linear-gradient(135deg, #f0f9ff, #eef2ff);
+      text-align: center; background: linear-gradient(135deg, #f0f9ff, #eef2ff);
       border: 1.5px solid #bae6fd; border-radius: 18px; padding: 16px;
     }
-    .gacha-res { font-size: 0.95rem; font-weight: 800; color: var(--indigo); min-height: 32px; margin: 10px 0; display: flex; align-items: center; justify-content: center; }
+    .gacha-res { font-size: 0.92rem; font-weight: 800; color: var(--indigo); min-height: 32px; margin: 10px 0; display: flex; align-items: center; justify-content: center; }
     .gacha-tags { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
     .g-tag { font-size: 0.72rem; padding: 5px 10px; border-radius: 99px; background: #ffffff; color: #475569; cursor: pointer; font-weight: 800; border: 1px solid #cbd5e1; }
     .g-tag.active { color: #fff; background: var(--blue); border-color: var(--blue); }
     .btn-gacha {
       background: linear-gradient(135deg, #0284c7, #4f46e5); color: #fff; border: none;
       padding: 10px 14px; border-radius: 12px; font-weight: 800; font-size: 0.82rem; cursor: pointer; width: 100%;
-      box-shadow: 0 6px 15px rgba(2, 132, 199, 0.25);
     }
 
     .park-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
@@ -221,12 +237,12 @@
     .toast {
       position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
       background: #0f172a; color: #ffffff; padding: 11px 20px; border-radius: 99px;
-      font-weight: 800; font-size: 0.82rem; display: none; z-index: 100; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.3);
+      font-weight: 800; font-size: 0.82rem; display: none; z-index: 100;
     }
   </style>
 </head>
 <body>
-<div class="toast" id="toast">✅ Đã copy Link! Gửi ngay qua Zalo/Mess cho bạn đồng hành.</div>
+<div class="toast" id="toast">✅ Đã copy Link! Gửi ngay qua Zalo/Mess cho người anh em.</div>
 
 <div class="app">
   <!-- Live Banner -->
@@ -234,50 +250,62 @@
     <div class="live-left">
       <div class="dot-live"></div>
       <span class="clock-txt" id="live-clock">13:30</span>
-      <span class="now-status" id="live-status">Lộ trình Giải Trí Nhẹ Nhàng • Giá thực tế đã gồm nước & VAT!</span>
+      <span class="now-status">Đã chuẩn hóa: Đơn giá 1 người × 2 = Tổng 2 người (Không ép giá ảo!)</span>
     </div>
     <span class="loc-pill">📍 Tập kết: 27 Ngõ 37 Phố Dịch Vọng</span>
   </div>
 
-  <!-- Hero & 3-Stage Stepper -->
+  <!-- Hero & Budget Mode Switch -->
   <div class="hero">
     <div class="hero-top">
       <div>
-        <div class="brand">☀️ BroOS v4.5 • Đi Chơi Thư Giãn Cầu Giấy</div>
-        <div class="sub-brand">Không quán Net, không thắng thua căng thẳng • Giá thực trả tại quầy</div>
+        <div class="brand">☀️ BroOS v6.0 • Chuẩn Giá Thực Tế × 2 Người</div>
+        <div class="sub-brand">Ghi rõ đơn giá 1 người nhân đôi • Chọn trần 550k (Bình dân) hoặc 800k (Nhà hàng)</div>
       </div>
-      <span class="db-badge">🧾 Giá Chuẩn Thực Tế</span>
+      <div class="cap-switch">
+        <button class="cap-btn active" id="cap-550" onclick="setCap(550000)">💸 Trần 550k (275k/ông)</button>
+        <button class="cap-btn" id="cap-800" onclick="setCap(800000)">🍖 Trần 800k (400k/ông)</button>
+      </div>
     </div>
 
     <div class="route-stepper">
       <div class="r-node" id="st-0"><span class="r-num">1</span><span class="r-label">13h30: Thư giãn chiều</span></div>
       <div class="r-node" id="st-1"><span class="r-num">2</span><span class="r-label">16h30: Dạo mát / Ngắm cảnh</span></div>
-      <div class="r-node" id="st-2"><span class="r-num">3</span><span class="r-label">18h00 – 22h30: Ăn & Trò chuyện</span></div>
+      <div class="r-node" id="st-2"><span class="r-num">3</span><span class="r-label">18h00 – 22h30: Ăn & Đàm đạo</span></div>
     </div>
 
     <div class="preset-bar">
-      <button class="preset-chip active" onclick="applyPreset([0,0,0], this)">☕ Kèo Tâm Sự: Cafe Rộng + Dạo Hồ + Nướng Chảo Gang (485k)</button>
-      <button class="preset-chip" onclick="applyPreset([5,4,2], this)">🍿 Kèo Điện Ảnh: Phim Rạp + Tàu Điện Trên Cao + Lẩu Ếch (565k)</button>
-      <button class="preset-chip" onclick="applyPreset([2,6,7], this)">🍵 Kèo Thư Thái: Trà Quán + Bảo Tàng + Buffet Lẩu Bò (580k)</button>
-      <button class="preset-chip" onclick="applyPreset([8,1,9], this)">📚 Kèo Khám Phá: Nhà Sách/Manga + Công Viên + Lẩu Bò Tự Do (600k)</button>
-      <button class="preset-chip" onclick="applyPreset([1,0,5], this)">💸 Kèo Nhẹ Ví: Cafe Ngõ + Trà Đá Công Viên + Đồ Thái (385k)</button>
+      <button class="preset-chip active" onclick="applyPreset([0,0,1], this)">✅ Chuẩn 540k: Cafe JIDAI (130k) + Công Viên (30k) + Lẩu Ếch (380k)</button>
+      <button class="preset-chip" onclick="applyPreset([1,4,0], this)">✅ Chuẩn 460k: Tiny Post (110k) + Tàu Điện (40k) + Dookki (310k)</button>
+      <button class="preset-chip" onclick="applyPreset([2,5,3], this)">✅ Chuẩn 510k: Trà Quán (130k) + Chùa Hà (20k) + Lẩu Gà Lá É (360k)</button>
+      <button class="preset-chip" onclick="applyPreset([5,0,6], this)">🍖 Kèo Nhà Hàng 750k: Phim CGV (240k) + Dạo Hồ (30k) + Lẩu Phan (480k)</button>
+      <button class="preset-chip" onclick="applyPreset([9,6,9], this)">🍻 Kèo Tới Bến 840k: Bi-a 2.5h (220k) + Bảo Tàng (60k) + Lẩu Bò Tự Do (560k)</button>
+    </div>
+  </div>
+
+  <!-- Cảnh báo khi vượt trần -->
+  <div class="over-alert" id="over-alert">
+    <span id="over-msg">⚠️ Các quán bạn chọn thuộc phân khúc Nhà hàng nên vượt trần 550k!</span>
+    <div style="display:flex; gap:8px;">
+      <button class="fix-btn" onclick="autoFit550()">🔽 Đổi sang quán Bình dân (≤ 550k)</button>
+      <button class="fix-btn" style="background:#0f172a" onclick="setCap(800000)">🔼 Nâng trần lên 800k</button>
     </div>
   </div>
 
   <!-- Bento KPIs -->
   <div class="bento-kpi">
     <div class="kpi-card">
-      <div class="kpi-lbl">💰 Tổng thực chi (All-in) / 580k</div>
+      <div class="kpi-lbl" id="ui-cap-lbl">💰 Tổng 2 người / Hạn mức 550.000đ</div>
       <div style="display:flex; justify-content:space-between; align-items:baseline;">
-        <div class="kpi-val" id="ui-total">485.000đ</div>
-        <div class="kpi-sub" id="ui-diff" style="font-weight:800; color:var(--emerald)">Dư 95.000đ</div>
+        <div class="kpi-val" id="ui-total">540.000đ</div>
+        <div class="kpi-sub" id="ui-diff" style="font-weight:800; color:var(--emerald)">Dư 10.000đ</div>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="budget-bar"></div></div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-lbl">🤝 Chia đôi / Mỗi người</div>
-      <div class="kpi-val" id="ui-per" style="color:var(--blue)">242.500đ</div>
-      <div class="kpi-sub">Đã tính đủ nước, gửi xe & VAT</div>
+      <div class="kpi-lbl">👤 Đơn giá / Mỗi anh em</div>
+      <div class="kpi-val" id="ui-per" style="color:var(--blue)">270.000đ</div>
+      <div class="kpi-sub">Chuẩn giá thị trường 2026</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-lbl">✅ Tiến độ trải nghiệm</div>
@@ -291,17 +319,17 @@
     <div>
       <div class="section-card">
         <div class="sec-title">
-          <span>🗺️ Lịch trình 3 Chặng (Bấm vào khung để đổi địa điểm)</span>
-          <span style="font-size:0.74rem; color:var(--blue); font-weight:800;">Đã cộng đủ phụ phí</span>
+          <span>🗺️ Lịch trình 3 Chặng (Ghi rõ Giá 1 người × 2)</span>
+          <span style="font-size:0.74rem; color:var(--blue); font-weight:800;">Minh bạch 100%</span>
         </div>
         <div id="timeline-list"></div>
 
         <!-- Chi phí phát sinh -->
         <div style="margin-top:14px; padding-top:14px; border-top:1.5px dashed #cbd5e1;">
-          <div style="font-size:0.78rem; font-weight:800; color:var(--muted); margin-bottom:6px;">➕ Phát sinh thêm ngoài dự kiến (Mua thêm đồ ăn vặt, nước uống...)</div>
+          <div style="font-size:0.78rem; font-weight:800; color:var(--muted); margin-bottom:6px;">➕ Phát sinh thêm ngoài dự kiến (Nếu có)</div>
           <div class="extra-row">
-            <input type="text" id="ext-name" class="extra-input" placeholder="Khoản chi phụ (VD: Mua thêm bánh ngọt / kem)" oninput="syncInput()">
-            <input type="number" id="ext-cost" class="money-input" step="5000" value="0" oninput="syncInput()">
+            <input type="text" id="ext-name" class="extra-input" placeholder="Khoản chi phụ (VD: Gọi thêm đồ tráng miệng)" oninput="syncInput()">
+            <input type="number" id="ext-cost" class="money-input" step="10000" value="0" oninput="syncInput()">
           </div>
         </div>
       </div>
@@ -309,7 +337,6 @@
 
     <!-- Cột Phải: Tiện ích -->
     <div>
-      <!-- Chia tiền -->
       <div class="section-card">
         <div class="sec-title">
           <span>⚖️ Máy tính Chia tiền (50/50)</span>
@@ -317,118 +344,110 @@
         </div>
         <div class="split-box">
           <div class="split-names">
-            <input type="text" id="nameA" class="name-inp" value="Bạn A" oninput="syncInput()">
-            <input type="text" id="nameB" class="name-inp" value="Bạn B" oninput="syncInput()">
+            <input type="text" id="nameA" class="name-inp" value="Ông A" oninput="syncInput()">
+            <input type="text" id="nameB" class="name-inp" value="Ông B" oninput="syncInput()">
           </div>
           <div class="settlement" id="split-result">Đang tính toán...</div>
         </div>
       </div>
 
-      <!-- Vòng quay Gacha -->
       <div class="section-card">
-        <div class="sec-title"><span>🎰 Vòng quay "Chốt Nhanh" (Ngẫu nhiên)</span></div>
+        <div class="sec-title"><span>🎰 Vòng quay "Chốt Nhanh"</span></div>
         <div class="gacha-box">
           <div class="gacha-tags">
             <span class="g-tag active" id="gt-0" onclick="setGachaStep(0)">Chặng 1 (Đầu chiều)</span>
             <span class="g-tag" id="gt-1" onclick="setGachaStep(1)">Chặng 2 (Chiều muộn)</span>
             <span class="g-tag" id="gt-2" onclick="setGachaStep(2)">Chặng 3 (Ăn tối)</span>
           </div>
-          <div class="gacha-res" id="gacha-output">Phân vân chưa biết chọn quán nào thì bấm quay!</div>
+          <div class="gacha-res" id="gacha-output">Bấm quay để chọn quán đúng hạn mức!</div>
           <button class="btn-gacha" onclick="spinGacha()">🎲 Quay & Áp Dụng Luôn Vào Lịch Trình</button>
         </div>
       </div>
 
-      <!-- Thẻ nhớ đỗ xe -->
       <div class="section-card">
         <div class="sec-title"><span>🅿️ Nhớ chỗ đỗ xe & Ghi chú chung</span></div>
         <div class="park-grid">
           <input type="text" id="park-loc" class="park-inp" placeholder="📍 Hầm / Bãi xe nào..." oninput="syncInput()">
           <input type="text" id="park-col" class="park-inp" placeholder="🔢 Cột số / Vé xe..." oninput="syncInput()">
         </div>
-        <textarea id="shared-note" placeholder="Ghi chú: Giờ suất chiếu phim, số bàn đặt trước, ý tưởng đang bàn dở..." oninput="syncInput()"></textarea>
+        <textarea id="shared-note" placeholder="Ghi chú: Giờ suất chiếu phim, số bàn đặt trước..." oninput="syncInput()"></textarea>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Thanh Dock dưới đáy -->
 <div class="floating-dock">
   <button class="dock-btn dock-share" onclick="copyLiveLink()">🔗 Copy Link Đồng Bộ</button>
-  <button class="dock-btn dock-random" onclick="randomizeAll()">🎲 Phối Ngẫu Nhiên</button>
+  <button class="dock-btn dock-random" onclick="randomizeByCap()">🎲 Random Theo Trần</button>
   <button class="dock-btn dock-reset" onclick="resetPlan()">🔄 Reset</button>
 </div>
 
 <script>
-// KHO DỮ LIỆU GIẢI TRÍ NHẸ NHÀNG & GIÁ THỰC TẾ RÚT VÍ (ĐÃ CỘNG NƯỚC, GỬI XE, VAT)
+let CAP = 550000;
+
+// KHO DỮ LIỆU CHUẨN HÓA: ĐƠN GIÁ 1 NGƯỜI x 2 = TỔNG 2 NGƯỜI (THỰC TẾ 100%)
 const MEGA_DB = [
-  // ================= CHẶNG 1: ĐẦU CHIỀU THƯ GIÃN & TRÁNH NẮNG (13h30 - 16h30) =================
+  // ================= CHẶNG 1: ĐẦU CHIỀU (13h30 - 16h30) =================
   [
-    { group: "☕ Cafe Không Gian Rộng, Thoáng & Dễ Trò Chuyện", name: "JIDAI Cerenote Coffee (Đầu Ngõ 165 Cầu Giấy)", desc: "Giá thực trả: 2 đồ uống (50k/cốc) + 1 đĩa hạt/bánh nhỏ (20k). Quán thiết kế tối giản rất thoáng, đi bộ vài phút từ Ngõ 37 Dịch Vọng, ngồi 3 tiếng máy lạnh nói chuyện cực kỳ thoải mái.", cost: 120000, tag: "📍 Cách 300m • 🧾 Đã tính 2 nước + đồ nhắm", map: "JIDAI Cerenote Coffee Ngõ 165 Cầu Giấy" },
-    { group: "☕ Cafe Không Gian Rộng, Thoáng & Dễ Trò Chuyện", name: "Tiny Post Cafe (Số 8 Ngõ 165 Cầu Giấy)", desc: "Giá thực trả: 2 trà hoa quả/cà phê (45k/cốc) + gửi xe. Không gian yên bình trong ngõ yên tĩnh, hợp ngồi trao đổi ý tưởng hoặc đọc sách.", cost: 95000, tag: "📍 Cách 300m • 🌿 Yên tĩnh, nhẹ nhàng", map: "Tiny Post Cafe Ngõ 165 Cầu Giấy" },
-    { group: "☕ Cafe Không Gian Rộng, Thoáng & Dễ Trò Chuyện", name: "Tâm Hoa Trà Quán (Ngách 37/2 Dịch Vọng)", desc: "Giá thực trả: 1 ấm trà ngon pha nhiều nước cho 2 người + đĩa mứt/hạt sen (115k). Ngay sát điểm xuất phát, không gian trà đạo mộc mạc tách biệt hẳn phố xá.", cost: 115000, tag: "📍 Cách 80m • 🍵 Thưởng trà đàm đạo", map: "Ngách 37/2 Dịch Vọng Cầu Giấy" },
-    { group: "☕ Cafe Không Gian Rộng, Thoáng & Dễ Trò Chuyện", name: "Cộng Cà Phê (Cầu Giấy / Xuân Thủy)", desc: "Giá thực trả: 2 cốc cốt dừa cốm xanh/đậu xanh (55k/cốc) + đĩa hướng dương (15k) + gửi xe (5k).", cost: 130000, tag: "📍 Cách 700m • 🧾 Chuẩn giá thực đơn", map: "Cộng Cà Phê Cầu Giấy" },
-    { group: "☕ Cafe Không Gian Rộng, Thoáng & Dễ Trò Chuyện", name: "Phê La (Phố Thành Thái - Trà Ô Long Đặc Sản)", desc: "Giá thực trả: 2 cốc Ô long sữa/Đà Lạt (55k-60k/cốc) + gửi xe (5k). Không gian ghế dù cắm trại rộng rãi, thơm mùi trà.", cost: 125000, tag: "📍 Cách 400m • 🏕️ Không gian mở", map: "Phê La Thành Thái Cầu Giấy" },
+    { group: "☕ Cafe & Trà Quán Thư Giãn (Hợp trần 550k)", name: "JIDAI Cerenote Coffee (Ngõ 165 Cầu Giấy)", per: 65000, cost: 130000, desc: "Đơn giá: 55k-60k/cốc nước + hướng dương/gửi xe (~65k/người × 2 = 130k). Ngồi máy lạnh 3 tiếng thoải mái.", tag: "📍 Cách 300m • ✅ Hợp trần 550k", map: "JIDAI Cerenote Coffee Ngõ 165 Cầu Giấy" },
+    { group: "☕ Cafe & Trà Quán Thư Giãn (Hợp trần 550k)", name: "Tiny Post Cafe (Số 8 Ngõ 165 Cầu Giấy)", per: 55000, cost: 110000, desc: "Đơn giá: 45k-50k/cốc + gửi xe (~55k/người × 2 = 110k). Quán yên tĩnh trong ngõ, dễ trò chuyện.", tag: "📍 Cách 300m • ✅ Hợp trần 550k", map: "Tiny Post Cafe Ngõ 165 Cầu Giấy" },
+    { group: "☕ Cafe & Trà Quán Thư Giãn (Hợp trần 550k)", name: "Tâm Hoa Trà Quán (Ngách 37/2 Dịch Vọng)", per: 65000, cost: 130000, desc: "Đơn giá: Ấm trà ngon + đĩa hạt sen/mứt cho 2 anh em (~65k/người × 2 = 130k). Ngay sát điểm xuất phát.", tag: "📍 Cách 80m • ✅ Hợp trần 550k", map: "Ngách 37/2 Dịch Vọng Cầu Giấy" },
+    { group: "☕ Cafe & Trà Quán Thư Giãn (Hợp trần 550k)", name: "Cộng Cà Phê / Phê La (Thành Thái / Cầu Giấy)", per: 70000, cost: 140000, desc: "Đơn giá: Đồ uống 60k-65k/cốc + gửi xe (~70k/người × 2 = 140k). Chuẩn giá menu chuỗi lớn.", tag: "📍 Cách 400m • ✅ Hợp trần 550k", map: "Phê La Thành Thái Cầu Giấy" },
+    { group: "☕ Cafe & Trà Quán Thư Giãn (Hợp trần 550k)", name: "Khu Cafe Sách & Manga Nhà sách Tiến Thọ", per: 55000, cost: 110000, desc: "Đơn giá: Nước uống 45k + gửi xe (~55k/người × 2 = 110k). Đọc sách, truyện tranh mát mẻ cả buổi chiều.", tag: "📍 Cách 900m • ✅ Hợp trần 550k", map: "Nhà sách Tiến Thọ Xuân Thủy" },
 
-    { group: "🍿 Xem Phim Điện Ảnh & Phòng Chiếu Thư Giãn", name: "CGV Indochina Plaza Xuân Thủy (Vé U22 Sinh Viên)", desc: "Giá thực trả: 2 vé U22 (70k x 2 = 140k) + 1 bắp/nước chung (45k) + gửi xe hầm (5k). Thư giãn nhẹ nhàng với một bộ phim điện ảnh màn ảnh rộng.", cost: 190000, tag: "📍 Cách 1km • 🧾 2 vé U22 + Bắp nước", map: "CGV Indochina Plaza 241 Xuân Thủy" },
-    { group: "🍿 Xem Phim Điện Ảnh & Phòng Chiếu Thư Giãn", name: "Lotte / BHD Star Discovery (302 Cầu Giấy)", desc: "Giá thực trả: 2 vé sinh viên (65k x 2 = 130k) + 2 nước ngọt (40k) + gửi xe (5k). Rạp ngay gần Phố Dịch Vọng, vắng vẻ dễ chịu.", cost: 175000, tag: "📍 Cách 450m • 🎬 Rạp gần, vắng người", map: "302 Cầu Giấy" },
-    { group: "🍿 Xem Phim Điện Ảnh & Phòng Chiếu Thư Giãn", name: "T-Box Café Dịch Vọng (Xem Netflix / Youtube riêng)", desc: "Giá thực trả: Combo phòng chiếu 2.5 tiếng buổi chiều cho 2 người + 2 đồ uống + bỏng ngô. Nằm ghế lười xem phim tài liệu, anime hoặc hành động ngay đầu ngõ 37.", cost: 175000, tag: "📍 Cách 50m • 📺 Đã gồm phòng + 2 nước", map: "T-Box Cafe Ngõ 37 Dịch Vọng Cầu Giấy" },
-
-    { group: "📚 Cafe Sách, Truyện Tranh Manga & Giải Trí Nhẹ", name: "Khu Đọc Sách / Manga & Cafe Nhà sách Tiến Thọ", desc: "Giá thực trả: 2 đồ uống tại khu cafe sách + gửi xe + mua 1-2 cuốn truyện/đồ lưu niệm nhỏ. Không gian cực rộng và mát để lượn lờ cả buổi chiều.", cost: 110000, tag: "📍 Cách 900m • 📚 Sách & Truyện tranh", map: "Nhà sách Tiến Thọ Xuân Thủy" },
-    { group: "📚 Cafe Sách, Truyện Tranh Manga & Giải Trí Nhẹ", name: "Nhã Nam Books N' Coffee / Đông Tây Cafe Sách", desc: "Giá thực trả: 2 đồ uống (45k-50k/cốc) + gửi xe. Ngồi đọc sách, bàn chuyện sáng tác hoặc nghỉ ngơi trong không gian ngập tràn kệ sách.", cost: 105000, tag: "📖 Yên bình • ☕ Cafe kết hợp đọc sách", map: "Nhã Nam Books Coffee Cầu Giấy" },
-    { group: "📚 Cafe Sách, Truyện Tranh Manga & Giải Trí Nhẹ", name: "Cafe Boardgame Thư Giãn (Nguyễn Văn Huyên)", desc: "Giá thực trả: Combo vé chơi + 2 đồ uống lớn (55k/người). Chọn các bộ game hợp tác nhẹ nhàng (Co-op) hoặc xếp hình giải trí vui vẻ.", cost: 115000, tag: "📍 Cách 900m • 🎲 Giải trí nhẹ nhàng", map: "Ngõ 158 Nguyễn Văn Huyên Cầu Giấy" },
-    { group: "📚 Cafe Sách, Truyện Tranh Manga & Giải Trí Nhẹ", name: "Giao lưu Bi-a Thư Giãn 1.5 Tiếng (Ngõ 165 Cầu Giấy)", desc: "Giá thực trả: 1.5 tiếng tiền bàn (~115k) + 2 chai nước/trà đá (35k) + gửi xe. Đánh thong thả vừa gõ bi vừa nói chuyện, không đặt nặng thắng thua.", cost: 155000, tag: "📍 Cách 250m • 🎱 1.5h bàn + 2 nước", map: "KF Pool Arena Ngõ 165 Cầu Giấy" }
+    { group: "🍿 Rạp Phim, Phòng Chiếu & Boardgame (Giá Thực Tế 2 Người)", name: "CGV IPH Xuân Thủy (2 Vé U22 + Combo Bắp Nước)", per: 120000, cost: 240000, desc: "Đơn giá thực tế: Vé U22 (70k/người) + chia đôi Combo bắp nước (50k/người) = 120k/người × 2 = 240k.", tag: "🍿 Đủ bắp nước • ⚠️ Khuyên dùng trần 800k", map: "CGV Indochina Plaza 241 Xuân Thủy" },
+    { group: "🍿 Rạp Phim, Phòng Chiếu & Boardgame (Giá Thực Tế 2 Người)", name: "Lotte / BHD Discovery 302 Cầu Giấy (2 Vé + Nước)", per: 105000, cost: 210000, desc: "Đơn giá thực tế: Vé sinh viên (65k/người) + Bắp/nước + Gửi xe = 105k/người × 2 = 210k.", tag: "📍 Cách 450m • 🎬 Đủ bắp nước", map: "302 Cầu Giấy" },
+    { group: "🍿 Rạp Phim, Phòng Chiếu & Boardgame (Giá Thực Tế 2 Người)", name: "T-Box Café Dịch Vọng (Combo phòng 2.5h + Nước + Bỏng)", per: 140000, cost: 280000, desc: "Đơn giá thực tế phòng riêng cho 2 người: ~140k/người × 2 = 280k (Gồm tiền phòng chiếu 2.5h + 2 nước + bỏng).", tag: "📍 Cách 50m • ⚠️ Khuyên dùng trần 800k", map: "T-Box Cafe Ngõ 37 Dịch Vọng Cầu Giấy" },
+    { group: "🍿 Rạp Phim, Phòng Chiếu & Boardgame (Giá Thực Tế 2 Người)", name: "Cafe Boardgame (Vé chơi 3h + Đồ uống từng người)", per: 95000, cost: 190000, desc: "Đơn giá thực tế: Vé chơi (45k) + 1 đồ uống (50k) = 95k/người × 2 = 190k.", tag: "🎲 Vé + Nước • 🧾 Chuẩn giá", map: "Ngõ 158 Nguyễn Văn Huyên Cầu Giấy" },
+    { group: "🍿 Rạp Phim, Phòng Chiếu & Boardgame (Giá Thực Tế 2 Người)", name: "Giao lưu Bi-a Thư Giãn 2.5 Tiếng + Nước", per: 110000, cost: 220000, desc: "Đơn giá thực tế: 2.5h tiền bàn (175k) + 2 lon nước/trà đá (45k) = 220k/2 anh em (110k/người).", tag: "🎱 2.5h bàn + Nước • 🧾 Chuẩn giá", map: "KF Pool Arena Ngõ 165 Cầu Giấy" }
   ],
 
-  // ================= CHẶNG 2: CHIỀU MUỘN DẠO MÁT & NGẮM CẢNH (16h30 - 18h00) =================
+  // ================= CHẶNG 2: CHIỀU MUỘN (16h30 - 18h00) =================
   [
-    { group: "🌿 Dạo Bộ Công Viên & Trà Đá / Nước Mía Thư Thái", name: "Công viên Cầu Giấy & Trà Đá Vỉa Hè Thành Thái", desc: "Giá thực trả: Gửi xe (5k) + 2 cốc nước mía/trà tắc lớn (20k) + đĩa hướng dương (10k). Đi bộ giãn gân cốt quanh hồ và ngồi ghế đá đón gió chiều.", cost: 35000, tag: "📍 Cách 400m • 🌬️ Rộng rãi, lộng gió", map: "Công viên Cầu Giấy Phố Thành Thái" },
-    { group: "🌿 Dạo Bộ Công Viên & Trà Đá / Nước Mía Thư Thái", name: "Dạo Hồ Điều Hòa Mai Dịch Ngắm Hoàng Hôn", desc: "Giá thực trả: Gửi xe (5k) + 2 phần nước uống ven hồ (25k). Không gian mặt hồ cực thoáng, ngắm mặt trời lặn rất thư giãn đầu óc.", cost: 30000, tag: "📍 Cách 2km • 🌅 Hoàng hôn mặt hồ", map: "Công viên Hồ điều hòa Mai Dịch" },
-    { group: "🌿 Dạo Bộ Công Viên & Trà Đá / Nước Mía Thư Thái", name: "Công viên Nghĩa Đô & Nước Mía Siêu To", desc: "Giá thực trả: Gửi xe (5k) + 2 cốc nước mía khổng lồ (24k). Tản bộ dưới những hàng cây cổ thụ rợp bóng mát.", cost: 30000, tag: "📍 Cách 800m • 🌳 Nhiều cây cổ thụ", map: "Công viên Nghĩa Đô Cầu Giấy" },
-    { group: "🌿 Dạo Bộ Công Viên & Trà Đá / Nước Mía Thư Thái", name: "Ngồi Trà Chanh Vỉa Hè Đại Lộ Dương Đình Nghệ", desc: "Giá thực trả: 2 cốc trà chanh/trà quất (30k) + hướng dương (10k). Ngồi ngắm phố phường thoáng đãng lúc chiều tà.", cost: 40000, tag: "📍 Cách 600m • 🛣️ Đại lộ thoáng", map: "Phố Dương Đình Nghệ Cầu Giấy" },
-
-    { group: "🚆 Tàu Điện Trên Cao, Bảo Tàng & Không Gian Văn Hóa", name: "Đi Tàu Điện Trên Cao Ngắm Thành Phố (Ga Chùa Hà)", desc: "Giá thực trả: 2 vé tàu khứ hồi trải nghiệm ngắm phố từ trên cao (32k) + gửi xe dưới ga (8k). Góc nhìn thành phố lúc chiều muộn cực đẹp và lạ mắt.", cost: 40000, tag: "📍 Cách 350m • 🚆 Ngắm phố từ trên cao", map: "Ga Chùa Hà Cầu Giấy" },
-    { group: "🚆 Tàu Điện Trên Cao, Bảo Tàng & Không Gian Văn Hóa", name: "Vãn cảnh Chùa Hà & Cầu Đi Bộ Trên Cao", desc: "Giá thực trả: Gửi xe (10k) + 2 chai nước suối (10k). Dạo bước trong khuôn viên kiến trúc cổ kính, yên bình trước giờ đóng cửa (18h00).", cost: 20000, tag: "📍 Cách 350m • 🏮 Kiến trúc thanh tịnh", map: "Chùa Hà Cầu Giấy" },
-    { group: "🚆 Tàu Điện Trên Cao, Bảo Tàng & Không Gian Văn Hóa", name: "Bảo tàng Dân tộc học Việt Nam (Nguyễn Văn Huyên)", desc: "Giá thực trả: 2 vé sinh viên (20k x 2 = 40k) + gửi xe (5k) + nước suối (15k). Khu vườn ngoài trời trưng bày nhà Rông, nhà Dài cực kỳ mát mẻ và thú vị.", cost: 60000, tag: "📍 Cách 900m • 🏛️ Không gian văn hóa", map: "Bảo tàng Dân tộc học Việt Nam" },
-
-    { group: "🏢 Dạo Khu Mô Hình, Công Nghệ & TTTM Mát Lạnh", name: "Ngắm Đồ Công Nghệ & Sảnh Giếng Trời IPH Xuân Thủy", desc: "Giá thực trả: Gửi xe hầm (5k) + 2 cây kem ốc quế/nước lẻ (25k). Đi bộ thư giãn trong trung tâm thương mại mát lạnh.", cost: 30000, tag: "📍 Cách 1km • ❄️ Mát mẻ trong nhà", map: "Indochina Plaza 241 Xuân Thủy" },
-    { group: "🏢 Dạo Khu Mô Hình, Công Nghệ & TTTM Mát Lạnh", name: "Gắp Thú / Chơi Xu Giải Trí Nhẹ tại Timezone IPH", desc: "Giá thực trả: Nạp thẻ 80k chơi nhẹ nhàng vài trò gắp thú, đẩy xu vui vẻ chờ tới giờ ăn tối.", cost: 80000, tag: "📍 Cách 1km • 🧸 Giải trí nhẹ", map: "Timezone Indochina Plaza 241 Xuân Thủy" },
-    { group: "🏢 Dạo Khu Mô Hình, Công Nghệ & TTTM Mát Lạnh", name: "Dạo Siêu Thị & Khu Mua Sắm Discovery (302 Cầu Giấy)", desc: "Giá thực trả: Gửi xe (5k) + 2 lon nước giải khát trong siêu thị (25k). Ngay sát Dịch Vọng, đi lại cực nhàn.", cost: 30000, tag: "📍 Cách 450m • 🛒 Tiện lợi", map: "302 Cầu Giấy" },
-    { group: "🏢 Dạo Khu Mô Hình, Công Nghệ & TTTM Mát Lạnh", name: "Lượn Phố Sách & Quà Lưu Niệm Phan Văn Trường", desc: "Giá thực trả: Gửi xe đầu phố (10k) + ăn nhẹ xiên nướng/bánh tráng (30k) trước khi vào quán ăn chính.", cost: 40000, tag: "📍 Cách 1km • 🚶 Tiện đường ăn tối", map: "Phố Phan Văn Trường Cầu Giấy" },
-    { group: "🏢 Dạo Khu Mô Hình, Công Nghệ & TTTM Mát Lạnh", name: "Thưởng Thức Tào Phớ / Chè Mát Lạnh (Khu Dịch Vọng)", desc: "Giá thực trả: 2 bát tào phớ trân châu đường đen / chè bưởi (25k/bát) giải nhiệt chiều muộn.", cost: 50000, tag: "📍 Cách 250m • 🍧 Mát lạnh", map: "Phố Dịch Vọng Cầu Giấy" }
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Công viên Cầu Giấy & Trà Đá / Nước Mía Thành Thái", per: 15000, cost: 30000, desc: "Đơn giá: 15k/người × 2 = 30k (Gồm 2 cốc nước mía/trà đá + gửi xe).", cost: 30000, tag: "📍 Cách 400m • 🌬️ Thoáng mát", map: "Công viên Cầu Giấy Phố Thành Thái" },
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Dạo Hồ Điều Hòa Mai Dịch & Uống Nước Ven Hồ", per: 20000, cost: 40000, desc: "Đơn giá: 20k/người × 2 = 40k (Gửi xe + 2 trà chanh/nước mía ven hồ).", tag: "🌅 Hoàng hôn đẹp • 🌊 Hồ rộng", map: "Công viên Hồ điều hòa Mai Dịch" },
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Công viên Nghĩa Đô & Nước Mía Siêu To", per: 15000, cost: 30000, desc: "Đơn giá: 15k/người × 2 = 30k (2 cốc nước mía khổng lồ + gửi xe).", tag: "🌳 Nhiều cây cổ thụ • 🥤 Giải khát", map: "Công viên Nghĩa Đô Cầu Giấy" },
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Trà Chanh Vỉa Hè Đại Lộ Dương Đình Nghệ", per: 25000, cost: 50000, desc: "Đơn giá: 25k/người × 2 = 50k (2 trà chanh + đĩa hướng dương ngồi hóng gió).", tag: "🛣️ Đại lộ thoáng • 🌬️ Gió mát", map: "Phố Dương Đình Nghệ Cầu Giấy" },
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Trải Nghiệm Tàu Điện Trên Cao (Ga Chùa Hà)", per: 20000, cost: 40000, desc: "Đơn giá: 20k/người × 2 = 40k (Vé tàu khứ hồi ngắm hoàng hôn thành phố + gửi xe).", tag: "📍 Cách 350m • 🚆 Ngắm phố trên cao", map: "Ga Chùa Hà Cầu Giấy" },
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Vãn Cảnh Chùa Hà & Cầu Đi Bộ Trên Cao", per: 10000, cost: 20000, desc: "Đơn giá: 10k/người × 2 = 20k (Gửi xe + 2 chai nước suối).", tag: "🏮 Thanh tịnh • 📍 Cách 350m", map: "Chùa Hà Cầu Giấy" },
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Bảo Tàng Dân Tộc Học (Vé SV + Nước + Gửi Xe)", per: 30000, cost: 60000, desc: "Đơn giá: 30k/người × 2 = 60k (Vé sinh viên 20k/người + nước suối + gửi xe).", tag: "🏛️ Không gian văn hóa • 🌳 Vườn rộng", map: "Bảo tàng Dân tộc học Việt Nam" },
+    { group: "🌿 Dạo Mát, Tàu Điện & Ngắm Cảnh (Nhẹ Ví)", name: "Thưởng Thức Tào Phớ / Chè Mát Lạnh Dịch Vọng", per: 30000, cost: 60000, desc: "Đơn giá: 30k/bát × 2 = 60k. Giải nhiệt nhẹ nhàng trước giờ ăn tối.", tag: "🍧 Ngọt mát • 📍 Cách 250m", map: "Phố Dịch Vọng Cầu Giấy" }
   ],
 
-  // ================= CHẶNG 3: ĂN TỐI KÉO DÀI & TRÒ CHUYỆN TỚI KHUYA (18h00 - 22h30) =================
+  // ================= CHẶNG 3: ĂN TỐI KÉO DÀI & TRÒ CHUYỆN (18h00 - 22h30) =================
   [
-    { group: "🥩 Nướng & Lẩu Bình Dân Ngồi Lâu (Không Thu VAT - Chuẩn Giá)", name: "Buffet Nướng Chảo Gang Sinh Viên (Phan Văn Trường)", desc: "Giá thực trả: 2 suất buffet (149k x 2 = 298k) + 2 nước ngọt/trà đá (30k) + khăn & gửi xe (10k). Không thu VAT, ngồi nướng bơ lai rai tâm sự 3-4 tiếng thoải mái.", cost: 340000, tag: "🧾 All-in 340k • ⏳ Ngồi lâu không giục", map: "Phố Phan Văn Trường Cầu Giấy" },
-    { group: "🥩 Nướng & Lẩu Bình Dân Ngồi Lâu (Không Thu VAT - Chuẩn Giá)", name: "Buffet Nướng Bơ / Nướng Lụi (Trần Quốc Hoàn)", desc: "Giá thực trả: 2 vé 145k + nước uống gọi thêm (35k) + khăn ướt (10k). Quán sinh viên thoáng mát, gọi ba chỉ bò và nầm heo không giới hạn.", cost: 335000, tag: "🧾 All-in 335k • 🥩 Gọi thịt thả ga", map: "Phố Trần Quốc Hoàn Cầu Giấy" },
-    { group: "🥩 Nướng & Lẩu Bình Dân Ngồi Lâu (Không Thu VAT - Chuẩn Giá)", name: "Lẩu Ếch Măng Cay & Ếch Rang Muối (Khu Cầu Giấy)", desc: "Giá thực trả: Combo lẩu ếch + đĩa ếch rang muối/khoai chiên (290k) + rau/mì thêm + 3 lon nước/trà đá (45k). Nồi lẩu đun liu riu ngồi nói chuyện tới 22h30 cực hợp.", cost: 335000, tag: "🧾 All-in 335k • ⏳ Vua ngồi đàm đạo", map: "Lẩu ếch Cầu Giấy" },
-    { group: "🥩 Nướng & Lẩu Bình Dân Ngồi Lâu (Không Thu VAT - Chuẩn Giá)", name: "Lẩu Bò Nhúng Dấm / Bò Nướng Tảng (Trần Thái Tông)", desc: "Giá thực trả: Nồi bò nhúng dấm đầy đặn cho 2 người (280k) + bánh phở/váng đậu + nước uống (50k). Chua dịu dễ ăn, không bị ngấy khi ngồi lâu.", cost: 330000, tag: "🧾 All-in 330k • 🍲 Thanh mát dễ ăn", map: "Phố Trần Thái Tông Cầu Giấy" },
-    { group: "🥩 Nướng & Lẩu Bình Dân Ngồi Lâu (Không Thu VAT - Chuẩn Giá)", name: "Vịt Nướng Cháy Tỏi & Lẩu Vịt Măng Cay (Trần Quốc Hoàn)", desc: "Giá thực trả: Nửa con vịt cháy tỏi + nồi lẩu vịt (250k) + bún/rau + nước ngọt (40k). Cực nhiều đạm, không gian bình dân thoải mái.", cost: 290000, tag: "🧾 All-in 290k • 🦆 Siêu no & Kinh tế", map: "Vịt nướng Trần Quốc Hoàn Cầu Giấy" },
-    { group: "🥩 Nướng & Lẩu Bình Dân Ngồi Lâu (Không Thu VAT - Chuẩn Giá)", name: "TSF Thai Street Food (Số 6 Khúc Thừa Dụ) + Trà Chanh", desc: "Giá thực trả: 3-4 món Thái (Pad Thái, Cơm rang dứa, Tomyum, Gỏi ~220k) + 2 trà Thái/trà chanh ngồi lai rai (40k). Ngay gần Dịch Vọng, sạch sẽ lịch sự.", cost: 260000, tag: "🧾 All-in 260k • 📍 Cách 500m", map: "6 Khúc Thừa Dụ Cầu Giấy" },
+    // Nhóm 1: Vừa tầm trần 550k (155k - 195k / người -> 310k - 390k / 2 người)
+    { group: "🍲 Quán Sinh Viên Chuẩn Giá ≤ 390k/2 Người (Hợp Trần 550k)", name: "Buffet Dookki IPH Xuân Thủy (Đã gồm VAT & Nước ngọt)", per: 155000, cost: 310000, desc: "Đơn giá niêm yết: 139k + VAT = 153k/người × 2 = 306k (+ gửi xe = 310k). Đã bao gồm nước ngọt uống thả ga không mất thêm tiền.", tag: "✅ Hợp trần 550k • 💯 Giá niêm yết", map: "Dookki Indochina Plaza 241 Xuân Thủy" },
+    { group: "🍲 Quán Sinh Viên Chuẩn Giá ≤ 390k/2 Người (Hợp Trần 550k)", name: "Lẩu Ếch Măng Cay Bình Dân + Khoai Chiên + Nước", per: 190000, cost: 380000, desc: "Đơn giá thực tế: 190k/người × 2 = 380k (Gồm nồi lẩu ếch 260k + khoai/váng đậu 60k + 3-4 nước ngọt/trà đá 60k). Ngồi tới 22h30 thoải mái.", tag: "✅ Hợp trần 550k • ⏳ Ngồi lâu thoải mái", map: "Lẩu ếch Cầu Giấy" },
+    { group: "🍲 Quán Sinh Viên Chuẩn Giá ≤ 390k/2 Người (Hợp Trần 550k)", name: "Buffet Nướng Chảo Gang Sinh Viên (Phan Văn Trường)", per: 190000, cost: 380000, desc: "Đơn giá thực tế: Vé 159k/người + Nước ngọt/Trà đá + Khăn & Gửi xe = 190k/người × 2 = 380k. Quán vỉa hè/bình dân không thu VAT.", tag: "✅ Hợp trần 550k • 🥩 Gọi thịt thả ga", map: "Phố Phan Văn Trường Cầu Giấy" },
+    { group: "🍲 Quán Sinh Viên Chuẩn Giá ≤ 390k/2 Người (Hợp Trần 550k)", name: "Lẩu Gà Lá É Tao Ngộ (Nồi 2 người + Bún thêm + Nước)", per: 180000, cost: 360000, desc: "Đơn giá thực tế: 180k/người × 2 = 360k (Nồi lẩu gà lá é 280k + váng đậu/nấm thêm + 2 nước sâm/trà đá). Ngon, ấm bụng, ngồi lâu.", tag: "✅ Hợp trần 550k • 🍲 Ngồi lâu, ấm bụng", map: "Lẩu gà lá é Cầu Giấy" },
+    { group: "🍲 Quán Sinh Viên Chuẩn Giá ≤ 390k/2 Người (Hợp Trần 550k)", name: "Vịt Nướng Cháy Tỏi & Lẩu Vịt (Trần Quốc Hoàn)", per: 175000, cost: 350000, desc: "Đơn giá thực tế: 175k/người × 2 = 350k (Nồi lẩu vịt + đĩa vịt cháy tỏi + rau bún + nước uống). Rất nhiều đạm, chuẩn quán bình dân.", tag: "✅ Hợp trần 550k • 🦆 Nhiều thịt", map: "Vịt nướng Trần Quốc Hoàn Cầu Giấy" },
+    { group: "🍲 Quán Sinh Viên Chuẩn Giá ≤ 390k/2 Người (Hợp Trần 550k)", name: "TSF Thai Street Food (4 Món Thái + 2 Trà Thái)", per: 185000, cost: 370000, desc: "Đơn giá thực tế: 185k/người × 2 = 370k (Gọi đủ 4 món: Pad Thái, Cơm rang dứa, Tomyum, Gỏi xoài ~290k + 2 Trà Thái 80k).", tag: "✅ Hợp trần 550k • 🇹🇭 Đủ 4 món + 2 nước", map: "6 Khúc Thừa Dụ Cầu Giấy" },
 
-    { group: "🍲 Buffet Nhà Hàng Máy Lạnh (Đã Cộng Đủ Quầy Nước + 8% VAT)", name: "Nhất Nướng - Buffet Than Hoa (28 Trần Vỹ)", desc: "Giá thực trả: 2 vé buffet tối (175k x 2 = 350k) + 2 nước ngọt/bia + khăn ướt & gửi xe (~70k). Quán rất rộng, hút khói tốt, ngồi lâu thoải mái.", cost: 420000, tag: "🧾 All-in 420k • 🔥 Nướng than hoa", map: "28 Trần Vỹ Cầu Giấy" },
-    { group: "🍲 Buffet Nhà Hàng Máy Lạnh (Đã Cộng Đủ Quầy Nước + 8% VAT)", name: "Buffet Lẩu Phan (Đào Tấn / Nguyễn Khang)", desc: "Giá thực trả: 2 vé 149k + 2 vé Buffet nước & kem tráng miệng (39k x 2) + 8% VAT + gửi xe = 415k. Gọi bò Mỹ thả ga trong phòng điều hòa mát rượi.", cost: 415000, tag: "🧾 All-in 415k • 🥩 Bò Mỹ + Nước + Kem", map: "Lẩu Phan Nguyễn Khang Cầu Giấy" },
-    { group: "🍲 Buffet Nhà Hàng Máy Lạnh (Đã Cộng Đủ Quầy Nước + 8% VAT)", name: "Buffet Lẩu Wang (Tô Hiệu / Nguyễn Khang)", desc: "Giá thực trả: 2 vé 159k + 2 vé quầy line/nước + 8% VAT = 430k. Không gian trẻ trung, sạch sẽ, ngồi ăn và trò chuyện êm ấm suốt buổi tối.", cost: 430000, tag: "🧾 All-in 430k • ❄️ Lịch sự, máy lạnh", map: "Lẩu Wang Tô Hiệu Cầu Giấy" },
-
-    { group: "🍖 Quán Ngon Không Gian Đẹp Ngồi Tới Khuya (Đã Cộng Đủ Nước & VAT)", name: "Lẩu Bò Tự Do (58 Khúc Thừa Dụ - Sát Dịch Vọng)", desc: "Giá thực trả: Nồi lẩu bò tươi (~300k) + ngô chiên/rau thêm (60k) + 4 lon nước ngọt/bia + VAT (~90k). Ngồi từ 18h tới 23h đêm tâm sự cực kỳ hợp.", cost: 450000, tag: "🧾 All-in 450k • 🏆 Không giới hạn giờ", map: "58 Khúc Thừa Dụ Cầu Giấy" },
-    { group: "🍖 Quán Ngon Không Gian Đẹp Ngồi Tới Khuya (Đã Cộng Đủ Nước & VAT)", name: "Sườn Mười BBQ (128 Vũ Phạm Hàm)", desc: "Giá thực trả: Combo sườn nướng BBQ tảng lớn + Mỳ Ý + Salad cho 2 người (380k) + 2 đồ uống + 8% VAT (~80k). Nhạc nhẹ nhàng, rất dễ nói chuyện sâu.", cost: 460000, tag: "🧾 All-in 460k • 🍖 Sườn BBQ & Mỳ Ý", map: "128 Vũ Phạm Hàm Cầu Giấy" },
-    { group: "🍖 Quán Ngon Không Gian Đẹp Ngồi Tới Khuya (Đã Cộng Đủ Nước & VAT)", name: "Bò Tơ Quán Mộc (Khu Nguyễn Phong Sắc / Cầu Giấy)", desc: "Giá thực trả: Bò tơ cuốn bánh tráng + Bò nướng/lẩu nhỏ + 2 nước + VAT. Không gian phố xưa rộng rãi, ngồi lai rai chuyện trò rất thư thái.", cost: 460000, tag: "🧾 All-in 460k • 🏮 Không gian phố xưa", map: "Bò Tơ Quán Mộc Cầu Giấy" }
+    // Nhóm 2: Nhà hàng / Buffet Thương hiệu (230k - 290k / người -> 460k - 580k / 2 người)
+    { group: "🥩 Buffet Nhà Hàng & Lẩu Bò Thương Hiệu (230k – 290k/Người)", name: "Buffet Lẩu Phan (Gói Bò Mỹ Tối + Buffet Nước + VAT)", per: 240000, cost: 480000, desc: "Đơn giá thực tế: Vé ăn tối 189k + Buffet nước/kem 39k + 8% VAT = ~240k/người × 2 = 480k. Phòng lạnh, ăn bò Mỹ thả ga.", tag: "🧾 240k/người × 2 • ❄️ Nhà hàng máy lạnh", map: "Lẩu Phan Nguyễn Khang Cầu Giấy" },
+    { group: "🥩 Buffet Nhà Hàng & Lẩu Bò Thương Hiệu (230k – 290k/Người)", name: "Nhất Nướng - Buffet Than Hoa Trần Vỹ (Vé tối + Nước)", per: 245000, cost: 490000, desc: "Đơn giá thực tế: Vé nướng tối 199k + Nước ngọt/Bia + Khăn & VAT = ~245k/người × 2 = 490k. Quán rộng, ngồi lâu thoải mái.", tag: "🧾 245k/người × 2 • 🔥 Than hoa không khói", map: "28 Trần Vỹ Cầu Giấy" },
+    { group: "🥩 Buffet Nhà Hàng & Lẩu Bò Thương Hiệu (230k – 290k/Người)", name: "Buffet Lẩu Wang Tô Hiệu (Gói Tối + Quầy Line + VAT)", per: 250000, cost: 500000, desc: "Đơn giá thực tế: Vé tối 189k + Quầy line/nước 39k + 10% VAT = ~250k/người × 2 = 500k.", tag: "🧾 250k/người × 2 • 🥘 Đủ quầy line & VAT", map: "Lẩu Wang Tô Hiệu Cầu Giấy" },
+    { group: "🥩 Buffet Nhà Hàng & Lẩu Bò Thương Hiệu (230k – 290k/Người)", name: "Lẩu Bò Tự Do 58 Khúc Thừa Dụ (Ngồi lai rai 4 tiếng)", per: 280000, cost: 560000, desc: "Đơn giá thực tế tại Tự Do: ~280k/người × 2 = 560k (Lẩu bò tươi + đồ nhúng thêm + khoai/ngô chiên + 4-6 cốc bia/nước + VAT).", tag: "🧾 280k/người × 2 • 🏆 Chuẩn giá Tự Do", map: "58 Khúc Thừa Dụ Cầu Giấy" },
+    { group: "🥩 Buffet Nhà Hàng & Lẩu Bò Thương Hiệu (230k – 290k/Người)", name: "Sườn Mười BBQ 128 Vũ Phạm Hàm (Combo Đôi + Nước + VAT)", per: 290000, cost: 580000, desc: "Đơn giá thực tế tại Sườn Mười: ~290k/người × 2 = 580k (Combo sườn tảng lớn + Mỳ Ý + Salad + 2 đồ uống + 8% VAT).", tag: "🧾 290k/người × 2 • 🍖 Chuẩn giá Sườn Mười", map: "128 Vũ Phạm Hàm Cầu Giấy" },
+    { group: "🥩 Buffet Nhà Hàng & Lẩu Bò Thương Hiệu (230k – 290k/Người)", name: "Bò Tơ Quán Mộc Cầu Giấy (Mẹt Bò Tơ + Lẩu + Nước + VAT)", per: 285000, cost: 570000, desc: "Đơn giá thực tế: ~285k/người × 2 = 570k (Bò tơ cuốn bánh tráng + Lẩu/nướng + Nước uống + VAT).", tag: "🧾 285k/người × 2 • 🏮 Chuẩn giá nhà hàng", map: "Bò Tơ Quán Mộc Cầu Giấy" }
   ]
 ];
 
 let state = {
-  sv: [0, 0, 0],
+  sv: [0, 0, 1],
   customNames: ["", "", ""],
-  c: [120000, 35000, 340000], // Tổng thực tế: 495.000đ / 2 người (247.5k/người)
+  c: [130000, 30000, 380000], // Mặc định: 130k + 30k + 380k = 540.000đ (270k/người)
   d: [0, 0, 0],
   p: ['S', 'S', 'S'],
-  na: 'Bạn A', nb: 'Bạn B',
+  na: 'Ông A', nb: 'Ông B',
   en: '', ec: 0, pl: '', pc: '', nt: ''
 };
 let gachaStep = 2;
 
 function init() {
   const q = new URLSearchParams(window.location.search);
+  if (q.has('cap')) CAP = Number(q.get('cap')) || 550000;
   if (q.has('sv')) state.sv = q.get('sv').split(',').map(Number).slice(0, 3);
   if (q.has('cn')) state.customNames = q.get('cn').split('|').slice(0, 3);
   if (q.has('c')) state.c = q.get('c').split(',').map(Number).slice(0, 3);
@@ -450,10 +469,23 @@ function init() {
   document.getElementById('park-col').value = state.pc;
   document.getElementById('shared-note').value = state.nt;
 
+  updateCapUI();
   setGachaStep(2);
   updateClock();
   setInterval(updateClock, 30000);
   render();
+}
+
+function setCap(val) {
+  CAP = val;
+  updateCapUI();
+  render();
+}
+
+function updateCapUI() {
+  document.getElementById('cap-550').classList.toggle('active', CAP === 550000);
+  document.getElementById('cap-800').classList.toggle('active', CAP === 800000);
+  document.getElementById('ui-cap-lbl').textContent = `💰 Tổng 2 người / Trần ${CAP.toLocaleString('vi-VN')}đ`;
 }
 
 function updateClock() {
@@ -469,19 +501,41 @@ function applyPreset(indices, btnEl) {
   state.sv = [...indices];
   state.customNames = ["", "", ""];
   state.c = indices.map((vIdx, stepIdx) => MEGA_DB[stepIdx][vIdx].cost);
+  const sum = state.c.reduce((a, b) => a + b, 0);
+  if (sum > 550000 && CAP === 550000) setCap(800000);
+  else if (sum <= 550000 && CAP === 800000) setCap(550000);
   render();
 }
 
-function randomizeAll() {
-  const newIndices = MEGA_DB.map(list => Math.floor(Math.random() * list.length));
-  applyPreset(newIndices, null);
+function autoFit550() {
+  setCap(550000);
+  if (state.sv[0] > 4) { state.sv[0] = 0; state.c[0] = MEGA_DB[0][0].cost; }
+  if (state.sv[2] > 5) { state.sv[2] = 1; state.c[2] = MEGA_DB[2][1].cost; }
+  render();
+}
+
+function randomizeByCap() {
+  let tries = 0;
+  while (tries < 60) {
+    const i0 = Math.floor(Math.random() * MEGA_DB[0].length);
+    const i1 = Math.floor(Math.random() * MEGA_DB[1].length);
+    const i2 = Math.floor(Math.random() * MEGA_DB[2].length);
+    const sum = MEGA_DB[0][i0].cost + MEGA_DB[1][i1].cost + MEGA_DB[2][i2].cost + state.ec;
+    if (sum <= CAP) {
+      state.sv = [i0, i1, i2];
+      state.c = [MEGA_DB[0][i0].cost, MEGA_DB[1][i1].cost, MEGA_DB[2][i2].cost];
+      render();
+      return;
+    }
+    tries++;
+  }
 }
 
 function render() {
   const times = [
     "Chặng 1 • 13h30 – 16h30 (Thư giãn đầu chiều)",
     "Chặng 2 • 16h30 – 18h00 (Dạo mát & Ngắm cảnh chiều muộn)",
-    "Chặng 3 • 18h00 – 22h30 (Ăn tối kéo dài & Ngồi trò chuyện tại quán)"
+    "Chặng 3 • 18h00 – 22h30 (Ăn tối kéo dài & Ngồi đàm đạo)"
   ];
   const container = document.getElementById('timeline-list');
 
@@ -505,11 +559,13 @@ function render() {
       <optgroup label="${gName}">
         ${groups[gName].map(item => `
           <option value="${item.idx}" ${item.idx === curIdx ? 'selected' : ''}>
-            ${item.name} (Thực chi: ${item.cost.toLocaleString('vi-VN')}đ)
+            ${item.name} [${(item.per/1000)}k/người × 2 = ${item.cost.toLocaleString('vi-VN')}đ]
           </option>
         `).join('')}
       </optgroup>
     `).join('');
+
+    const perPersonNow = Math.round(state.c[i] / 2);
 
     return `
       <div class="step-card step-${i} ${state.d[i] ? 'done' : ''}">
@@ -533,6 +589,10 @@ function render() {
           <input type="text" class="custom-inp" placeholder="Gõ tên địa điểm tự chọn vào đây..." value="${state.customNames[i]}" oninput="updateCustomName(${i}, this.value)">
         </div>
 
+        <div>
+          <span class="math-pill">🧮 Tính chuẩn 2 người: ${perPersonNow.toLocaleString('vi-VN')}đ/người × 2 = ${state.c[i].toLocaleString('vi-VN')}đ</span>
+        </div>
+
         <div class="tags-row">
           <span class="v-tag">${isCustom ? '✨ Địa điểm tự chọn' : venue.tag}</span>
           <span class="v-tag">📂 ${venue.group.replace(/^[^\s]+\s/, '')}</span>
@@ -542,7 +602,7 @@ function render() {
 
         <div class="step-actions">
           <div class="input-group">
-            <input type="number" class="money-input" step="5000" value="${state.c[i]}" oninput="changeCost(${i}, this.value)">
+            <input type="number" class="money-input" step="10000" value="${state.c[i]}" oninput="changeCost(${i}, this.value)">
             <select class="payer-select" onchange="changePayer(${i}, this.value)">
               <option value="S" ${state.p[i] === 'S' ? 'selected' : ''}>🤝 Chia đôi luôn</option>
               <option value="A" ${state.p[i] === 'A' ? 'selected' : ''}>💳 ${state.na} ứng</option>
@@ -584,12 +644,12 @@ function updateCustomName(i, val) {
 }
 
 function toggleStep(i) { state.d[i] = state.d[i] ? 0 : 1; render(); }
-function changeCost(i, val) { state.c[i] = Number(val) || 0; calcTotals(); }
+function changeCost(i, val) { state.c[i] = Number(val) || 0; render(); }
 function changePayer(i, val) { state.p[i] = val; calcTotals(); }
 
 function syncInput() {
-  state.na = document.getElementById('nameA').value || 'Bạn A';
-  state.nb = document.getElementById('nameB').value || 'Bạn B';
+  state.na = document.getElementById('nameA').value || 'Ông A';
+  state.nb = document.getElementById('nameB').value || 'Ông B';
   state.en = document.getElementById('ext-name').value;
   state.ec = Number(document.getElementById('ext-cost').value) || 0;
   state.pl = document.getElementById('park-loc').value;
@@ -601,8 +661,7 @@ function syncInput() {
 function calcTotals() {
   const stepSum = state.c.reduce((a, b) => a + b, 0);
   const total = stepSum + state.ec;
-  const budget = 580000;
-  const diff = budget - total;
+  const diff = CAP - total;
 
   document.getElementById('ui-total').textContent = total.toLocaleString('vi-VN') + 'đ';
   document.getElementById('ui-per').textContent = Math.round(total / 2).toLocaleString('vi-VN') + 'đ';
@@ -611,10 +670,18 @@ function calcTotals() {
   diffEl.textContent = (diff >= 0 ? 'Dư ' : 'Vượt ') + Math.abs(diff).toLocaleString('vi-VN') + 'đ';
   diffEl.style.color = diff >= 0 ? 'var(--emerald)' : 'var(--red)';
 
-  const pct = Math.min(100, Math.round((total / budget) * 100));
+  const alertBox = document.getElementById('over-alert');
+  if (total > CAP) {
+    alertBox.classList.add('show');
+    document.getElementById('over-msg').textContent = `⚠️ Tổng 2 người (${total.toLocaleString('vi-VN')}đ) đang vượt trần ${CAP.toLocaleString('vi-VN')}đ vì chọn quán phân khúc Nhà hàng!`;
+  } else {
+    alertBox.classList.remove('show');
+  }
+
+  const pct = Math.min(100, Math.round((total / CAP) * 100));
   const bar = document.getElementById('budget-bar');
   bar.style.width = pct + '%';
-  bar.style.background = total > budget ? 'var(--red)' : 'linear-gradient(90deg, #10b981, #0284c7)';
+  bar.style.background = total > CAP ? 'var(--red)' : 'linear-gradient(90deg, #10b981, #0284c7)';
 
   const doneCount = state.d.filter(Boolean).length;
   document.getElementById('ui-prog').textContent = `${doneCount} / 3 chặng`;
@@ -626,13 +693,13 @@ function calcTotals() {
   });
   const splitEl = document.getElementById('split-result');
   if (paidA === 0 && paidB === 0) {
-    splitEl.textContent = `Mỗi người chuẩn bị thực tế ${Math.round(total / 2).toLocaleString('vi-VN')}đ.`;
+    splitEl.textContent = `Mỗi anh em chuẩn bị đúng ${Math.round(total / 2).toLocaleString('vi-VN')}đ (Tổng 2 người: ${total.toLocaleString('vi-VN')}đ).`;
   } else {
     const net = (paidA - paidB) / 2;
     if (net > 0) {
-      splitEl.innerHTML = `💸 <b>${state.nb}</b> chuyển lại <b>${state.na}</b>: <b>${Math.round(net).toLocaleString('vi-VN')}đ</b>`;
+      splitEl.innerHTML = `💸 <b>${state.nb}</b> bắn trả <b>${state.na}</b>: <b>${Math.round(net).toLocaleString('vi-VN')}đ</b>`;
     } else if (net < 0) {
-      splitEl.innerHTML = `💸 <b>${state.na}</b> chuyển lại <b>${state.nb}</b>: <b>${Math.round(Math.abs(net)).toLocaleString('vi-VN')}đ</b>`;
+      splitEl.innerHTML = `💸 <b>${state.na}</b> bắn trả <b>${state.nb}</b>: <b>${Math.round(Math.abs(net)).toLocaleString('vi-VN')}đ</b>`;
     } else {
       splitEl.textContent = `🤝 Hai anh em đã chi cân bằng nhau!`;
     }
@@ -644,22 +711,25 @@ function setGachaStep(sIdx) {
   [0, 1, 2].forEach(i => {
     document.getElementById('gt-' + i).classList.toggle('active', i === sIdx);
   });
-  document.getElementById('gacha-output').textContent = `Quay chọn ngẫu nhiên 1 trong 12 địa điểm Chặng ${sIdx + 1}!`;
+  document.getElementById('gacha-output').textContent = `Quay chọn quán Chặng ${sIdx + 1} theo trần ${CAP.toLocaleString('vi-VN')}đ!`;
 }
 
 function spinGacha() {
-  const list = MEGA_DB[gachaStep];
+  const otherCost = state.c.reduce((acc, val, idx) => idx === gachaStep ? acc : acc + val, 0) + state.ec;
+  const fullList = MEGA_DB[gachaStep];
+  const safeList = fullList.map((item, idx) => ({ ...item, idx })).filter(item => (otherCost + item.cost) <= CAP);
+  const pool = safeList.length > 0 ? safeList : fullList.map((item, idx) => ({ ...item, idx }));
+
   const out = document.getElementById('gacha-output');
   let count = 0;
   const timer = setInterval(() => {
-    out.textContent = list[count % list.length].name;
+    out.textContent = pool[count % pool.length].name;
     count++;
     if (count > 12) {
       clearInterval(timer);
-      const pickIdx = Math.floor(Math.random() * list.length);
-      const pick = list[pickIdx];
+      const pick = pool[Math.floor(Math.random() * pool.length)];
       out.innerHTML = `🎯 Chốt: <span style="color:var(--blue)">${pick.name}</span>`;
-      changeVenue(gachaStep, pickIdx);
+      changeVenue(gachaStep, pick.idx);
     }
   }, 65);
 }
@@ -667,6 +737,7 @@ function spinGacha() {
 function copyLiveLink() {
   syncInput();
   const q = new URLSearchParams();
+  q.set('cap', CAP);
   q.set('sv', state.sv.join(','));
   if (state.customNames.some(Boolean)) q.set('cn', state.customNames.join('|'));
   q.set('c', state.c.join(','));
